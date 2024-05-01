@@ -34,10 +34,13 @@ git clone https://github.com/lujiannan/bounden-frontend.git
 - react-auth-kit and jwt_extended are used for user authentication and token refreshing
 - Quill is used for the blog creater/editor
 - Render is used for the deployment and hosting of the website
+- Waitress is used for the production server
 
-## Deployment
-- The website is deployed on Render (https://render.com/)
-- The website is hosted on a custom domain (https://bounden.onrender.com/)
+## Deployment (Render)
+- The website is hosted on a custom domain on Render [Provided URL](https://bounden.onrender.com/) [Custom URL](https://render.bounden.cn/)
+- Follow the instructions on the Render website to link to the github account
+- Create a new static site, link to the frontend repo on github, set name (the prefix of the provided URL), and other details
+- Set environment variable to ```REACT_APP_SERVER_URL=<your_backend_deployed_url>```
 
 ## Support
 This is an open source project and everyone is welcome to contribute. Feel free to open an issue, if you have any questions or incase you find a bug. Also if you are impressed/inspired by this project, a little credit will be much appreciated.
