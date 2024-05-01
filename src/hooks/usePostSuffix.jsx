@@ -15,7 +15,7 @@ const usePostSuffix = (urlSuffix, data_in) => {
     useEffect(() => {      
         const abortController = new AbortController();
 
-        fetch(urlSuffix, {
+        fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
             signal: abortController.signal,
             method: 'POST',
             headers: {

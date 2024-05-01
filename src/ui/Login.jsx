@@ -32,9 +32,10 @@ function Login() {
 
     const handleSubmit = (e, suffix) => {
         setIsLoading(true);
+        console.log(process.env.REACT_APP_SERVER_URL + suffix);
         e.preventDefault();
         // send data to server in a format {"user" : {username: "", password: "", etc.}}
-        fetch(process.env.REACT_APP_API_URL + suffix, {
+        fetch(process.env.REACT_APP_SERVER_URL + suffix, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
