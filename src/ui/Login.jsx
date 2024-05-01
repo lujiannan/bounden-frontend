@@ -34,7 +34,7 @@ function Login() {
         setIsLoading(true);
         e.preventDefault();
         // send data to server in a format {"user" : {username: "", password: "", etc.}}
-        fetch(suffix, {
+        fetch(process.env.REACT_APP_API_URL + suffix, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

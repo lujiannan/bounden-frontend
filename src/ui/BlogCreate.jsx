@@ -52,7 +52,7 @@ function BlogCreate() {
         });
 
         // send data to server in a format {"blog" : {category: "", title: "", etc.}}
-        fetch(URL_SUFFIX_CREATE, {
+        fetch(process.env.REACT_APP_API_URL + URL_SUFFIX_CREATE, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

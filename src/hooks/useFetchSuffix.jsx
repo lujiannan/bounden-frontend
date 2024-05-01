@@ -15,7 +15,7 @@ const useFetchSuffix = (urlSuffix) => {
     useEffect(() => {      
         const abortController = new AbortController();
         
-        fetch(urlSuffix, { signal: abortController.signal })
+        fetch(process.env.REACT_APP_API_URL + urlSuffix, { signal: abortController.signal })
             .then(res => {
                 if (!res.ok) {throw Error('Could not fetch the data for that resource...');}
                 return res.json();
