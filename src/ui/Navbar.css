@@ -1,0 +1,199 @@
+.NavbarItems {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    padding: 0 30px;
+    /* background-color: var(--pretty-base-color); */
+    background-color: var(--pretty-bg-color);
+    /* box-shadow: 0 5px 15px rgba(34, 34, 34, 0.25); */
+    width: 100%;
+    z-index: 99;
+    /* fix the nv bar at the top */
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    transition: var(--pretty-transition);
+    height: var(--top-nav-height);
+    /* opacity: 0.75; */
+}
+.NavbarItems h1 {
+    /* center the logo and app name */
+    margin: auto 0;
+}
+
+.NavbarItems-affix {
+    height: var(--top-nav-height-scrolled);
+    background-color: var(--pretty-nav-bg-color-white);
+    transition: var(--pretty-transition);
+    /* opacity: 1; */
+}
+
+.logo {
+    padding-left: 3rem;
+    color: var(--pretty-base-color);
+    justify-content: start;
+    cursor: pointer;
+    /* ensure logo and text are in the same line */
+    white-space: nowrap;
+    transition: var(--pretty-transition);
+}
+
+.nav-menu {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    /* nav bar element spacing */
+    grid-gap: 0.5rem;
+    /* remove bullet points */
+    list-style: none;
+    align-items: center;
+    text-align: center;
+    justify-content: end;
+    /* space for user icon */
+    margin-right: 5rem;
+}
+
+/* change color of active link */
+.nav-links {
+    text-decoration: none;
+    color: var(--pretty-base-color-light);
+    border-radius: var(--pretty-border-radius);
+    padding: 0.7rem 0.5rem;
+    white-space: nowrap;
+}
+.nav-links i {
+    padding-right: 10px;
+}
+.nav-links:hover {
+    background-color: var(--pretty-btn-color);
+    border-radius: var(--pretty-border-radius);
+    color: var(--pretty-base-color-dark);
+    transition: all 0.2s ease-in-out;
+}
+
+/* toggle menu icon */
+.menu-icon {
+    /* hide by default */
+    display: none;
+    justify-content: end;
+}
+.menu-icon .fa-bars {
+    font-size: larger;
+    color: var(--pretty-base-color);
+}
+.menu-icon .fa-times {
+    font-size: larger;
+    color: var(--pretty-base-color);
+}
+.menu-icon .fa-bars:hover {
+    color: var(--pretty-btn-color-hover);
+    cursor: pointer;
+}
+.menu-icon .fa-times:hover {
+    color: var(--pretty-btn-color-hover);
+    cursor: pointer;
+}
+
+.user-icon {
+    position: absolute;
+    right: 3rem;
+    /* justify-content: end; */
+}
+.user-icon .nav-link-user {
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+    background-color: transparent;
+    border-radius: var(--pretty-border-radius);
+    border: 2px solid var(--pretty-base-color);
+    border-style: dashed;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--pretty-base-color);
+    transition: var(--pretty-transition);
+}
+.user-icon .nav-link-user:hover {
+    background-color: var(--pretty-btn-color);
+    transition: var(--pretty-transition);
+}
+.user-icon .nav-link-user-signed-in {
+    border-style: inset;
+}
+
+/* change navbar style on small screens */
+@media screen and (max-width: 1024px) {
+    .logo {
+        padding-left: 1.5rem;
+    }
+
+    .nav-menu {
+        display: flex;
+        transition: var(--pretty-transition);
+        flex-direction: column;
+        justify-content: flex-start;
+        box-shadow: 0 5px 15px rgba(34, 34, 34, 0.4);
+        background-color: var(--pretty-bg-color);
+        /* add blur effect */
+        /* backdrop-filter: blur(10px); */
+        width: 16rem;
+        height: 100vh;
+        position: absolute;
+        top: 0px;
+        right: -16rem;
+        align-items: stretch;
+        padding: 100px 0 30px 0;
+        margin: 0;
+        z-index: 1;
+    }
+    .nav-menu.active {
+        transition: var(--pretty-transition);
+        right: 0rem;
+    }
+
+    .nav-links {
+        display: inline-block;
+        widows: 100%;
+        padding: 1.5rem 1.5rem;
+        color: var(--pretty-base-color);
+        cursor: pointer;
+    }
+    .nav-links:hover {
+        background-color: var(--pretty-btn-color-hover);
+        color: var(--pretty-base-color-dark);
+    }
+    /* hover underline effect for active link */
+    .nav-links::before {
+        position: absolute;
+        content: "";
+        width: 10%;
+        height: 1.5rem;
+        align-content: center;
+        margin-top: 0rem;
+        right: 0;
+        background-color: var(--pretty-base-color);
+        transform: scaleX(0);
+        transition: var(--pretty-transition);
+        transform-origin: right;
+    }
+    .nav-links:hover::before {
+        transform: scaleX(1);
+    }
+
+    .user-icon {
+        margin-right: 1.5rem;
+    }
+
+    .menu-icon {
+        display: block;
+        /* align with the user icon */
+        margin-top: 0.25rem;
+        z-index: 99;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .logo {
+        padding-left: 0rem;
+    }
+}

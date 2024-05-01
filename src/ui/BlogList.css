@@ -1,0 +1,94 @@
+.blog-container {
+    text-align: start;
+    padding: 0% 20%;
+    height: 100%;
+    width: 100%;
+    font-size: 1rem;
+    transition: var(--pretty-transition);
+}
+.blog-container h1 {
+    /* font-size: 2rem; */
+    font-weight: bold;
+    margin-bottom: 1rem;
+    padding: 1rem 0rem;
+}
+
+.blog-list-loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+    padding: 1rem;
+}
+
+.blog-preview {
+    text-align: start;
+    padding: 1.5rem 1.5rem;
+    margin: 0.75rem 0;
+    box-shadow: 1px 3px 5px rgba(2, 2, 2, 0.1);
+    border-radius: var(--pretty-border-radius-large);
+    transition: var(--pretty-transition);
+}
+.blog-preview:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 15px;
+    transition: var(--pretty-transition);
+}
+.blog-preview .blog-preview-link {
+    text-decoration: none;
+    color: var(--pretty-base-color);
+}
+.blog-preview h1,
+.blog-preview p,
+.blog-preview text {
+    overflow-wrap: break-word;
+}
+
+.blog-preview .blog-preview-category {
+    margin-left: 0.1rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    color: var(--pretty-base-color-lighter);
+}
+
+.blog-preview .blog-preview-title {
+    margin: 0;
+    font-size: 2.25rem;
+}
+
+.blog-preview .blog-preview-description {
+    max-width: fit-content;
+    margin: 0.5rem 0;
+    color: var(--pretty-base-color-light);
+    background-color: var(--pretty-btn-color);
+    border-radius: var(--pretty-border-radius-small);
+    padding: 0.5rem;
+}
+.blog-preview .blog-preview-create {
+    max-width: fit-content;
+    color: var(--pretty-base-color-lighter);
+}
+
+@media screen and (max-width: 1024px) {
+    .blog-container {
+        padding: 0% 10%;
+    }
+
+    /* no hover effect on mobile */
+    .blog-preview:hover {
+        box-shadow: 1px 3px 5px rgba(2, 2, 2, 0.1);
+        transition: var(--pretty-transition);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .blog-container {
+        padding: 0% 5%;
+    }
+
+    /* no hover effect on mobile */
+    .blog-preview:hover {
+        box-shadow: 1px 3px 5px rgba(2, 2, 2, 0.1);
+        transition: var(--pretty-transition);
+    }
+}

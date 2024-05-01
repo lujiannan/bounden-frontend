@@ -1,0 +1,23 @@
+.blog-create-btn {
+    position: fixed;
+    bottom: 2.5%;
+    right: 2.5%;
+    /* padding: 0.5rem 0.7rem; */
+    width: 3rem;
+    height: 3rem;
+    /* keep the icon in the center */
+    text-align: center;
+    align-content: center;
+    border-radius: var(--pretty-border-radius);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    opacity: 0.3;
+    background-color: var(--pretty-base-color);
+    color: var(--pretty-btn-color);
+    transition: var(--pretty-transition);
+}
+.blog-create-btn:hover {
+    opacity: 1;
+    transition: var(--pretty-transition);
+}
