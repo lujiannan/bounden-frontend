@@ -137,7 +137,7 @@ function Login() {
                             <h2>Create Account</h2>
                             <form>
                                 <div className='login-form-input-container'>
-                                    <label htmlFor="user_name">Full Name</label>
+                                    <label htmlFor="user_name">Username</label>
                                     <input className={`login-form-input ${usernameError ? "login-form-input-error" : ""}`} type="text" id="user_name"
                                         onChange={(e) => { setUsername(e.target.value) }} onFocus={() => { setUsernameError(false) }}>
                                     </input>

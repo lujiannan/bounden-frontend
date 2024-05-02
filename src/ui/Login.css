@@ -2,7 +2,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
     align-items: center;
     justify-content: center;
 }
@@ -12,7 +12,7 @@
     width: min(90%, 960px);
     height: min(90%, 600px);
     min-width: 200px;
-    min-height: 600px;
+    min-height: 500px;
     background-color: var(--pretty-btn-color);
     /* box-shadow: 0 0 1em #e5e5e5; */
     font-family: inherit;
@@ -53,7 +53,7 @@
 .login-form-block h2 {
     color: var(--pretty-base-color);
     font-size: 2.5rem;
-    margin-bottom: 1em;
+    margin: 0em 3rem 1rem 3rem;
 }
 
 .login-form-block form {
@@ -64,22 +64,24 @@
 
 .login-form-input-container {
     /* margin-bottom: 1em; */
-    height: calc(1.05rem + 0.5rem + 3em + 0.75rem);
+    height: calc(1.2rem + 0.75rem + 3em + 0.75rem);
     display: flex;
     flex-direction: column;
 }
 
 .login-form-input-container label {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
+    height: 1.2rem;
 }
 
 .login-form-input-container .login-form-input {
-    margin-top: 0.5em;
+    margin-top: 0.75em;
     width: 100%;
     height: 3em;
+    font-size: 1rem;
     border-radius: 5px;
     border: 1px solid var(--pretty-input-border-color);
-    background-color: #e6e6e6;
+    background-color: var(--pretty-input-bg-color);
     padding-left: 5%;
 }
 
@@ -126,17 +128,16 @@
     border: 2px solid var(--pretty-btn-color);
     font-weight: bold;
     letter-spacing: 0.1rem;
-}
-
-.signin-block button,
-.signup-block button {
     text-transform: uppercase;
     font-size: 1.05rem;
     padding: 1em 3.5em;
     border-radius: 2em;
-    background-color: var(--pretty-btn-color);
-    color: var(--pretty-base-color);
-    cursor: pointer;
+}
+
+.login-aside-container h2 {
+    margin: 0rem 3rem;
+    font-size: 2rem;
+    color: var(--pretty-btn-text-color);
 }
 
 /* Aside Section */
@@ -148,12 +149,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
-.login-aside-container h2 {
-    font-size: 1.75rem;
-    color: var(--pretty-btn-text-color);
+.signin-block button,
+.signup-block button {
+    background-color: var(--pretty-btn-color);
+    color: var(--pretty-base-color);
+    cursor: pointer;
 }
 
 /* initially show signup form and signin block */
@@ -197,9 +200,16 @@
     align-items: center;
 }
 
+/* adapt to mobile devices */
 @media (max-width: 576px) {
     .login-page-container {
         margin-top: 5rem;
+        padding-bottom: 3rem;
+        min-height: 500px;
+    }
+
+    .login-container {
+        min-height: 300px;
     }
 
     .login-main-container,
@@ -208,32 +218,54 @@
     }
 
     .login-main-container {
-        height: 70%;
+        height: 75%;
         top: 0;
         left: 0;
+    }
+
+    .login-main-container button {
+        margin: 0rem;
+    }
+
+    .login-form-block h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .login-form-block button {
+        font-size: 1rem;
+    }
+
+    .login-form-input-container {
+        /* margin-bottom: 1em; */
+        height: calc(0.95rem + 0.75rem + 2.25em + 0.75rem);
+    }
+
+    .login-form-input-container label {
+        font-size: 0.95rem;
+        height: 0.95rem;
+    }
+
+    .login-form-input-container .login-form-input {
+        font-size: 0.8rem;
+        height: 2.25rem;
     }
 
     .login-aside-container {
         top: 100%;
         left: 0;
         transform: translateY(-100%);
-        height: 30%;
-    }
-
-    .login-form-block h2 {
-        font-size: 1.75rem;
+        height: 25%;
     }
 
     .login-aside-container h2 {
         font-size: 1.25rem;
+        margin-bottom: 0.5rem;
     }
 
-    .login-form-block input {
-        font-size: 0.75rem;
-    }
-
-    .login-form-block button {
-        font-size: 1rem;
+    .login-aside-container button {
+        font-size: 0.85rem;
+        padding: 0.75em 2em;
     }
 
     /* animation classes */
@@ -247,5 +279,13 @@
     .login-aside-container.slide-left {
         top: 0;
         transform: translateY(0);
+    }
+}
+
+/* adapt to mobile devices landscape */
+@media screen and (max-height: 630px) {
+    .login-container {
+        display: block;
+        margin: auto auto;
     }
 }
