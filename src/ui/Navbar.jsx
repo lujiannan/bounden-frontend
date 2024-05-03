@@ -15,7 +15,7 @@ function Navbar() {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-    }, [])
+    })
 
     const handleScroll = () => {
         // if user scrolls down > n pixels, navbar's transpareny is higher
@@ -54,7 +54,7 @@ function Navbar() {
                 })}
             </ul>
             <div className="user-icon">
-                <Link to="/login" className="nav-link-user" id="nav-link-user">
+                <Link to="/login" className={`nav-link-user ${isAuthenticated ? "active" : ""}`} id="nav-link-user">
                     <i className="fa-solid fa-user"></i>
                 </Link>
             </div>

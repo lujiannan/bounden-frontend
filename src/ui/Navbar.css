@@ -123,7 +123,6 @@
 }
 .user-icon .nav-link-user.active {
     border-style: inset;
-    border: 2px solid var(--pretty-base-color);
     color: var(--pretty-base-color);
     transition: var(--pretty-transition);
 }
