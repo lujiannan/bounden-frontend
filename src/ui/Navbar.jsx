@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // replace <a> tag with <Link> to enable routing faster (preload the page before the user clicks on the link)
 import { MenuData } from "../utils/menuData";
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import "./Navbar.css";
 
 function Navbar() {
     const [menuClicked, setMenuClicked] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const isAuthenticated = useIsAuthenticated();
 
     const handleMenuIconClick = () => {
         setMenuClicked(!menuClicked);
@@ -13,7 +15,7 @@ function Navbar() {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-    })
+    }, [])
 
     const handleScroll = () => {
         // if user scrolls down > n pixels, navbar's transpareny is higher
@@ -33,7 +35,9 @@ function Navbar() {
         // after scrolling down, navbar's background color & height changes
         <nav className={`NavbarItems ${scrolled ? "NavbarItems-affix" : ""}`}>
             <h1 className="logo">
-                <i className="fab fa-react"></i> Bounden
+                <Link to="/" className="nav-link-home">
+                    <i className="fab fa-react"></i> Bounden
+                </Link>
             </h1>
             <div className="menu-icon" onClick={handleMenuIconClick}>
                 <i className={menuClicked ? "fas fa-times" : "fas fa-bars"}></i>
@@ -50,7 +54,7 @@ function Navbar() {
                 })}
             </ul>
             <div className="user-icon">
-                <Link to= "/login" className="nav-link-user" >
+                <Link to="/login" className="nav-link-user" id="nav-link-user">
                     <i className="fa-solid fa-user"></i>
                 </Link>
             </div>

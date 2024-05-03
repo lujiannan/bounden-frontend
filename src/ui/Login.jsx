@@ -77,6 +77,7 @@ function Login() {
                     refresh: data.refresh_token,
                     userState: { uid: data.user_id, username: data.username, email: data.email },
                 })) { // Only if you are using refreshToken feature
+                    handleSignedInEffect();
                     // Redirect or do-something
                     navigate(-1);
                 } else {
@@ -100,6 +101,12 @@ function Login() {
         handleSubmit(e, URL_SUFFIX_SIGNIN);
     }
 
+    const handleSignedInEffect = () => {
+        // set user icon to logged in state
+        const nav_link_user = document.getElementById('nav-link-user');
+        nav_link_user.classList.add('active');
+    }
+
     // make two sections of the login page switch there position on switch button click
     const handleSideSignInClick = () => {
         setIsSignInActive(true);
@@ -117,15 +124,18 @@ function Login() {
         setPasswordError(false);
     }
 
-    const handleSignOut = () => {
+    const handleSignOutEffect = () => {
         signOut();
+        // set user icon to logged out state
+        const nav_link_user = document.getElementById('nav-link-user');
+        nav_link_user.classList.remove('active'); 
         navigate('/login')
     }
 
     if (isAuthenticated) {
         return (
             <div className='login-page-container'>
-                <button onClick={() => handleSignOut()}>Sign Out</button>
+                <button onClick={() => handleSignOutEffect()}>Sign Out</button>
             </div>
         )
     } else {
