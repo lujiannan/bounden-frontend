@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // replace <a> tag with <Link> to enable routing faster (preload the page before the user clicks on the link)
 import { MenuData } from "../utils/menuData";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import boundenIcon from '../images/bounden.png';
 import "./Navbar.css";
 
 function Navbar() {
@@ -34,9 +35,10 @@ function Navbar() {
     return (
         // after scrolling down, navbar's background color & height changes
         <nav className={`NavbarItems ${scrolled ? "NavbarItems-affix" : ""}`}>
-            <h1 className="logo">
+            <h1 className="bounden-title">
                 <Link to="/" className="nav-link-home">
-                    <i className="fab fa-react"></i> Bounden
+                    <img className="bounden-icon" alt="Bounden Icon" src={boundenIcon}></img>
+                    <span>Bounden</span>
                 </Link>
             </h1>
             <div className="menu-icon" onClick={handleMenuIconClick}>

@@ -30,18 +30,26 @@
     /* opacity: 1; */
 }
 
+.bounden-title {
+    padding-left: 3rem;
+    color: var(--pretty-base-color);
+    cursor: pointer;
+    /* ensure logo and text are in the same line */
+    transition: var(--pretty-transition);
+}
+
 .nav-link-home {
     text-decoration: none;
     color: var(--pretty-base-color);
-}
-.logo {
-    padding-left: 3rem;
-    color: var(--pretty-base-color);
+    display: flex;
+    flex-direction: row;
     justify-content: start;
-    cursor: pointer;
-    /* ensure logo and text are in the same line */
-    white-space: nowrap;
-    transition: var(--pretty-transition);
+    align-items: center;
+}
+
+.bounden-icon {
+    height: 2rem;
+    margin-right: 0.5rem;
 }
 
 .nav-menu {
@@ -129,7 +137,7 @@
 
 /* change navbar style on small screens */
 @media screen and (max-width: 1024px) {
-    .logo {
+    .bounden-title {
         padding-left: 1.5rem;
     }
 
@@ -199,7 +207,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .logo {
+    .bounden-title {
         padding-left: 0rem;
     }
 }
