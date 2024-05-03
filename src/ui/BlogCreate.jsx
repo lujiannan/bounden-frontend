@@ -175,6 +175,8 @@ function BlogCreate() {
                     <p className="blog-create-form-input-error-message">{errors.content?.message}</p>
                 </div>
 
+                <div className="blog-create-form-bottom-placeholder"></div>
+
                 <button className="blog-create-form-button" form="blog-create-form" type="submit">
                     <i className="fa-solid fa-cloud-arrow-up"></i>
                 </button>

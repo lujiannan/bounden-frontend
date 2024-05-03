@@ -142,7 +142,6 @@
     border-bottom-left-radius: var(--pretty-border-radius);
     border-bottom-right-radius: var(--pretty-border-radius);
     font-size: 1rem;
-    margin-bottom: 1rem;
 }
 
 .blog-create-container .ql-container .ql-editor {
@@ -157,6 +156,10 @@
 
 .blog-create-container .ql-container .ql-tooltip {
     margin-left: 10rem;
+}
+
+.blog-create-form-bottom-placeholder {
+    height: 2rem;
 }
 
 @media screen and (max-width: 1024px) {
