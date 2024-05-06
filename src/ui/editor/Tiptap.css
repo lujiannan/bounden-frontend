@@ -90,3 +90,29 @@
     cursor: not-allowed;
     border: none;
 }
+
+.floating-menu-container {
+    background-color: var(--pretty-nav-bg-color-white);
+    border-radius: var(--pretty-border-radius-small);
+
+    & button {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0.25rem 0.25rem;
+        font-size: 1rem;
+        background-color: var(--pretty-btn-text-color);
+        /* color: var(--pretty-base-color-light); */
+        border: none;
+        border-radius: var(--pretty-border-radius-small);
+        cursor: pointer;
+        transition: var(--pretty-transition);
+
+        &:hover {
+            background-color: var(--pretty-nav-bg-color-white);
+        }
+
+        &.active {
+            background-color: var(--pretty-nav-bg-color-white);
+        }
+    }
+}

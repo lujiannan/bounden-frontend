@@ -1,4 +1,4 @@
-import { EditorProvider, FloatingMenu } from '@tiptap/react'
+import { EditorProvider, FloatingMenu, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -6,6 +6,7 @@ import TextStyle from '@tiptap/extension-text-style'
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
 import TextAlign from '@tiptap/extension-text-align'
+import Typography from '@tiptap/extension-typography'
 
 import MenuBar from './MenuBar'
 import './Tiptap.css'
@@ -14,7 +15,7 @@ import './Tiptap.css'
 const extensions = [
     StarterKit,
     Placeholder.configure({
-        placeholder: 'ʕ•̀ω•́ʔ✧ ~ ~ ~',
+        placeholder: '  ʕ•̀ω•́ʔ✧ ~ ~ ~',
     }),
     Underline,
     TextStyle,
@@ -25,6 +26,7 @@ const extensions = [
     TextAlign.configure({
         types: ['heading', 'paragraph'],
     }),
+    Typography,
 ]
 
 const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent, onError }) => {
@@ -41,10 +43,20 @@ const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent
                 slotBefore={enableToolbar ? <MenuBar /> : null}
                 // TODO: editorProps is not updating after initialization, need to fix it
                 // add error affix to editor if there is an error
-                editorProps={ onError!=null ? {attributes: { class: 'tiptap-error' }} : null}
+                editorProps={onError != null ? { attributes: { class: 'tiptap-error' } } : null}
             >
                 {/* <BubbleMenu>This is the bubble menu</BubbleMenu> */}
-                {/* <FloatingMenu>This is the floating menu</FloatingMenu> */}
+                {/* <FloatingMenu
+                    tippyOptions={{ duration: 300 }}
+                    editor={useCurrentEditor()}
+                >
+                    <div className="floating-menu-container">
+                        <button
+                            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                            className={`ri-bold ${editor.isActive('heading', { level: 1 }) ? 'active' : ''}`}
+                        ></button>
+                    </div>
+                </FloatingMenu> */}
             </EditorProvider>
         </div>
     )
