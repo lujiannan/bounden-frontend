@@ -4,6 +4,8 @@ import { useCurrentEditor } from '@tiptap/react';
 import Colors from '../../utils/colors';
 import './MenuBar.css';
 
+// TODO: add a leave-focus event handler to hide the dropdown menus when the user clicks outside of them
+
 const MenuBar = () => {
     const { editor } = useCurrentEditor();
     const [isTextFormatMenuActive, setIsTextFormatMenuActive] = useState(false);
