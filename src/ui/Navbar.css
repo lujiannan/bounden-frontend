@@ -76,6 +76,7 @@
 }
 .nav-links i {
     padding-right: 10px;
+    font-size: 1.25rem;
 }
 .nav-links:hover {
     background-color: var(--pretty-btn-color);
@@ -113,14 +114,14 @@
     /* justify-content: end; */
 }
 .user-icon .nav-link-user {
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.4rem;
     white-space: nowrap;
     background-color: transparent;
     border-radius: var(--pretty-border-radius);
     border: 2px solid var(--pretty-base-color-light);
     border-style: dashed;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: bold;
     color: var(--pretty-base-color-light);
     transition: var(--pretty-transition);

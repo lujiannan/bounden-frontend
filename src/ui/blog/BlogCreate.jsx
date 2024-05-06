@@ -148,7 +148,7 @@ function BlogCreate() {
                 <div className="blog-create-form-bottom-placeholder"></div>
 
                 <button className="blog-create-form-button" form="blog-create-form" type="submit">
-                    <i className="fa-solid fa-cloud-arrow-up"></i>
+                    <i className="ri-upload-2-fill"></i>
                 </button>
             </div>
         </>

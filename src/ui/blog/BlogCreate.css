@@ -71,23 +71,24 @@
 .blog-create-form-button {
     /* position the button to the right of the container */
     position: fixed;
-    bottom: 2.5%;
-    right: 2.5%;
+    bottom: 4%;
+    right: 4%;
     /* padding: 0.5rem 0.7rem; */
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
     /* keep the icon in the center */
     text-align: center;
     align-content: center;
     border: 0px;
     border-radius: var(--pretty-border-radius);
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     opacity: 0.5;
     background-color: var(--pretty-base-color);
     color: var(--pretty-btn-color);
     transition: var(--pretty-transition);
+    cursor: pointer;
 }
 
 .blog-create-form-button:hover {

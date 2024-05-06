@@ -3,19 +3,19 @@ export const MenuData = [
         title: "Home",
         url: "/",
         cName: "nav-links",
-        icon: "fa-solid fa-house-user"
+        icon: "ri-home-3-fill"
     },
     {
         title: "Blog",
         url: "/blogs",
         cName: "nav-links",
-        icon: "fa-solid fa-book-open"
+        icon: "ri-blogger-fill"
     },
     {
         title: "Service",
         url: "/service",
         cName: "nav-links",
-        icon: "fa-solid fa-briefcase"
+        icon: "ri-suitcase-fill"
     },
     // {
     //     title: "Contact",
@@ -27,6 +27,6 @@ export const MenuData = [
         title: "About",
         url: "/about",
         cName: "nav-links",
-        icon: "fa-solid fa-circle-info"
+        icon: "ri-information-fill"
     },
 ]
