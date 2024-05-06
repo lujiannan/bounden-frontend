@@ -98,7 +98,7 @@ function BlogCreate() {
     return (
         <>
             <div className="blog-create-container">
-                <h2>Add a new blog</h2>
+                <h1 className="blog-create-form-title">Add a new blog</h1>
                 <form onSubmit={handleSubmit((data) => onSubmit(data))} id="blog-create-form">
                     <div className="blog-create-form-vertical-group">
                         <div className="blog-create-form-horizontal-group">
@@ -140,6 +140,7 @@ function BlogCreate() {
                         enableToolbar={true}
                         enableEditable={true}
                         initialContent={null}
+                        onError={errors.content}
                     />
                     <p className="blog-create-form-input-error-message">{errors.content?.message}</p>
                 </div>

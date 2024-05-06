@@ -24,13 +24,13 @@
 .blog-detail-header {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    width: 100%;
+    /* width: 100%; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--pretty-header-bg-color-whiter);
-    border-radius: var(--pretty-border-radius-large);
-    border-bottom: 4px solid var(--pretty-nav-bg-color-white);
+    /* background-color: var(--pretty-header-bg-color-whiter); */
+    /* border-radius: var(--pretty-border-radius-large); */
+    border-bottom: 2px solid var(--pretty-nav-bg-color-white);
 }
 
 .blog-detail-container .blog-detail-link {
@@ -46,7 +46,7 @@
 
 .blog-detail-container .blog-detail-title {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--pretty-base-color-light);
 }
 

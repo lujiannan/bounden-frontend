@@ -8,11 +8,12 @@
 
 .tiptap {
     width: 100%;
+    min-height: 30vh;
     padding: 0.75rem 0.75rem;
     margin-top: 0.25rem;
     /* padding: 0.1rem 0.5rem; */
-    border: 2px solid var(--pretty-input-border-color);
-    border-radius: var(--pretty-border-radius);
+    border: 1px solid var(--pretty-input-border-color);
+    border-radius: var(--pretty-border-radius-small);
 
     /* applies a margin of 0.5em to the top of each direct child element of elements with the class ".tiptap" that immediately follow another element */
     >*+* {
@@ -72,6 +73,10 @@
         border-top: 2px solid var(--pretty-nav-bg-color-white);
         margin: 2rem 0;
     }
+}
+
+.tiptap-error {
+    border: 2px solid var(--pretty-error-color);
 }
 
 /* style when setting editable as false */

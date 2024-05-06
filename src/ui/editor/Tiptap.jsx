@@ -1,4 +1,4 @@
-import { EditorProvider, FloatingMenu, BubbleMenu } from '@tiptap/react'
+import { EditorProvider, FloatingMenu, BubbleMenu, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -15,7 +15,7 @@ const extensions = [
     Underline,
 ]
 
-const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent }) => {
+const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent, onError }) => {
     return (
         <div className="tiptap-container">
             <EditorProvider
@@ -27,6 +27,9 @@ const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent
                     onContentChange(editor);
                 }}
                 slotBefore={enableToolbar ? <MenuBar /> : null}
+                // TODO: editorProps is not updating after initialization, need to fix it
+                // add error affix to editor if there is an error
+                editorProps={ onError!=null ? {attributes: { class: 'tiptap-error' }} : null}
             >
                 {/* <FloatingMenu>This is the floating menu</FloatingMenu> */}
                 {/* <BubbleMenu>This is the bubble menu</BubbleMenu> */}
