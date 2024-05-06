@@ -113,36 +113,36 @@ const MenuBar = () => {
                 <button
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     disabled={!editor.can().chain().focus().toggleBold().run()}
-                    className={`ri-bold ${editor.isActive('bold') ? 'is-active' : ''}`}
+                    className={`ri-bold ${editor.isActive('bold') ? 'active' : ''}`}
                     title='Bold'
                 ></button>
                 <button
                     onClick={() => editor.chain().focus().toggleItalic().run()}
                     disabled={!editor.can().chain().focus().toggleItalic().run()}
-                    className={`ri-italic ${editor.isActive('italic') ? 'is-active' : ''}`}
+                    className={`ri-italic ${editor.isActive('italic') ? 'active' : ''}`}
                     title='Italic'
                 ></button>
                 <button
                     onClick={() => editor.chain().focus().toggleUnderline().run()}
                     disabled={!editor.can().chain().focus().toggleUnderline().run()}
-                    className={`ri-underline ${editor.isActive('underline') ? 'is-active' : ''}`}
+                    className={`ri-underline ${editor.isActive('underline') ? 'active' : ''}`}
                     title='Underline'
                 ></button>
                 <button
                     onClick={() => editor.chain().focus().toggleStrike().run()}
                     disabled={!editor.can().chain().focus().toggleStrike().run()}
-                    className={`ri-strikethrough ${editor.isActive('strike') ? 'is-active' : ''}`}
+                    className={`ri-strikethrough ${editor.isActive('strike') ? 'active' : ''}`}
                     title='Strikethrough'
                 ></button>
                 <button
                     onClick={() => editor.chain().focus().toggleCode().run()}
                     disabled={!editor.can().chain().focus().toggleCode().run()}
-                    className={`ri-code-view ${editor.isActive('code') ? 'is-active' : ''}`}
+                    className={`ri-code-view ${editor.isActive('code') ? 'active' : ''}`}
                     title='Code'
                 ></button>
                 <button
                     onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                    className={`ri-double-quotes-r ${editor.isActive('blockquote') ? 'is-active' : ''}`}
+                    className={`ri-double-quotes-r ${editor.isActive('blockquote') ? 'active' : ''}`}
                     title='Blockquote'
                 ></button>
             </div>
@@ -179,12 +179,12 @@ const MenuBar = () => {
             <div className='tool-block'>
                 <button
                     onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={`ri-list-unordered ${editor.isActive('bulletList') ? 'is-active' : ''}`}
+                    className={`ri-list-unordered ${editor.isActive('bulletList') ? 'active' : ''}`}
                     title='Bullet List'
                 ></button>
                 <button
                     onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                    className={`ri-list-ordered ${editor.isActive('orderedList') ? 'is-active' : ''}`}
+                    className={`ri-list-ordered ${editor.isActive('orderedList') ? 'active' : ''}`}
                     title='Ordered List'
                 ></button>
             </div>
