@@ -3,9 +3,9 @@ This is a reusable component for displaying a list of blog posts
 */
 
 import "./BlogList.css"
-import useFetchSuffix from '../hooks/useFetchSuffix.jsx';
+import useFetchSuffix from '../../hooks/useFetchSuffix.jsx';
 import { Link } from "react-router-dom";
-import blogFormatDate from "../utils/blogFormatDate";
+import blogFormatDate from "../../utils/blogFormatDate.jsx";
 
 function sortBlogsByUpdated(data_blogs) {
     return data_blogs.sort((a, b) => {

@@ -95,69 +95,6 @@
     transition: var(--pretty-transition);
 }
 
-/* whole ql container */
-.blog-create-container .editor-input {
-    width: 100%;
-    font-size: 1rem;
-    transition: var(--pretty-transition-fast);
-    border-radius: var(--pretty-border-radius);
-}
-
-.blog-create-container .editor-input-error {
-    border: 2px solid var(--pretty-error-color);
-}
-
-/* ql toolbar container */
-.blog-create-container .ql-toolbar {
-    background: var(--pretty-btn-text-color);
-    width: 100%;
-    border-top-left-radius: var(--pretty-border-radius);
-    border-top-right-radius: var(--pretty-border-radius);
-}
-
-/* style for every operation in the toolbar */
-.blog-create-container .ql-toolbar .ql-formats .ql-picker,
-.blog-create-container .ql-toolbar .ql-formats .ql-picker .ql-picker-label,
-.blog-create-container .ql-toolbar .ql-formats .ql-picker .ql-picker-options,
-.blog-create-container .ql-toolbar .ql-formats .ql-picker .ql-picker-options .ql-picker-item,
-.blog-create-container .ql-toolbar button {
-    font-size: 1rem;
-    border-radius: var(--pretty-border-radius-small);
-}
-.blog-create-container .ql-toolbar .ql-formats .ql-picker:hover,
-.blog-create-container .ql-toolbar button:hover {
-    background: var(--pretty-nav-bg-color-white);
-}
-.blog-create-container .ql-toolbar .ql-formats .ql-picker .ql-picker-options .ql-picker-item:hover {
-    border-radius: var(--pretty-border-radius-small);
-}
-
-/* ql text editing container */
-.blog-create-container .ql-container {
-    background: var(--pretty-btn-text-color);
-    width: 100%;
-    /* min-height: 300px; */
-    max-height: 50vh;
-    overflow-y: auto;
-    border-bottom-left-radius: var(--pretty-border-radius);
-    border-bottom-right-radius: var(--pretty-border-radius);
-    font-size: 1rem;
-}
-
-.blog-create-container .ql-container .ql-editor {
-    min-height: 300px !important;
-    max-height: 70% !important;
-}
-
-.blog-create-container .ql-container .ql-editor img {
-    max-height: 40vh;
-    max-width: 100%;
-}
-
-.blog-create-container .ql-container .ql-tooltip {
-    margin-left: 10rem;
-}
-
 .blog-create-form-bottom-placeholder {
     height: 2rem;
 }

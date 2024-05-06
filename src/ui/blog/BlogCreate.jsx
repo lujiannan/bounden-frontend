@@ -3,24 +3,17 @@ import { useNavigate } from "react-router-dom"; // for redirecting to the blog p
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'; // for getting the logged in user's email
 import { useForm } from "react-hook-form"; // for handling form data
 import "./BlogCreate.css";
-import "../utils/blogCategories"
+import "../../utils/blogCategories"
 
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.bubble.css';
-import { SortedBlogCategories } from "../utils/blogCategories";
+import Tiptap from "../editor/Tiptap"
+import { SortedBlogCategories } from "../../utils/blogCategories";
 
 function BlogCreate() {
     const URL_SUFFIX_CREATE = "/blogs/create";
 
     const navigate = useNavigate();
     const auth = useAuthUser();
-
     const author_email = auth.email;
-    // for retrieving the content form the editor
-    const [editor, setEditor] = useState(null);
-    const editorRef = useRef(null);
-    const readOnly = false;
 
     const [result, setResult] = useState(false);
     const [fetchError, setFetchError] = useState(null);
@@ -29,10 +22,9 @@ function BlogCreate() {
         register,
         handleSubmit,
         setValue,
-        watch,
-        trigger,
         formState: { errors },
     } = useForm({
+        mode: "onChange",
         // defaultValues: {
         //     category: "",
         //     title: "",
@@ -80,45 +72,28 @@ function BlogCreate() {
             });
     }
 
-    // modules for the Squill editor
-    const modules = {
-        toolbar: [
-            [{ header: [1, 2, 3, 4, false] }],
-            [{ font: [] }],
-            [{ size: [] }],
-            ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
-            [
-                { list: 'ordered' },
-                { list: 'bullet' },
-                { indent: '-1' },
-                { indent: '+1' },
-            ],
-            [{ 'color': [] }, { 'background': [] }],
-            [, 'link', 'image', 'video'],
-            ['clean'],
-        ]
-    }
-
-    // register the form field for Squill Editor
+    // titap editor functions
     useEffect(() => {
-        register("content", { required: "Minimum 15 characters required", minLength: 15 });
-    }, [register]);
-
-    const handleContentOnChange = async (value, delta, source, editor) => {
-        console.log(value);
-        if (editor) {
-            if (value === "<p><br></p>") {
-                setValue("content", "");
-            } else {
-                setValue("content", editor.getContents());
+        register("content", { validate: (value) => {
+            // console.log(value);
+            // FOR JSON OUTPUT: check if content is empty (if there is at least one block in the editor that has a content then it's valid)
+            for (let i = value?.content.length - 1; i >= 0; i--) {
+                if (value.content[i].content !== undefined) {
+                    return true;
+                }
             }
-        }
-        setEditor(editorRef?.current?.getEditor());
-        // trigger validation for content to re-render after content is updated
-        await trigger("content");
-    }
+            return "Content is required";
+        }})
+    }, []);
 
-    const editorContent = watch("content");
+    const handleContentOnChange = (editor) => {
+        // set the content value while user inputs in the editor (by default, setValue doesn't trigger change of the field state, so we have to manually set it through the third argument)
+        setValue("content", editor.getJSON(), {
+            shouldDirty: true,
+            shouldValidate: true,
+            shouldTouched: true,
+        });
+    }
 
     return (
         <>
@@ -160,18 +135,12 @@ function BlogCreate() {
                 </form>
 
                 <div className="blog-create-form-vertical-group">
-                    <ReactQuill
-                        className={`editor-input ${errors.content ? "editor-input-error" : ""}`}
-                        theme={readOnly ? 'bubble' : 'snow'}
-                        value={editorContent}
-                        modules={(readOnly) ? { toolbar: [] } : modules}
-                        onChange={handleContentOnChange}
-                        placeholder={readOnly ? 'Nothing here yet...' : 'Show your creativity...'}
-                        ref={editorRef}
-                        preserveWhitespace
-                        readOnly={readOnly}
-                    >
-                    </ReactQuill>
+                    <Tiptap
+                        onContentChange={handleContentOnChange}
+                        enableToolbar={true}
+                        enableEditable={true}
+                        initialContent={null}
+                    />
                     <p className="blog-create-form-input-error-message">{errors.content?.message}</p>
                 </div>
 

@@ -97,59 +97,6 @@
     margin-bottom: 1rem;
 }
 
-/* whole ql container */
-.blog-detail-container .editor-input {
-    width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    transition: var(--pretty-transition-fast);
-}
-
-/* ql toolbar container */
-.blog-detail-container .ql-toolbar {
-    background: var(--pretty-btn-text-color);
-    width: 100%;
-    border-top-left-radius: var(--pretty-border-radius);
-    border-top-right-radius: var(--pretty-border-radius);
-}
-
-/* style for every operation in the toolbar */
-.blog-detail-container .ql-toolbar .ql-formats .ql-picker,
-.blog-detail-container .ql-toolbar .ql-formats .ql-picker .ql-picker-label,
-.blog-detail-container .ql-toolbar .ql-formats .ql-picker .ql-picker-options,
-.blog-detail-container .ql-toolbar .ql-formats .ql-picker .ql-picker-options .ql-picker-item,
-.blog-detail-container .ql-toolbar button {
-    font-size: 1rem;
-    border-radius: var(--pretty-border-radius-small);
-}
-.blog-detail-container .ql-toolbar .ql-formats .ql-picker:hover,
-.blog-detail-container .ql-toolbar button:hover {
-    background: var(--pretty-nav-bg-color-white);
-}
-.blog-detail-container .ql-toolbar .ql-formats .ql-picker .ql-picker-options .ql-picker-item:hover {
-    border-radius: var(--pretty-border-radius-small);
-}
-
-/* ql text editing container */
-.blog-detail-container .ql-container {
-    background: var(--pretty-btn-text-color);
-    width: 100%;
-    overflow-y: auto;
-    border-radius: var(--pretty-border-radius);
-    font-size: 1rem;
-}
-
-.blog-detail-container .ql-container .ql-editor img {
-    max-height: 40vh;
-    max-width: 100%;
-}
-
-.blog-detail-container .ql-container .ql-editor .ql-video {
-    max-height: 40vh;
-    max-width: 100%;
-}
-
 @media screen and (max-width: 1024px) {
     .blog-detail-container {
         padding: 0% 10%;
