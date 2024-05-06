@@ -187,7 +187,7 @@ const MenuBar = () => {
             <div className='dropdown-menu'>
                 <div className='dropdown-btn' onClick={() => setIsTextHighlightMenuActive(!isTextHighlightMenuActive)}>
                     <div className='dropdown-btn-horizontal-group'>
-                        <i className='ri-paint-fill' style={{ color: editor.getAttributes('textStyle').color }}></i>
+                        <i className='ri-paint-fill' style={{ color: editor.getAttributes('highlight').color }}></i>
                     </div>
                     <i className={`${isTextHighlightMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                 </div>
