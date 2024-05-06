@@ -73,6 +73,12 @@
         border-top: 2px solid var(--pretty-nav-bg-color-white);
         margin: 2rem 0;
     }
+
+    /* for highlighting text */
+    & mark {
+        border-radius: var(--pretty-border-radius-small);
+        padding: 0.125rem;
+    }
 }
 
 .tiptap-error {
@@ -83,33 +89,4 @@
 [contenteditable="false"] {
     cursor: not-allowed;
     border: none;
-}
-
-.tiptap-bubble-menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
-    & button {
-        width: 1.5rem;
-        height: 1.5rem;
-        margin: 0.25rem 0.25rem;
-        font-size: 1rem;
-        background-color: var(--pretty-btn-text-color);
-        /* color: var(--pretty-base-color-light); */
-        border: none;
-        border-radius: var(--pretty-border-radius-small);
-        cursor: pointer;
-        transition: var(--pretty-transition);
-
-        &:hover {
-            background-color: var(--pretty-nav-bg-color-white);
-        }
-
-        &.active {
-            background-color: var(--pretty-nav-bg-color-white);
-        }
-    }
 }

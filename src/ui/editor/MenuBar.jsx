@@ -163,21 +163,17 @@ const MenuBar = () => {
                 {isTextColorMenuActive && (
                     <div className='dropdown-grid'>
                         {/* color unset button */}
-                        <div className='dropdown-grid-item'>
-                            <button
-                                onClick={() => editor.chain().focus().unsetColor().run()}
-                                style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)"}}
-                            ></button>
-                        </div>
+                        <button
+                            onClick={() => editor.chain().focus().unsetColor().run()}
+                            style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)" }}
+                        ></button>
                         {/* color buttons */}
                         {Colors.map((color, index) => (
-                            <div className='dropdown-grid-item'>
-                                <button
-                                    onClick={() => editor.chain().focus().setColor(color.hexCode).run()}
-                                    className={editor.isActive('textStyle', { color: color.hexCode }) ? 'active' : ''}
-                                    style={{ backgroundColor: color.hexCode }}
-                                ></button>
-                            </div>
+                            <button
+                                onClick={() => editor.chain().focus().setColor(color.hexCode).run()}
+                                className={editor.isActive('textStyle', { color: color.hexCode }) ? 'active' : ''}
+                                style={{ backgroundColor: color.hexCode }}
+                            ></button>
                         ))}
                     </div>
                 )}
@@ -194,22 +190,18 @@ const MenuBar = () => {
                 {isTextHighlightMenuActive && (
                     <div className='dropdown-grid'>
                         {/* highlight unset button */}
-                        <div className='dropdown-grid-item'>
-                            <button
-                                onClick={() => editor.chain().focus().unsetHighlight().run()}
-                                // disabled={!editor.isActive('highlight')}
-                                style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)"}}
-                            ></button>
-                        </div>
+                        <button
+                            onClick={() => editor.chain().focus().unsetHighlight().run()}
+                            // disabled={!editor.isActive('highlight')}
+                            style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)" }}
+                        ></button>
                         {/* highlight color buttons */}
                         {Colors.map((color, index) => (
-                            <div className='dropdown-grid-item'>
-                                <button
-                                    onClick={() => editor.chain().focus().toggleHighlight({color: color.hexCode}).run()}
-                                    className={editor.isActive('highlight', { color: color.hexCode }) ? 'active' : ''}
-                                    style={{ backgroundColor: color.hexCode }}
-                                ></button>
-                            </div>
+                            <button
+                                onClick={() => editor.chain().focus().setHighlight({ color: color.hexCode }).run()}
+                                className={editor.isActive('highlight', { color: color.hexCode }) ? 'active' : ''}
+                                style={{ backgroundColor: color.hexCode }}
+                            ></button>
                         ))}
                     </div>
                 )}

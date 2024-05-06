@@ -61,7 +61,7 @@
         }
 
         & .dropdown-grid {
-            width: 150px;
+            width: auto;
             position: absolute;
             top: 110%;
             left: 0;
@@ -73,9 +73,11 @@
             display: grid;
             z-index: 2;
             grid-template-columns: repeat(5, 1.5rem);
-            grid-gap: 0.25rem;
+            column-gap: 0.25rem;
+            row-gap: 0.5rem;
 
             & button {
+                margin: auto;
                 width: 1.25rem;
                 height: 1.25rem;
                 border-radius: var(--pretty-border-radius-small);
