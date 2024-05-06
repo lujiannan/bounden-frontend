@@ -5,6 +5,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import TextStyle from '@tiptap/extension-text-style'
 import { Color } from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
+import TextAlign from '@tiptap/extension-text-align'
 
 import MenuBar from './MenuBar'
 import './Tiptap.css'
@@ -20,6 +21,9 @@ const extensions = [
     Color,
     Highlight.configure({
         multicolor: true,
+    }),
+    TextAlign.configure({
+        types: ['heading', 'paragraph'],
     }),
 ]
 

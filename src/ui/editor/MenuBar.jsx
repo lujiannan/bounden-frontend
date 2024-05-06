@@ -9,9 +9,10 @@ import './MenuBar.css';
 const MenuBar = () => {
     const { editor } = useCurrentEditor();
     const [isTextFormatMenuActive, setIsTextFormatMenuActive] = useState(false);
-    const [isAssertMenuActive, setIsAssertMenuActive] = useState(false);
     const [isTextColorMenuActive, setIsTextColorMenuActive] = useState(false);
     const [isTextHighlightMenuActive, setIsTextHighlightMenuActive] = useState(false);
+    const [isAssertMenuActive, setIsAssertMenuActive] = useState(false);
+    const [isAlignMenuActive, setIsAlignMenuActive] = useState(false);
     const [dropdownMenuPosition, setDropdownMenuPosition] = useState({ left: 0, right: "unset" });
 
     const handleTextFormatSelected = (format) => {
@@ -252,14 +253,56 @@ const MenuBar = () => {
                 {isAssertMenuActive && (
                     <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
                         <div className={`dropdown-item`}
-                            onClick={() => handleAssertMenuSelected("Hard Break")} title='Hard Break'>
+                            onClick={() => handleAssertMenuSelected("Hard Break")} 
+                            title='Hard Break'
+                            >
                             <i className='ri-corner-down-left-line'></i>
                             <span>&nbsp;&nbsp;Hard Break</span>
                         </div>
                         <div className={`dropdown-item`}
-                            onClick={() => handleAssertMenuSelected("Separator")} title='Separator'>
+                            onClick={() => handleAssertMenuSelected("Separator")} 
+                            title='Separator'
+                            >
                             <i className='ri-separator'></i>
                             <span>&nbsp;&nbsp;Separator</span>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            <div className='divider'></div>
+
+            {/* dropdown insert list */}
+            <div className='dropdown-menu'>
+                <div className='dropdown-btn' onClick={(e) => {setIsAlignMenuActive(!isAlignMenuActive); handleDropdownMenuPosition(e);}}>
+                    <div className='dropdown-btn-horizontal-group'>
+                        <i className='ri-align-justify dropdown-btn-icon'></i>
+                        <span>&nbsp;&nbsp;align</span>
+                    </div>
+                    <i className={`${isAlignMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                </div>
+                {isAlignMenuActive && (
+                    <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
+                        <div className={`dropdown-item ${editor.isActive({ textAlign: 'left' }) ? 'active' : ''}`}
+                            onClick={() => {editor.chain().focus().setTextAlign('left').run(); setIsAlignMenuActive(false);}}
+                            title='Align Left'
+                            >
+                                <i className='ri-align-left'></i>
+                                <span>&nbsp;&nbsp;Left Align</span>
+                        </div>
+                        <div className={`dropdown-item ${editor.isActive({ textAlign: 'center' }) ? 'active' : ''}`}
+                            onClick={() => {editor.chain().focus().setTextAlign('center').run(); setIsAlignMenuActive(false);}} 
+                            title='Align Center'
+                            >
+                                <i className='ri-align-center'></i>
+                                <span>&nbsp;&nbsp;Center Align</span>
+                        </div>
+                        <div className={`dropdown-item ${editor.isActive({ textAlign: 'right' }) ? 'active' : ''}`}
+                            onClick={() => {editor.chain().focus().setTextAlign('right').run(); setIsAlignMenuActive(false);}} 
+                            title='Align Right'
+                            >
+                                <i className='ri-align-right'></i>
+                                <span>&nbsp;&nbsp;Right Align</span>
                         </div>
                     </div>
                 )}
