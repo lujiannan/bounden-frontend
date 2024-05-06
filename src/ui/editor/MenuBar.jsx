@@ -10,6 +10,7 @@ const MenuBar = () => {
     const [isAssertMenuActive, setIsAssertMenuActive] = useState(false);
     const [isTextColorMenuActive, setIsTextColorMenuActive] = useState(false);
     const [isTextHighlightMenuActive, setIsTextHighlightMenuActive] = useState(false);
+    const [dropdownMenuPosition, setDropdownMenuPosition] = useState({ left: 0, right: "unset" });
 
     const handleTextFormatSelected = (format) => {
         switch (format) {
@@ -47,6 +48,17 @@ const MenuBar = () => {
         setIsAssertMenuActive(false);
     }
 
+    // fix the dropdown menu position when it's out of the screen
+    const handleDropdownMenuPosition = (event) => {
+        // calculate the position of the dropdown btn to the right of the screen
+        const button_to_right = window.innerWidth - event.target.getBoundingClientRect().right;
+        if (button_to_right < 150) {
+            setDropdownMenuPosition({ left: "unset", right: 0 });
+        } else {
+            setDropdownMenuPosition({ left: 0, right: "unset" });
+        }
+    }
+
     return (
         <div className="tiptap-toolbar">
             <div className='tool-block'>
@@ -67,7 +79,7 @@ const MenuBar = () => {
             <div className='divider'></div>
             {/* dropdown text format list */}
             <div className='dropdown-menu'>
-                <div className='dropdown-btn' onClick={() => setIsTextFormatMenuActive(!isTextFormatMenuActive)}>
+                <div className='dropdown-btn' onClick={(e) => {setIsTextFormatMenuActive(!isTextFormatMenuActive); handleDropdownMenuPosition(e);}}>
                     <div className='dropdown-btn-horizontal-group'>
                         <i className='ri-menu-4-line dropdown-btn-icon'></i>
                         <span>&nbsp;&nbsp;style</span>
@@ -75,7 +87,7 @@ const MenuBar = () => {
                     <i className={`${isTextFormatMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                 </div>
                 {isTextFormatMenuActive && (
-                    <div className='dropdown-list'>
+                    <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
                         <div className={`dropdown-item ${editor.isActive('paragraph') ? 'active' : ''}`}
                             onClick={() => handleTextFormatSelected("Paragraph")} title='Paragraph'>
                             <i className='ri-paragraph'></i>
@@ -154,23 +166,24 @@ const MenuBar = () => {
 
             {/* dropdown text color grid */}
             <div className='dropdown-menu'>
-                <div className='dropdown-btn' onClick={() => setIsTextColorMenuActive(!isTextColorMenuActive)}>
+                <div className='dropdown-btn' onClick={(e) => {setIsTextColorMenuActive(!isTextColorMenuActive); handleDropdownMenuPosition(e);}}>
                     <div className='dropdown-btn-horizontal-group'>
                         <i className='ri-font-color' style={{ color: editor.getAttributes('textStyle').color }}></i>
                     </div>
                     <i className={`${isTextColorMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                 </div>
                 {isTextColorMenuActive && (
-                    <div className='dropdown-grid'>
+                    <div className='dropdown-grid' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
                         {/* color unset button */}
                         <button
-                            onClick={() => editor.chain().focus().unsetColor().run()}
+                            onClick={() => {editor.chain().focus().unsetColor().run(); setIsTextColorMenuActive(false);}}
                             style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)" }}
                         ></button>
                         {/* color buttons */}
                         {Colors.map((color, index) => (
                             <button
-                                onClick={() => editor.chain().focus().setColor(color.hexCode).run()}
+                                key={index+1}
+                                onClick={() => {editor.chain().focus().setColor(color.hexCode).run(); setIsTextColorMenuActive(false);}}
                                 className={editor.isActive('textStyle', { color: color.hexCode }) ? 'active' : ''}
                                 style={{ backgroundColor: color.hexCode }}
                             ></button>
@@ -181,24 +194,25 @@ const MenuBar = () => {
 
             {/* dropdown text highlight grid */}
             <div className='dropdown-menu'>
-                <div className='dropdown-btn' onClick={() => setIsTextHighlightMenuActive(!isTextHighlightMenuActive)}>
+                <div className='dropdown-btn' onClick={(e) => {setIsTextHighlightMenuActive(!isTextHighlightMenuActive); handleDropdownMenuPosition(e);}}>
                     <div className='dropdown-btn-horizontal-group'>
                         <i className='ri-paint-fill' style={{ color: editor.getAttributes('highlight').color }}></i>
                     </div>
                     <i className={`${isTextHighlightMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                 </div>
                 {isTextHighlightMenuActive && (
-                    <div className='dropdown-grid'>
+                    <div className='dropdown-grid' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
                         {/* highlight unset button */}
                         <button
-                            onClick={() => editor.chain().focus().unsetHighlight().run()}
+                            onClick={() => {editor.chain().focus().unsetHighlight().run(); setIsTextHighlightMenuActive(false);}}
                             // disabled={!editor.isActive('highlight')}
                             style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)" }}
                         ></button>
                         {/* highlight color buttons */}
                         {Colors.map((color, index) => (
                             <button
-                                onClick={() => editor.chain().focus().setHighlight({ color: color.hexCode }).run()}
+                                key={index+1}
+                                onClick={() => {editor.chain().focus().setHighlight({ color: color.hexCode }).run(); setIsTextHighlightMenuActive(false);}}
                                 className={editor.isActive('highlight', { color: color.hexCode }) ? 'active' : ''}
                                 style={{ backgroundColor: color.hexCode }}
                             ></button>
@@ -226,7 +240,7 @@ const MenuBar = () => {
 
             {/* dropdown insert list */}
             <div className='dropdown-menu'>
-                <div className='dropdown-btn' onClick={() => setIsAssertMenuActive(!isAssertMenuActive)}>
+                <div className='dropdown-btn' onClick={(e) => {setIsAssertMenuActive(!isAssertMenuActive); handleDropdownMenuPosition(e);}}>
                     <div className='dropdown-btn-horizontal-group'>
                         <i className='ri-add-line dropdown-btn-icon'></i>
                         <span>&nbsp;&nbsp;assert</span>
@@ -234,7 +248,7 @@ const MenuBar = () => {
                     <i className={`${isAssertMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                 </div>
                 {isAssertMenuActive && (
-                    <div className='dropdown-list'>
+                    <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
                         <div className={`dropdown-item`}
                             onClick={() => handleAssertMenuSelected("Hard Break")} title='Hard Break'>
                             <i className='ri-corner-down-left-line'></i>
