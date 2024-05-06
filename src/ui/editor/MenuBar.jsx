@@ -9,6 +9,7 @@ const MenuBar = () => {
     const [isTextFormatMenuActive, setIsTextFormatMenuActive] = useState(false);
     const [isAssertMenuActive, setIsAssertMenuActive] = useState(false);
     const [isTextColorMenuActive, setIsTextColorMenuActive] = useState(false);
+    const [isTextHighlightMenuActive, setIsTextHighlightMenuActive] = useState(false);
 
     const handleTextFormatSelected = (format) => {
         switch (format) {
@@ -68,7 +69,7 @@ const MenuBar = () => {
             <div className='dropdown-menu'>
                 <div className='dropdown-btn' onClick={() => setIsTextFormatMenuActive(!isTextFormatMenuActive)}>
                     <div className='dropdown-btn-horizontal-group'>
-                        <i className='ri-text dropdown-btn-icon'></i>
+                        <i className='ri-menu-4-line dropdown-btn-icon'></i>
                         <span>&nbsp;&nbsp;style</span>
                     </div>
                     <i className={`${isTextFormatMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
@@ -161,17 +162,51 @@ const MenuBar = () => {
                 </div>
                 {isTextColorMenuActive && (
                     <div className='dropdown-grid'>
+                        {/* color unset button */}
                         <div className='dropdown-grid-item'>
                             <button
                                 onClick={() => editor.chain().focus().unsetColor().run()}
                                 style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)"}}
                             ></button>
                         </div>
+                        {/* color buttons */}
                         {Colors.map((color, index) => (
                             <div className='dropdown-grid-item'>
                                 <button
                                     onClick={() => editor.chain().focus().setColor(color.hexCode).run()}
                                     className={editor.isActive('textStyle', { color: color.hexCode }) ? 'active' : ''}
+                                    style={{ backgroundColor: color.hexCode }}
+                                ></button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            {/* dropdown text highlight grid */}
+            <div className='dropdown-menu'>
+                <div className='dropdown-btn' onClick={() => setIsTextHighlightMenuActive(!isTextHighlightMenuActive)}>
+                    <div className='dropdown-btn-horizontal-group'>
+                        <i className='ri-paint-fill' style={{ color: editor.getAttributes('textStyle').color }}></i>
+                    </div>
+                    <i className={`${isTextHighlightMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                </div>
+                {isTextHighlightMenuActive && (
+                    <div className='dropdown-grid'>
+                        {/* highlight unset button */}
+                        <div className='dropdown-grid-item'>
+                            <button
+                                onClick={() => editor.chain().focus().unsetHighlight().run()}
+                                // disabled={!editor.isActive('highlight')}
+                                style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)"}}
+                            ></button>
+                        </div>
+                        {/* highlight color buttons */}
+                        {Colors.map((color, index) => (
+                            <div className='dropdown-grid-item'>
+                                <button
+                                    onClick={() => editor.chain().focus().toggleHighlight({color: color.hexCode}).run()}
+                                    className={editor.isActive('highlight', { color: color.hexCode }) ? 'active' : ''}
                                     style={{ backgroundColor: color.hexCode }}
                                 ></button>
                             </div>

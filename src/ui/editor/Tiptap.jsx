@@ -4,6 +4,7 @@ import Underline from '@tiptap/extension-underline'
 import Placeholder from '@tiptap/extension-placeholder'
 import TextStyle from '@tiptap/extension-text-style'
 import { Color } from '@tiptap/extension-color'
+import Highlight from '@tiptap/extension-highlight'
 
 import MenuBar from './MenuBar'
 import './Tiptap.css'
@@ -17,6 +18,9 @@ const extensions = [
     Underline,
     TextStyle,
     Color,
+    Highlight.configure({
+        multicolor: true,
+    }),
 ]
 
 const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent, onError }) => {

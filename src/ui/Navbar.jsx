@@ -42,7 +42,7 @@ function Navbar() {
                 </Link>
             </h1>
             <div className="menu-icon" onClick={handleMenuIconClick}>
-                <i className={menuClicked ? "fas fa-times" : "fas fa-bars"}></i>
+                <i className={menuClicked ? "ri-close-line" : "ri-menu-line"}></i>
             </div>
             <ul className={menuClicked ? "nav-menu active" : "nav-menu"}>
                 {MenuData.map((item, index) => {

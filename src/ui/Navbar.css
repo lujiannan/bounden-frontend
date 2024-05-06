@@ -90,20 +90,11 @@
     /* hide by default */
     display: none;
     justify-content: end;
-}
-.menu-icon .fa-bars {
-    font-size: larger;
+    font-size: 1.5rem;
     color: var(--pretty-base-color);
+    padding-bottom: 0.25rem;
 }
-.menu-icon .fa-times {
-    font-size: larger;
-    color: var(--pretty-base-color);
-}
-.menu-icon .fa-bars:hover {
-    color: var(--pretty-btn-color-hover);
-    cursor: pointer;
-}
-.menu-icon .fa-times:hover {
+.menu-icon:hover {
     color: var(--pretty-btn-color-hover);
     cursor: pointer;
 }
@@ -121,7 +112,7 @@
     border: 2px solid var(--pretty-base-color-light);
     border-style: dashed;
     text-decoration: none;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: var(--pretty-base-color-light);
     transition: var(--pretty-transition);
