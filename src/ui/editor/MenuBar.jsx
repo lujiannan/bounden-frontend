@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useCurrentEditor } from '@tiptap/react';
 
+import Colors from '../../utils/colors';
 import './MenuBar.css';
 
 const MenuBar = () => {
     const { editor } = useCurrentEditor();
     const [isTextFormatMenuActive, setIsTextFormatMenuActive] = useState(false);
     const [isAssertMenuActive, setIsAssertMenuActive] = useState(false);
+    const [isTextColorMenuActive, setIsTextColorMenuActive] = useState(false);
 
     const handleTextFormatSelected = (format) => {
         switch (format) {
@@ -149,7 +151,53 @@ const MenuBar = () => {
 
             <div className='divider'></div>
 
-            {/* dropdown text format list */}
+            {/* dropdown text color grid */}
+            <div className='dropdown-menu'>
+                <div className='dropdown-btn' onClick={() => setIsTextColorMenuActive(!isTextColorMenuActive)}>
+                    <div className='dropdown-btn-horizontal-group'>
+                        <i className='ri-font-color' style={{ color: editor.getAttributes('textStyle').color }}></i>
+                    </div>
+                    <i className={`${isTextColorMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                </div>
+                {isTextColorMenuActive && (
+                    <div className='dropdown-grid'>
+                        <div className='dropdown-grid-item'>
+                            <button
+                                onClick={() => editor.chain().focus().unsetColor().run()}
+                                style={{ background: "linear-gradient(225deg, rgba(255,255,255,1) 45%, rgba(251,63,63,1) 50%, rgba(255,255,255,1) 55%)"}}
+                            ></button>
+                        </div>
+                        {Colors.map((color, index) => (
+                            <div className='dropdown-grid-item'>
+                                <button
+                                    onClick={() => editor.chain().focus().setColor(color.hexCode).run()}
+                                    className={editor.isActive('textStyle', { color: color.hexCode }) ? 'active' : ''}
+                                    style={{ backgroundColor: color.hexCode }}
+                                ></button>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            <div className='divider'></div>
+
+            <div className='tool-block'>
+                <button
+                    onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    className={`ri-list-unordered ${editor.isActive('bulletList') ? 'active' : ''}`}
+                    title='Bullet List'
+                ></button>
+                <button
+                    onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                    className={`ri-list-ordered ${editor.isActive('orderedList') ? 'active' : ''}`}
+                    title='Ordered List'
+                ></button>
+            </div>
+
+            <div className='divider'></div>
+
+            {/* dropdown insert list */}
             <div className='dropdown-menu'>
                 <div className='dropdown-btn' onClick={() => setIsAssertMenuActive(!isAssertMenuActive)}>
                     <div className='dropdown-btn-horizontal-group'>
@@ -172,21 +220,6 @@ const MenuBar = () => {
                         </div>
                     </div>
                 )}
-            </div>
-
-            <div className='divider'></div>
-
-            <div className='tool-block'>
-                <button
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
-                    className={`ri-list-unordered ${editor.isActive('bulletList') ? 'active' : ''}`}
-                    title='Bullet List'
-                ></button>
-                <button
-                    onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                    className={`ri-list-ordered ${editor.isActive('orderedList') ? 'active' : ''}`}
-                    title='Ordered List'
-                ></button>
             </div>
 
             <div className='divider'></div>

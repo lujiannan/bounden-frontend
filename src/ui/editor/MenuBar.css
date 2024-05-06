@@ -32,6 +32,10 @@
             background-color: var(--pretty-btn-text-color);
             transition: var(--pretty-transition);
 
+            & i {
+                border-radius: var(--pretty-border-radius-small);
+            }
+
             &:hover {
                 background-color: var(--pretty-nav-bg-color-white);
             }
@@ -52,6 +56,38 @@
                     & .dropdown-btn-icon {
                         display: none;
                     }
+                }
+            }
+        }
+
+        & .dropdown-grid {
+            width: 150px;
+            position: absolute;
+            top: 110%;
+            left: 0;
+            padding: 0.25rem;
+            background-color: var(--pretty-btn-text-color);
+            border: 1px solid var(--pretty-input-border-color);
+            border-radius: var(--pretty-border-radius-small);
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            display: grid;
+            z-index: 2;
+            grid-template-columns: repeat(5, 1.5rem);
+            grid-gap: 0.25rem;
+
+            & button {
+                width: 1.25rem;
+                height: 1.25rem;
+                border-radius: var(--pretty-border-radius-small);
+                cursor: pointer;
+                transition: var(--pretty-transition);
+
+                &:hover {
+                    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+                }
+
+                &.active {
+                    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
                 }
             }
         }

@@ -1,7 +1,9 @@
-import { EditorProvider, FloatingMenu, BubbleMenu, useCurrentEditor } from '@tiptap/react'
+import { EditorProvider, FloatingMenu } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import Placeholder from '@tiptap/extension-placeholder'
+import TextStyle from '@tiptap/extension-text-style'
+import { Color } from '@tiptap/extension-color'
 
 import MenuBar from './MenuBar'
 import './Tiptap.css'
@@ -13,6 +15,8 @@ const extensions = [
         placeholder: 'ʕ•̀ω•́ʔ✧ ~ ~ ~',
     }),
     Underline,
+    TextStyle,
+    Color,
 ]
 
 const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent, onError }) => {
@@ -31,8 +35,8 @@ const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent
                 // add error affix to editor if there is an error
                 editorProps={ onError!=null ? {attributes: { class: 'tiptap-error' }} : null}
             >
-                {/* <FloatingMenu>This is the floating menu</FloatingMenu> */}
                 {/* <BubbleMenu>This is the bubble menu</BubbleMenu> */}
+                {/* <FloatingMenu>This is the floating menu</FloatingMenu> */}
             </EditorProvider>
         </div>
     )
