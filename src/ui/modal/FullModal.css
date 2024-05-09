@@ -14,7 +14,7 @@
     & .full-modal-content {
         background-color: #fff;
         padding: 1.5rem;
-        border-radius: var(--pretty-border-radius-small);
+        border-radius: var(--pretty-border-radius);
         position: relative;
         display: flex;
         flex-direction: column;

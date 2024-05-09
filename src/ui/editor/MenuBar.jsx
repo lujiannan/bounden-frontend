@@ -33,7 +33,7 @@ const MenuBar = () => {
         <>
             {/* Modal for image upload */}
             <FullModal isOpen={isImageUploadModalActive} onClose={() => setIsImageUploadModalActive(false)}>
-                <h2>Insert Image</h2>
+                <h1>Insert Image</h1>
                 <div className='image-upload-modal-container'>
                     <i className='ri-file-upload-line'></i>
                     <h3>Click to Upload</h3>
