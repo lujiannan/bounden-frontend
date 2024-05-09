@@ -12,12 +12,10 @@
     --pretty-base-color-lighter: #aaa;
     --pretty-base-color-dark: #111;
     --pretty-bg-color: #fff;
+    /* #eee with 0.95 opacity */
     --pretty-nav-bg-color-white: rgba(238, 238, 238, 0.95);
-    /* #eee with 0.95 opacity */
     --pretty-header-bg-color-whiter: rgba(238, 238, 238, 0.3);
-    /* #eee with 0.95 opacity */
     --pretty-footer-bg-color-dark: rgba(2, 2, 2, 0.7);
-    /* #eee with 0.95 opacity */
     --pretty-btn-color: #eee;
     --pretty-btn-color-hover: #aaa;
     --pretty-btn-text-color: #fff;

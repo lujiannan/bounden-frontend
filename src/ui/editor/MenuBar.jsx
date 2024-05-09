@@ -33,11 +33,16 @@ const MenuBar = () => {
         <>
             {/* Modal for image upload */}
             <FullModal isOpen={isImageUploadModalActive} onClose={() => setIsImageUploadModalActive(false)}>
-                <input type="file" accept="image/*" onChange={(event) => {
-                    const file = event.target.files[0];
-                    editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
-                    setIsImageUploadModalActive(false);
-                }} />
+                <h2>Insert Image</h2>
+                <div className='image-upload-modal-container'>
+                    <i className='ri-file-upload-line'></i>
+                    <h3>Click to Upload</h3>
+                    <input type="file" accept="image/*" onChange={(event) => {
+                        const file = event.target.files[0];
+                        editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
+                        setIsImageUploadModalActive(false);
+                    }} />
+                </div>
             </FullModal>
             <div className="tiptap-toolbar">
                 <div className='tool-block'>
