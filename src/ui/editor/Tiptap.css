@@ -81,7 +81,9 @@
     }
 
     .tiptap-image {
-        height: 100px;
+        border-radius: var(--pretty-border-radius);
+        max-height: 30rem;
+        max-width: 100%;
     }
 }
 
