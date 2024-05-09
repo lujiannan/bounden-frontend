@@ -1,14 +1,8 @@
-.blog-create-page-container {
-    /* fix the height of the blog container to the height of the top nav bar */
-    margin-top: var(--top-nav-height);
-    position: relative;
-}
-
 .blog-create-container {
     text-align: start;
-    padding: 0% 20%;
     height: 100%;
-    width: 100%;
+    width: 53rem;
+    margin: auto;
     font-size: 1rem;
     transition: var(--pretty-transition);
 }
@@ -102,12 +96,14 @@
 
 @media screen and (max-width: 1024px) {
     .blog-create-container {
+        width: 100%;
         padding: 0% 10%;
     }
 }
 
 @media screen and (max-width: 768px) {
     .blog-create-container {
-        padding: 0% 5%;
+        width: 100%;
+        padding: 0% 2.5%;
     }
 }

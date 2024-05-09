@@ -1,8 +1,8 @@
 .blog-container {
     text-align: start;
-    padding: 0% 20%;
+    width: 53rem;
+    margin: auto;
     height: 100%;
-    width: 100%;
     font-size: 1rem;
     transition: var(--pretty-transition);
 }
@@ -71,6 +71,7 @@
 
 @media screen and (max-width: 1024px) {
     .blog-container {
+        width: 100%;
         padding: 0% 10%;
     }
 
@@ -83,7 +84,8 @@
 
 @media screen and (max-width: 768px) {
     .blog-container {
-        padding: 0% 5%;
+        width: 100%;
+        padding: 0% 2.5%;
     }
 
     /* no hover effect on mobile */

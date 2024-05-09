@@ -79,6 +79,10 @@
         border-radius: var(--pretty-border-radius-small);
         padding: 0.125rem;
     }
+
+    .tiptap-image {
+        height: 100px;
+    }
 }
 
 .tiptap-error {

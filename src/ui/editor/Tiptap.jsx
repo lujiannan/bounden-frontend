@@ -31,6 +31,9 @@ const extensions = [
     Typography,
     Image.configure({
         allowBase64: true,
+        HTMLAttributes: {
+            class: 'tiptap-image'
+        }
     }),
 ]
 
