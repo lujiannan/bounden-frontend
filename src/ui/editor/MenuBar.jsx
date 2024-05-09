@@ -253,24 +253,21 @@ const MenuBar = () => {
                     <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
                         <div className={`dropdown-item ${editor.isActive({ textAlign: 'left' }) ? 'active' : ''}`}
                             onClick={() => {editor.chain().focus().setTextAlign('left').run(); setIsAlignMenuActive(false);}}
-                            title='Align Left'
-                            >
-                                <i className='ri-align-left'></i>
-                                <span>&nbsp;&nbsp;Left Align</span>
+                            title='Align Left'>
+                            <i className='ri-align-left'></i>
+                            <span>&nbsp;&nbsp;Left Align</span>
                         </div>
                         <div className={`dropdown-item ${editor.isActive({ textAlign: 'center' }) ? 'active' : ''}`}
                             onClick={() => {editor.chain().focus().setTextAlign('center').run(); setIsAlignMenuActive(false);}} 
-                            title='Align Center'
-                            >
-                                <i className='ri-align-center'></i>
-                                <span>&nbsp;&nbsp;Center Align</span>
+                            title='Align Center'>
+                            <i className='ri-align-center'></i>
+                            <span>&nbsp;&nbsp;Center Align</span>
                         </div>
                         <div className={`dropdown-item ${editor.isActive({ textAlign: 'right' }) ? 'active' : ''}`}
                             onClick={() => {editor.chain().focus().setTextAlign('right').run(); setIsAlignMenuActive(false);}} 
-                            title='Align Right'
-                            >
-                                <i className='ri-align-right'></i>
-                                <span>&nbsp;&nbsp;Right Align</span>
+                            title='Align Right'>
+                            <i className='ri-align-right'></i>
+                            <span>&nbsp;&nbsp;Right Align</span>
                         </div>
                     </div>
                 )}
@@ -282,8 +279,8 @@ const MenuBar = () => {
                 <button
                     onClick={() => editor.chain().focus().unsetAllMarks().run()}
                     className='ri-format-clear'
-                    title='Mark Clear'
-                ></button>
+                    title='Mark Clear'>
+                </button>
             </div>
         </div>
     )
