@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { EditorProvider, FloatingMenu, useCurrentEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
@@ -25,7 +26,7 @@ const extensions = [
         multicolor: true,
     }),
     TextAlign.configure({
-        types: ['heading', 'paragraph'],
+        types: ['heading', 'paragraph', 'image'],
     }),
     Typography,
     Image.configure({
