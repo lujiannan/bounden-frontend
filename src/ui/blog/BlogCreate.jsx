@@ -140,7 +140,7 @@ function BlogCreate() {
                         enableToolbar={true}
                         enableEditable={true}
                         initialContent={null}
-                        onError={errors.content}
+                        onError={errors.content ? true : false}
                     />
                     <p className="blog-create-form-input-error-message">{errors.content?.message}</p>
                 </div>
