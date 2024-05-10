@@ -14,7 +14,7 @@ function Blogs() {
         <>
             {/* new blog button */}
             <Link to='/blogs/create' className='blog-create-btn'>
-                <i className="fa-solid fa-feather"></i>
+                <i className="ri-quill-pen-line"></i>
             </Link>
             {/* generate a blog list by passing the route string, process GET request to the server */}
             <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS} handleBlogDelete={handleBlogDelete}/>

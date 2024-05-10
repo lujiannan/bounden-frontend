@@ -1,4 +1,3 @@
-import { useState } from'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthProvider from 'react-auth-kit'
 import createStore from 'react-auth-kit/createStore';
@@ -7,10 +6,10 @@ import refreshApi from "./utils/refreshApi";
 
 import './App.css';
 import Navbar from './ui/Navbar'
-import Blogs from './ui/Blogs';
-import BlogCreate from './ui/BlogCreate';
-import BlogDetail from './ui/BlogDetail';
-import Login from './ui/Login';
+import Blogs from './ui/blog/Blogs';
+import BlogCreate from './ui/blog/BlogCreate';
+import BlogDetail from './ui/blog/BlogDetail';
+import Login from './ui/user/Login';
 
 export default function App() {
     const store = createStore({

@@ -1,0 +1,159 @@
+.blog-create-container {
+    text-align: start;
+    height: 100%;
+    width: var(--pretty-inner-container-width);
+    margin: auto;
+    font-size: 1rem;
+    transition: var(--pretty-transition);
+}
+
+.blog-create-container .blog-create-form-title {
+    /* margin: 0% 10%; */
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    padding: 1rem 0rem;
+}
+
+.blog-create-form-vertical-group {
+    display: flex;
+    flex-direction: column;
+    /* Horizontally center the element */
+    justify-content: center;
+    /* Vertically center the element */
+    /* align-items: center; */
+    margin: 0.5rem 0;
+}
+
+.blog-create-form-horizontal-group {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.blog-create-form-vertical-group .blog-create-form-label {
+    text-align: left;
+    display: block;
+}
+
+/* title input styles */
+.blog-create-form-vertical-group .blog-create-form-input-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 0.5rem 0rem;
+    border: none;
+    transition: var(--pretty-transition);
+}
+
+/* title input placeholder */
+.blog-create-form-vertical-group .blog-create-form-input-title::placeholder {
+    color: var(--pretty-input-placeholder-color);
+    transition: var(--pretty-transition);
+}
+
+.blog-create-form-vertical-group .blog-create-form-input-title:focus::placeholder {
+    color: var(--pretty-input-border-focus-color);
+}
+
+.blog-create-form-vertical-group .blog-create-form-input-title:focus {
+    outline: none;
+}
+
+.blog-create-form-vertical-group .blog-create-form-input-title-error {
+    border: none;
+}
+
+.blog-create-form-vertical-group .blog-create-form-input-title-error-message {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    color: var(--pretty-error-color);
+}
+
+/* input and select styles */
+.blog-create-form-vertical-group .blog-create-form-input,
+.blog-create-form-vertical-group .blog-create-form-select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid var(--pretty-input-border-color);
+    border-radius: var(--pretty-border-radius-small);
+    /* box-sizing: border-box; */
+    display: block;
+    transition: var(--pretty-transition);
+}
+
+/* input placeholder */
+.blog-create-form-vertical-group .blog-create-form-input::placeholder {
+    color: var(--pretty-input-placeholder-color);
+    transition: var(--pretty-transition);
+}
+
+.blog-create-form-vertical-group .blog-create-form-input:focus::placeholder {
+    color: var(--pretty-input-border-focus-color);
+}
+
+.blog-create-form-vertical-group .blog-create-form-input:focus,
+.blog-create-form-vertical-group .blog-create-form-select:focus {
+    outline: none;
+    border: 2px solid var(--pretty-input-border-focus-color);
+}
+
+.blog-create-form-vertical-group .blog-create-form-input-error,
+.blog-create-form-vertical-group .blog-create-form-select-error {
+    border: 2px solid var(--pretty-error-color);
+}
+
+.blog-create-form-vertical-group .blog-create-form-input-error-message,
+.blog-create-form-vertical-group .blog-create-form-select-error-message {
+    align-self: flex-end;
+    font-size: 0.75rem;
+    color: var(--pretty-error-color);
+}
+
+.blog-create-form-button {
+    /* position the button to the right of the container */
+    position: fixed;
+    bottom: 4%;
+    right: 4%;
+    /* padding: 0.5rem 0.7rem; */
+    width: 3.5rem;
+    height: 3.5rem;
+    /* keep the icon in the center */
+    text-align: center;
+    align-content: center;
+    border: 0px;
+    border-radius: var(--pretty-border-radius);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    opacity: 0.5;
+    background-color: var(--pretty-base-color);
+    color: var(--pretty-btn-color);
+    transition: var(--pretty-transition);
+    cursor: pointer;
+}
+
+.blog-create-form-button:hover {
+    opacity: 1;
+    transition: var(--pretty-transition);
+}
+
+.blog-create-form-bottom-placeholder {
+    height: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .blog-create-container {
+        width: 100%;
+        padding: 0% 10%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .blog-create-container {
+        width: 100%;
+        padding: 0% 2.5%;
+    }
+}

@@ -42,7 +42,7 @@ function Navbar() {
                 </Link>
             </h1>
             <div className="menu-icon" onClick={handleMenuIconClick}>
-                <i className={menuClicked ? "fas fa-times" : "fas fa-bars"}></i>
+                <i className={menuClicked ? "ri-close-line" : "ri-menu-line"}></i>
             </div>
             <ul className={menuClicked ? "nav-menu active" : "nav-menu"}>
                 {MenuData.map((item, index) => {
@@ -57,7 +57,7 @@ function Navbar() {
             </ul>
             <div className="user-icon">
                 <Link to="/login" className={`nav-link-user ${isAuthenticated ? "active" : ""}`} id="nav-link-user">
-                    <i className="fa-solid fa-user"></i>
+                    <i className="ri-user-fill"></i>
                 </Link>
             </div>
         </nav>

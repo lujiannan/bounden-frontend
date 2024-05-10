@@ -76,6 +76,7 @@
 }
 .nav-links i {
     padding-right: 10px;
+    font-size: 1.25rem;
 }
 .nav-links:hover {
     background-color: var(--pretty-btn-color);
@@ -89,20 +90,11 @@
     /* hide by default */
     display: none;
     justify-content: end;
-}
-.menu-icon .fa-bars {
-    font-size: larger;
+    font-size: 1.5rem;
     color: var(--pretty-base-color);
+    padding-bottom: 0.25rem;
 }
-.menu-icon .fa-times {
-    font-size: larger;
-    color: var(--pretty-base-color);
-}
-.menu-icon .fa-bars:hover {
-    color: var(--pretty-btn-color-hover);
-    cursor: pointer;
-}
-.menu-icon .fa-times:hover {
+.menu-icon:hover {
     color: var(--pretty-btn-color-hover);
     cursor: pointer;
 }
@@ -113,7 +105,7 @@
     /* justify-content: end; */
 }
 .user-icon .nav-link-user {
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 0.4rem;
     white-space: nowrap;
     background-color: transparent;
     border-radius: var(--pretty-border-radius);
@@ -154,7 +146,7 @@
         height: 100vh;
         position: absolute;
         top: 0px;
-        right: -16rem;
+        right: -18rem;
         align-items: stretch;
         padding: 100px 0 30px 0;
         margin: 0;
