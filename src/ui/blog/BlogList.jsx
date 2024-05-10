@@ -51,7 +51,9 @@ function BlogList({ urlSuffix, titleString, handleBlogDelete }) {
                                 <Link className="blog-preview-link" to={`${urlSuffix}/${blog.id}`}>
                                     <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
                                     <h1 className="blog-preview-title">{blog.attributes.title}</h1>
-                                    <p className="blog-preview-description">{blog.attributes.description}</p>
+                                    {blog.attributes.description && (
+                                        <p className="blog-preview-description">{blog.attributes.description}</p>
+                                    )}
                                     <p className="blog-preview-create">{blog.author.name + ' - ' +
                                         (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
                                 </Link>

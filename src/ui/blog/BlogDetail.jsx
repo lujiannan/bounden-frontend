@@ -28,7 +28,9 @@ function BlogDetail() {
                             <p className="blog-detail-create">{(blog.blog.attributes.updated ? blogFormatDate(blog.blog.attributes.updated) : blogFormatDate(blog.blog.attributes.created))}</p>
                             <h1 className="blog-detail-title">{blog.blog.attributes.title}</h1>
                             <p className="blog-detail-category">{blog.blog.attributes.category.toUpperCase()}</p>
-                            <p className="blog-detail-decription">{blog.blog.attributes.description}</p>
+                            {blog.blog.attributes.description && (
+                                <p className="blog-detail-decription">{blog.blog.attributes.description}</p>
+                            )}
                         </div>
                         <Tiptap
                             enableToolbar={false}
