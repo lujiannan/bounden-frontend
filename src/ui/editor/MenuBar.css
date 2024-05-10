@@ -31,6 +31,14 @@
         opacity: 0;
         cursor: pointer;
     }
+
+    & .image-upload-modal-loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 4rem;
+        padding: 1rem;
+    }
 }
 .image-upload-modal-container:hover {
     color: var(--pretty-base-color-light);

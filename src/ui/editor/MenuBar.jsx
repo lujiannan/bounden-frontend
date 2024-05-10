@@ -23,6 +23,7 @@ const MenuBar = () => {
 
     const [isImageUploadModalActive, setIsImageUploadModalActive] = useState(false);
 
+    const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState(false);
     const [fetchError, setFetchError] = useState(null);
 
@@ -38,6 +39,8 @@ const MenuBar = () => {
     }
 
     const handleImageUpload = (event) => {
+        setIsLoading(true);
+
         const file = event.target.files[0];
 
         // upload the image to the server, insert the image into the editor and show the upload status under the editor
@@ -59,6 +62,7 @@ const MenuBar = () => {
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
                 console.log('Image Data posted');
+                setIsLoading(false);
                 setResult(true);
                 setFetchError(null);
                 return res.json();
@@ -75,6 +79,7 @@ const MenuBar = () => {
                 }
             })
             .catch(error => {
+                setIsLoading(false);
                 setResult(false);
                 setFetchError(error.message);
                 console.log(error.message)
@@ -83,7 +88,6 @@ const MenuBar = () => {
 
         // set the image to the local image as a preview
         // editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
-        
     }
 
     return (
@@ -92,8 +96,17 @@ const MenuBar = () => {
             <FullModal isOpen={isImageUploadModalActive} onClose={() => setIsImageUploadModalActive(false)}>
                 <h1>Insert Image</h1>
                 <div className='image-upload-modal-container'>
-                    <i className='ri-file-upload-line'></i>
-                    <h3>Click (Drop) to Upload</h3>
+                    {isLoading && (
+                        <div className="image-upload-modal-loading-container">
+                            <div className="loading-pulse"></div>
+                        </div>
+                    )}
+                    {!isLoading && (
+                        <>
+                            <i className='ri-file-upload-line'></i>
+                            <h3>Click (Drop) to Upload</h3>
+                        </>
+                    )}
                     <input type="file" accept="image/*" onChange={(event) => {
                         handleImageUpload(event);
                     }} />
