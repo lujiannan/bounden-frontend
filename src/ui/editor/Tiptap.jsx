@@ -17,7 +17,7 @@ import './Tiptap.css'
 const extensions = [
     StarterKit,
     Placeholder.configure({
-        placeholder: '  ʕ•̀ω•́ʔ✧ ~ ~ ~',
+        placeholder: ' ʕ•̀ω•́ʔ✧ ~ ~ ~',
     }),
     Underline,
     TextStyle,
@@ -33,7 +33,7 @@ const extensions = [
         allowBase64: true,
         HTMLAttributes: {
             class: 'tiptap-image'
-        }
+        },
     }),
 ]
 
@@ -51,7 +51,9 @@ const Tiptap = ({ onContentChange, enableToolbar, enableEditable, initialContent
                 slotBefore={enableToolbar ? <MenuBar /> : null}
                 // TODO: editorProps is not updating after initialization, need to fix it
                 // add error affix to editor if there is an error
-                editorProps={onError != false ? { attributes: { class: 'tiptap-error' } } : null}
+                editorProps={
+                    { attributes: { class: onError == false ? '' : 'tiptap-error' } }
+                }
             >
                 {/* <BubbleMenu>This is the bubble menu</BubbleMenu> */}
                 {/* <FloatingMenu

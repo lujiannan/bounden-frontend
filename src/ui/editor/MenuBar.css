@@ -48,13 +48,19 @@
 
 .tiptap-toolbar {
     /* border-bottom: 2px solid var(--pretty-input-border-color); */
-    /* margin-top: 0.25rem; */
+    margin-bottom: 0.25rem;
     display: flex;
     height: auto;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    /* set sticky position to the toolbar after user enter bunch of lines in the blog */
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: var(--top-nav-height-scrolled);
+    z-index: 1;
+    background-color: var(--pretty-bg-color);
 
     & .tool-block {
         display: block;

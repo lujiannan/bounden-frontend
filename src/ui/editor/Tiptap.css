@@ -12,8 +12,9 @@
     padding: 0.75rem 0.75rem;
     margin-top: 0.25rem;
     /* padding: 0.1rem 0.5rem; */
-    border: 1px solid var(--pretty-input-border-color);
+    border: 2px solid var(--pretty-input-border-color);
     border-radius: var(--pretty-border-radius-small);
+    transition: var(--pretty-transition);
 
     /* applies a margin of 0.5em to the top of each direct child element of elements with the class ".tiptap" that immediately follow another element */
     >*+* {
@@ -90,6 +91,12 @@
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     }
 }
+
+.tiptap:focus {
+    outline: none;
+    border-color: var(--pretty-input-border-focus-color);
+}
+
 
 .tiptap-error {
     border: 2px solid var(--pretty-error-color);

@@ -1,6 +1,6 @@
 .blog-container {
     text-align: start;
-    width: 53rem;
+    width: var(--pretty-inner-container-width);
     margin: auto;
     height: 100%;
     font-size: 1rem;

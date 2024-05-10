@@ -74,16 +74,18 @@ function BlogCreate() {
 
     // titap editor functions
     useEffect(() => {
-        register("content", { validate: (value) => {
-            // console.log(value);
-            // FOR JSON OUTPUT: check if content is empty (if there is at least one block in the editor that has a content then it's valid)
-            for (let i = value?.content.length - 1; i >= 0; i--) {
-                if (value.content[i].content !== undefined) {
-                    return true;
+        register("content", {
+            validate: (value) => {
+                // console.log(value);
+                // FOR JSON OUTPUT: check if content is empty (if there is at least one block in the editor that has a content then it's valid)
+                for (let i = value?.content.length - 1; i >= 0; i--) {
+                    if (value.content[i].content !== undefined) {
+                        return true;
+                    }
                 }
+                return "Content is required";
             }
-            return "Content is required";
-        }})
+        })
     }, []);
 
     const handleContentOnChange = (editor) => {
@@ -98,38 +100,38 @@ function BlogCreate() {
     return (
         <>
             <div className="blog-create-container">
-                <h1 className="blog-create-form-title">Add a new blog</h1>
                 <form onSubmit={handleSubmit((data) => onSubmit(data))} id="blog-create-form">
                     <div className="blog-create-form-vertical-group">
+                        <div className="blog-create-form-vertical-group">
+                            {/* <label className=".blog-create-form-label">Title:</label> */}
+                            <input {...register("title", { required: "Title is required" })} className={`blog-create-form-input-title ${errors.title ? "blog-create-form-input-title-error" : ""}`}
+                                placeholder="Title"></input>
+                            <p className="blog-create-form-input-title-error-message">{errors.title?.message}</p>
+                        </div>
+
                         <div className="blog-create-form-horizontal-group">
-                            <div className="blog-create-form-vertical-group" style={{ width: "70%" }}>
-                                {/* <label className=".blog-create-form-label">Title:</label> */}
-                                <input {...register("title", { required: "Title is required" })} className={`blog-create-form-input ${errors.title ? "blog-create-form-input-error" : ""}`}
-                                    placeholder="Title"></input>
-                                <p className="blog-create-form-input-error-message">{errors.title?.message}</p>
+                            <div className="blog-create-form-vertical-group" style={{ flexGrow: 1 }}>
+                                {/* <label className=".blog-create-form-label">Description:</label> */}
+                                <input {...register("description", { required: false })} className={`blog-create-form-input ${errors.description ? "blog-create-form-input-error" : ""}`}
+                                    placeholder="Description (optional)"></input>
+                                <p className="blog-create-form-input-error-message">{errors.description?.message}</p>
                             </div>
-                            <div className="blog-create-form-vertical-group">
+
+                            <div className="blog-create-form-vertical-group" style={{ width: "auto" }}>
                                 {/* <label className=".blog-create-form-label">Category:</label> */}
                                 {/* <input {...register("category", { required: "Category is required" })} className={`blog-create-form-input ${errors.category ? "blog-create-form-input-error" : ""}`}
                                     placeholder="Category"></input> */}
-                                <select {...register("category", { required: "Category is required" })} 
+                                <select {...register("category", { required: "Category is required" })}
                                     className={`blog-create-form-select ${errors.category ? "blog-create-form-select-error" : ""}`}>
-                                        <option key={0} value="">--Categories--</option>
-                                        {SortedBlogCategories.map((category, index) => {
-                                            return (
-                                                <option key={index+1} value={category.cateName}>{category.cateName}</option>
-                                            )
-                                        })}
+                                    <option key={0} value="">--Categories--</option>
+                                    {SortedBlogCategories.map((category, index) => {
+                                        return (
+                                            <option key={index + 1} value={category.cateName}>{category.cateName}</option>
+                                        )
+                                    })}
                                 </select>
                                 <p className="blog-create-form-select-error-message">{errors.category?.message}</p>
                             </div>
-                        </div>
-
-                        <div className="blog-create-form-vertical-group">
-                            {/* <label className=".blog-create-form-label">Description:</label> */}
-                            <input {...register("description", { required: false })} className={`blog-create-form-input ${errors.description ? "blog-create-form-input-error" : ""}`}
-                                placeholder="Description (optional)"></input>
-                            <p className="blog-create-form-input-error-message">{errors.description?.message}</p>
                         </div>
                     </div>
                 </form>

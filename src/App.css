@@ -20,13 +20,16 @@
     --pretty-btn-color-hover: #aaa;
     --pretty-btn-text-color: #fff;
     --pretty-error-color: #dd5746;
+    --pretty-input-placeholder-color: #ccc;
     --pretty-input-border-color: #e5e5e5;
+    --pretty-input-border-focus-color: #aaa;
     --pretty-input-bg-color: #e6e6e6;
     --pretty-border-radius: 10px;
     --pretty-border-radius-small: 5px;
     --pretty-border-radius-large: 20px;
     --pretty-transition: all 0.3s ease-in-out;
     --pretty-transition-fast: all 0.2s ease-in-out;
+    --pretty-inner-container-width: 53rem;
     --top-nav-height: 100px;
     --top-nav-height-scrolled: 75px;
 }
