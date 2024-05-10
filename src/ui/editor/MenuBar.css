@@ -94,8 +94,12 @@
             background-color: var(--pretty-btn-text-color);
             transition: var(--pretty-transition);
 
-            & i {
+            & .dropdown-btn-icon {
                 border-radius: var(--pretty-border-radius-small);
+            }
+
+            & .dropdown-btn-arrow {
+                color: var(--pretty-base-color-light);
             }
 
             &:hover {
@@ -115,7 +119,11 @@
                 }
 
                 @media screen and (max-width: 1024px) {
-                    & .dropdown-btn-icon {
+                    /* & .dropdown-btn-icon {
+                        display: none;
+                    } */
+
+                    & .dropdown-btn-text {
                         display: none;
                     }
                 }

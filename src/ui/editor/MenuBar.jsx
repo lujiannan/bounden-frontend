@@ -136,7 +136,7 @@ const MenuBar = () => {
                             <i className='ri-menu-4-line dropdown-btn-icon'></i>
                             <span>&nbsp;&nbsp;style</span>
                         </div>
-                        <i className={`${isTextFormatMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                        <i className={`dropdown-btn-arrow ${isTextFormatMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                     </div>
                     {isTextFormatMenuActive && (
                         <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
@@ -228,7 +228,7 @@ const MenuBar = () => {
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-font-color' style={{ color: editor.getAttributes('textStyle').color }}></i>
                         </div>
-                        <i className={`${isTextColorMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                        <i className={`dropdown-btn-arrow ${isTextColorMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                     </div>
                     {isTextColorMenuActive && (
                         <div className='dropdown-grid' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
@@ -256,7 +256,7 @@ const MenuBar = () => {
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-paint-fill' style={{ color: editor.getAttributes('highlight').color }}></i>
                         </div>
-                        <i className={`${isTextHighlightMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                        <i className={`dropdown-btn-arrow ${isTextHighlightMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                     </div>
                     {isTextHighlightMenuActive && (
                         <div className='dropdown-grid' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
@@ -300,10 +300,10 @@ const MenuBar = () => {
                 <div className='dropdown-menu'>
                     <div className='dropdown-btn' onClick={(e) => { setisInsertMenuActive(!isInsertMenuActive); handleDropdownMenuPosition(e); }}>
                         <div className='dropdown-btn-horizontal-group'>
-                            <i className='ri-add-line dropdown-btn-icon'></i>
-                            <span>&nbsp;&nbsp;insert</span>
+                            <i className='ri-function-add-line dropdown-btn-icon'></i>
+                            <span className='dropdown-btn-text'>&nbsp;&nbsp;insert</span>
                         </div>
-                        <i className={`${isInsertMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                        <i className={`dropdown-btn-arrow ${isInsertMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                     </div>
                     {isInsertMenuActive && (
                         <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
@@ -331,14 +331,14 @@ const MenuBar = () => {
 
                 <div className='divider'></div>
 
-                {/* dropdown insert list */}
+                {/* dropdown alignment list */}
                 <div className='dropdown-menu'>
                     <div className='dropdown-btn' onClick={(e) => { setIsAlignMenuActive(!isAlignMenuActive); handleDropdownMenuPosition(e); }}>
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-align-justify dropdown-btn-icon'></i>
-                            <span>&nbsp;&nbsp;align</span>
+                            <span className='dropdown-btn-text'>&nbsp;&nbsp;align</span>
                         </div>
-                        <i className={`${isAlignMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
+                        <i className={`dropdown-btn-arrow ${isAlignMenuActive ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
                     </div>
                     {isAlignMenuActive && (
                         <div className='dropdown-list' style={{ left: dropdownMenuPosition.left, right: dropdownMenuPosition.right }}>
