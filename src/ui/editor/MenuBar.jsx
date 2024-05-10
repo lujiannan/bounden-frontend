@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCurrentEditor } from '@tiptap/react';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser'; // for getting the logged in user's email
 
 import FullModal from '../modal/FullModal';
 import Colors from '../../utils/colors';
@@ -8,6 +9,10 @@ import './MenuBar.css';
 // TODO: add a leave-focus event handler to hide the dropdown menus when the user clicks outside of them
 
 const MenuBar = () => {
+    const URL_SUFFIX_IMAGE_UPLOAD = "/images/upload";
+    const auth = useAuthUser();
+    const user_email = auth.email;
+
     const { editor } = useCurrentEditor();
     const [isTextFormatMenuActive, setIsTextFormatMenuActive] = useState(false);
     const [isTextColorMenuActive, setIsTextColorMenuActive] = useState(false);
@@ -17,6 +22,9 @@ const MenuBar = () => {
     const [dropdownMenuPosition, setDropdownMenuPosition] = useState({ left: 0, right: "unset" });
 
     const [isImageUploadModalActive, setIsImageUploadModalActive] = useState(false);
+
+    const [result, setResult] = useState(false);
+    const [fetchError, setFetchError] = useState(null);
 
     // fix the dropdown menu position when it's out of the screen
     const handleDropdownMenuPosition = (event) => {
@@ -31,13 +39,51 @@ const MenuBar = () => {
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        console.log(typeof file);
 
-        // TODO: upload the image to the server, insert the image into the editor and show the upload status under the editor
+        // upload the image to the server, insert the image into the editor and show the upload status under the editor
+        const form_data = new FormData();
+        form_data.append("user_email", user_email);
+        form_data.append("name", file.name);
+        form_data.append("file", file);
 
-        // set the image to the editor andclose the modal
-        editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
-        setIsImageUploadModalActive(false);
+        fetch(process.env.REACT_APP_SERVER_URL + URL_SUFFIX_IMAGE_UPLOAD, {
+            method: "POST",
+            headers: {
+                // Content-Type is not required for FormData, cuz browser will set it automatically
+                // "Content-Type": "application/form-data",
+                // get access token from local storage
+                "Authorization": "Bearer " + localStorage.getItem("_auth"),
+            },
+            body: form_data,
+        })
+            .then((res) => {
+                if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
+                console.log('Image Data posted');
+                setResult(true);
+                setFetchError(null);
+                return res.json();
+            })
+            .then((data) => {
+                // do sth here after the image is uploaded
+                console.log(data.message);
+                if (data.message === "Image uploaded successfully") {
+                    // set the image to the editor andclose the modal
+                    editor.chain().focus().setImage({ src: data.url }).run();
+                    setIsImageUploadModalActive(false);
+                } else {
+                    console.log(data.message);
+                }
+            })
+            .catch(error => {
+                setResult(false);
+                setFetchError(error.message);
+                console.log(error.message)
+                // alert(fetchError);
+            });
+
+        // set the image to the local image as a preview
+        // editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
+        
     }
 
     return (
