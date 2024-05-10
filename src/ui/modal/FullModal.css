@@ -12,7 +12,7 @@
     transition: var(--pretty-transition);
 
     & .full-modal-content {
-        background-color: #fff;
+        background-color: var(--pretty-bg-color);
         padding: 1.5rem;
         border-radius: var(--pretty-border-radius);
         position: relative;

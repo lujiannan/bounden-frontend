@@ -22,6 +22,8 @@ const MenuBar = () => {
     const [dropdownMenuPosition, setDropdownMenuPosition] = useState({ left: 0, right: "unset" });
 
     const [isImageUploadModalActive, setIsImageUploadModalActive] = useState(false);
+    const [imageUploadModalTab, setImageUploadModalTab] = useState(0);
+    const [imageURL, setImageURL] = useState("");
 
     const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState(false);
@@ -90,27 +92,63 @@ const MenuBar = () => {
         // editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
     }
 
+    const handleImageURL = (e) => {
+        e.preventDefault();
+        editor.chain().focus().setImage({ src: imageURL }).run();
+        setImageURL("");
+        setIsImageUploadModalActive(false);
+    }
+
+    const handleImageUploadModalTabClick = (event) => {
+        if (event.target.value === 0) {
+            // image from website
+            setImageUploadModalTab(0);
+            document.getElementById("image-upload-modal-indicator").style.marginLeft = "0";
+        } else if (event.target.value === 1) {
+            // image upload
+            setImageUploadModalTab(1);
+            document.getElementById("image-upload-modal-indicator").style.marginLeft = "calc((100% - 3rem)/2)";
+        }
+    }
+
     return (
         <>
             {/* Modal for image upload */}
             <FullModal isOpen={isImageUploadModalActive} onClose={() => setIsImageUploadModalActive(false)}>
                 <h1>Insert Image</h1>
-                <div className='image-upload-modal-container'>
-                    {isLoading && (
-                        <div className="image-upload-modal-loading-container">
-                            <div className="loading-pulse"></div>
-                        </div>
-                    )}
-                    {!isLoading && (
-                        <>
-                            <i className='ri-file-upload-line'></i>
-                            <h3>Click (Drop) to Upload</h3>
-                        </>
-                    )}
-                    <input type="file" accept="image/*" onChange={(event) => {
-                        handleImageUpload(event);
-                    }} />
-                </div>
+                <ul className='image-upload-modal-tab-bar'>
+                    <li value={0} onClick={(e) => { handleImageUploadModalTabClick(e) }} className='image-upload-modal-tab-item'>WEBSITE</li>
+                    <li value={1} onClick={(e) => { handleImageUploadModalTabClick(e) }} className='image-upload-modal-tab-item'>UPLOAD</li>
+                    <div className="image-upload-modal-indicator" id="image-upload-modal-indicator"></div>
+                </ul>
+                {/* website tab */}
+                {imageUploadModalTab === 0 && (
+                    <div className='image-upload-modal-url-container'>
+                        <form onSubmit={handleImageURL}>
+                            <input type="text" placeholder="Enter image URL" onChange={(e) => { setImageURL(e.target.value) }}/>
+                            <button type="submit">Confirm</button>
+                        </form>
+                    </div>
+                )}
+                {/* image upload tab */}
+                {imageUploadModalTab === 1 && (
+                    <div className='image-upload-modal-container'>
+                        {isLoading && (
+                            <div className="image-upload-modal-loading-container">
+                                <div className="loading-pulse"></div>
+                            </div>
+                        )}
+                        {!isLoading && (
+                            <>
+                                <i className='ri-file-upload-line'></i>
+                                <h3>Click (Drop) to Upload</h3>
+                            </>
+                        )}
+                        <input type="file" accept="image/*" onChange={(event) => {
+                            handleImageUpload(event);
+                        }} />
+                    </div>
+                )}
             </FullModal>
             <div className="tiptap-toolbar">
                 <div className='tool-block'>

@@ -1,3 +1,73 @@
+/* image modal */
+.image-upload-modal-tab-bar {
+    margin-top: 1rem;
+    width: 100%;
+    height: auto;
+    border-radius: var(--pretty-border-radius-small);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    -webkit-padding-start: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+    & .image-upload-modal-tab-item {
+        background-color: var(--pretty-bg-color);
+        color: var(--pretty-base-color);
+        padding: 0.75rem 0;
+        margin: auto;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    & .image-upload-modal-indicator {
+        position: absolute;
+        border-radius: var(--pretty-border-radius-small);
+        width: calc((100% - 3rem)/2);
+        height: 0.25rem;
+        background: var(--pretty-base-color);
+        margin-top: 2.5rem;
+        /* margin-left: calc((100% - 3rem)/2); */
+        transition: var(--pretty-transition);
+    }
+}
+.image-upload-modal-url-container {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--pretty-bg-color);
+
+    & form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    & input {
+        width: 20rem;
+        font-size: 1rem;
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border: none;
+        border-bottom: 2px solid var(--pretty-input-border-color);
+        transition: var(--pretty-transition);
+    }
+
+    & input:focus {
+        outline: none;
+        border-color: var(--pretty-input-border-color-focus);
+    }
+
+    & button {
+        margin-top: 1rem;
+        font-size: 1rem;
+        padding: 0.5rem;
+        border-radius: var(--pretty-border-radius-small);
+        border: none;
+        cursor: pointer;
+    }
+}
 .image-upload-modal-container {
     margin-top: 1rem;
     padding: 2rem 4rem;
@@ -7,8 +77,8 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--pretty-border-radius);
-    border: 4px solid var(--pretty-input-border-color);
-    border-style: dashed;
+    border: 4px dashed var(--pretty-base-color-lighter);
+    background-color: var(--pretty-input-border-color);
     position: relative;
     cursor: pointer;
     color: var(--pretty-base-color-lighter);
@@ -41,10 +111,17 @@
     }
 }
 .image-upload-modal-container:hover {
+    border: 4px dashed var(--pretty-base-color-light);
     color: var(--pretty-base-color-light);
 }
 
 @media screen and (max-width: 768px) {
+    .image-upload-modal-url-container{
+        & input {
+            width: 16rem;
+        }
+    }
+
     .image-upload-modal-container {
         padding: 1rem 2rem;
 
@@ -54,6 +131,7 @@
     }
 }
 
+/* tiptap toolbar */
 .tiptap-toolbar {
     /* border-bottom: 2px solid var(--pretty-input-border-color); */
     margin-bottom: 0.25rem;

@@ -7,14 +7,6 @@
     transition: var(--pretty-transition);
 }
 
-.blog-create-container .blog-create-form-title {
-    /* margin: 0% 10%; */
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    padding: 1rem 0rem;
-}
-
 .blog-create-form-vertical-group {
     display: flex;
     flex-direction: column;
