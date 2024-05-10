@@ -29,6 +29,17 @@ const MenuBar = () => {
         }
     }
 
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        console.log(typeof file);
+
+        // TODO: upload the image to the server, insert the image into the editor and show the upload status under the editor
+
+        // set the image to the editor andclose the modal
+        editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
+        setIsImageUploadModalActive(false);
+    }
+
     return (
         <>
             {/* Modal for image upload */}
@@ -36,11 +47,9 @@ const MenuBar = () => {
                 <h1>Insert Image</h1>
                 <div className='image-upload-modal-container'>
                     <i className='ri-file-upload-line'></i>
-                    <h3>Click to Upload</h3>
+                    <h3>Click (Drop) to Upload</h3>
                     <input type="file" accept="image/*" onChange={(event) => {
-                        const file = event.target.files[0];
-                        editor.chain().focus().setImage({ src: URL.createObjectURL(file) }).run();
-                        setIsImageUploadModalActive(false);
+                        handleImageUpload(event);
                     }} />
                 </div>
             </FullModal>
