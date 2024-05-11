@@ -170,6 +170,7 @@
             justify-content: space-between;
             cursor: pointer;
             background-color: var(--pretty-btn-text-color);
+            color: var(--pretty-base-color);
             transition: var(--pretty-transition);
 
             & .dropdown-btn-icon {
@@ -281,6 +282,7 @@
         margin: 0.25rem 0.25rem;
         font-size: 1rem;
         background-color: var(--pretty-btn-text-color);
+        color: var(--pretty-base-color);
         /* color: var(--pretty-base-color-light); */
         border: none;
         border-radius: var(--pretty-border-radius-small);
