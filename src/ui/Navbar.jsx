@@ -55,8 +55,8 @@ function Navbar() {
                     )
                 })}
             </ul>
-            <div className={`user-icon ${isAuthenticated ? "active" : ""}`}>
-                <Link to="/login" className="nav-link-user">
+            <div className="user-icon">
+                <Link to="/login" className={`nav-link-user ${isAuthenticated ? "active" : ""}`} id="nav-link-user">
                     <i className="ri-user-fill"></i>
                 </Link>
             </div>
