@@ -117,11 +117,11 @@
     color: var(--pretty-base-color-light);
     transition: var(--pretty-transition);
 }
-.user-icon .nav-link-user:hover {
+.user-icon:hover {
     background-color: var(--pretty-btn-color);
     transition: var(--pretty-transition);
 }
-.user-icon .nav-link-user.active {
+.user-icon.active {
     border-style: inset;
     color: var(--pretty-base-color);
     transition: var(--pretty-transition);
