@@ -71,9 +71,10 @@ function Navbar() {
                     )
                 })}
             </ul>
-            <div className={`user-icon ${isAuthenticated ? "active" : ""}`} id="user-icon">
+            <div className={`user-icon ${isAuthenticated ? "active" : ""}`} id="user-icon"
+                onClick={() => { handleLoggedInUserClick() }}>
                 <div className="nav-link-user-container">
-                    <i onClick={() => { handleLoggedInUserClick() }} className="ri-user-fill"></i>
+                    <i className="ri-user-fill"></i>
                     {isUserLoggedInClicked && (
                         <div className='dropdown-list'>
                             <div className='dropdown-item'
