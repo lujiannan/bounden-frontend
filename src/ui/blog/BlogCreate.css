@@ -7,6 +7,35 @@
     transition: var(--pretty-transition);
 }
 
+.blog-create-loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+    padding: 1rem;
+}
+
+.blog-create-submitting-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* overrides loading pulse height to fit for the submit button */
+    & .loading-pulse {
+        height: 1.75rem;
+    }
+
+    & .loading-pulse:before {
+        height: 1.5rem;
+        left: -1rem;
+    }
+
+    & .loading-pulse:after {
+        height: 1.5rem;
+        left: 1rem;
+    }
+}
+
 .blog-create-form-vertical-group {
     display: flex;
     flex-direction: column;

@@ -19,6 +19,7 @@ function BlogEdit() {
     const auth = useAuthUser();
     const author_email = auth.email;
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [result, setResult] = useState(false);
     const [fetchError, setFetchError] = useState(null);
 
@@ -38,6 +39,7 @@ function BlogEdit() {
     });
 
     const onSubmit = (data) => {
+        setIsSubmitting(true);
         // construct data body before sending to server
         const body_data = JSON.stringify({
             "category": data.category,
@@ -60,6 +62,7 @@ function BlogEdit() {
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
                 console.log('Data posted');
+                setIsSubmitting(false);
                 setResult(true);
                 setFetchError(null);
                 // return res.json();
@@ -69,6 +72,7 @@ function BlogEdit() {
                 navigate("/blogs-self");
             })
             .catch(error => {
+                setIsSubmitting(false);
                 setResult(false);
                 setFetchError(error.message);
                 console.log(error.message)
@@ -115,7 +119,7 @@ function BlogEdit() {
         <>
             <div className="blog-create-container">
                 {isLoading &&
-                    <div className="blog-detail-loading-container">
+                    <div className="blog-create-loading-container">
                         <div className="loading-pulse"></div>
                     </div>
                 }
@@ -173,7 +177,13 @@ function BlogEdit() {
                         <div className="blog-create-form-bottom-placeholder"></div>
 
                         <button className="blog-create-form-button" form="blog-create-form" type="submit">
-                            <i className="ri-upload-cloud-2-line"></i>
+                            {isSubmitting ? (
+                                <div className="blog-create-submitting-container">
+                                    <div className="loading-pulse"></div>
+                                </div>
+                            ) : (
+                                <i className="ri-upload-cloud-2-line"></i>
+                            )}
                         </button>
                     </>
                 )}

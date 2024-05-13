@@ -15,6 +15,7 @@ function BlogCreate() {
     const auth = useAuthUser();
     const author_email = auth.email;
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [result, setResult] = useState(false);
     const [fetchError, setFetchError] = useState(null);
 
@@ -34,6 +35,7 @@ function BlogCreate() {
     });
 
     const onSubmit = (data) => {
+        setIsSubmitting(true);
         // construct data body before sending to server
         const body_data = JSON.stringify({
             "category": data.category,
@@ -56,6 +58,7 @@ function BlogCreate() {
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
                 console.log('Data posted');
+                setIsSubmitting(false);
                 setResult(true);
                 setFetchError(null);
                 // return res.json();
@@ -65,6 +68,7 @@ function BlogCreate() {
                 navigate("/blogs");
             })
             .catch(error => {
+                setIsSubmitting(false);
                 setResult(false);
                 setFetchError(error.message);
                 console.log(error.message)
@@ -150,7 +154,13 @@ function BlogCreate() {
                 <div className="blog-create-form-bottom-placeholder"></div>
 
                 <button className="blog-create-form-button" form="blog-create-form" type="submit">
-                    <i className="ri-upload-cloud-2-line"></i>
+                    {isSubmitting ? (
+                        <div className="blog-create-submitting-container">
+                            <div className="loading-pulse"></div>
+                        </div>
+                    ) : (
+                        <i className="ri-upload-cloud-2-line"></i>
+                    )}
                 </button>
             </div>
         </>
