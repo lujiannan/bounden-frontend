@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom"; // replace <a> tag with <Link> to enable routing faster (preload the page before the user clicks on the link)
 import { MenuData } from "../utils/menuData";
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
@@ -8,24 +8,40 @@ import "./Navbar.css";
 
 function Navbar() {
     const [menuClicked, setMenuClicked] = useState(false);
-    const [isUserLoggedInClicked, setIsUserLoggedInClicked] = useState(false);
+    const menuIconRef = useRef(null);
+    const menuRef = useRef(null);
+    const navUserRef = useRef(null);
+    const [isNavUserClicked, setIsNavUserClicked] = useState(false);
+
     const [scrolled, setScrolled] = useState(false);
     const navigate = useNavigate();
     const isAuthenticated = useIsAuthenticated();
     const signOut = useSignOut();
 
-    const handleMenuIconClick = () => {
-        setMenuClicked(!menuClicked);
-    }
-
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-        
+        window.addEventListener("click", handleOutsideClick);
+
         // cleanup function to remove event listener when component unmounts
         return () => {
             window.removeEventListener('scroll', handleScroll);
-        }
+            window.removeEventListener("click", handleOutsideClick);
+        };
     }, []);
+
+    function handleOutsideClick(event) {
+        // if user clicks outside the specific element, close the element
+        if (menuIconRef.current && !menuIconRef.current.contains(event.target) && !menuRef.current.contains(event.target)) {
+            setMenuClicked(false);
+        }
+        if (navUserRef.current && !navUserRef.current.contains(event.target)) {
+            setIsNavUserClicked(false);
+        }
+    }
+
+    const handleMenuIconClick = () => {
+        setMenuClicked(!menuClicked);
+    }
 
     const handleScroll = () => {
         // if user scrolls down > n pixels, navbar's transpareny is higher
@@ -41,16 +57,16 @@ function Navbar() {
         setMenuClicked(false);
     }
 
-    const handleLoggedInUserClick = () => {
-        isAuthenticated ? setIsUserLoggedInClicked(!isUserLoggedInClicked) : navigate('/login');
+    const handleNavUserClick = () => {
+        isAuthenticated ? setIsNavUserClicked(!isNavUserClicked) : navigate('/login');
     }
 
     const handleSignOutClick = () => {
-        setIsUserLoggedInClicked(false);
+        setIsNavUserClicked(false);
         signOut();
         // set user icon to logged out state
-        const user_icon = document.getElementById('user-icon');
-        user_icon.classList.remove('active');
+        const nav_link_user_container = document.getElementById('nav-link-user-container');
+        nav_link_user_container.classList.remove('active');
     }
 
     return (
@@ -62,10 +78,10 @@ function Navbar() {
                     <span>Bounden</span>
                 </Link>
             </h1>
-            <div className="menu-icon" onClick={handleMenuIconClick}>
+            <div className="menu-icon" onClick={handleMenuIconClick} ref={menuIconRef}>
                 <i className={menuClicked ? "ri-close-line" : "ri-menu-line"}></i>
             </div>
-            <ul className={menuClicked ? "nav-menu active" : "nav-menu"}>
+            <ul className={menuClicked ? "nav-menu active" : "nav-menu"} ref={menuRef}>
                 {MenuData.map((item, index) => {
                     return (
                         <li key={index}>
@@ -76,11 +92,11 @@ function Navbar() {
                     )
                 })}
             </ul>
-            <div className={`user-icon ${isAuthenticated ? "active" : ""}`} id="user-icon"
-                onClick={() => { handleLoggedInUserClick() }}>
-                <div className="nav-link-user-container">
+            <div className={`nav-link-user-container ${isAuthenticated ? "active" : ""}`} id="nav-link-user-container" ref={navUserRef}
+                onClick={() => { handleNavUserClick() }}>
+                <div className="user-icon">
                     <i className="ri-user-fill"></i>
-                    {isUserLoggedInClicked && (
+                    {isNavUserClicked && (
                         <div className='dropdown-list'>
                             <div className='dropdown-item'
                                 onClick={handleSignOutClick}>

@@ -105,7 +105,7 @@
     cursor: pointer;
 }
 
-.user-icon {
+.nav-link-user-container {
     position: absolute;
     right: 3rem;
     /* justify-content: end; */
@@ -115,7 +115,7 @@
     cursor: pointer;
 }
 
-.user-icon .nav-link-user-container {
+.nav-link-user-container .user-icon {
     margin: 0.25rem 0.4rem;
     white-space: nowrap;
     background-color: transparent;
@@ -126,23 +126,23 @@
     transition: var(--pretty-transition);
 }
 
-.user-icon:hover {
+.nav-link-user-container:hover {
     background-color: var(--pretty-btn-color);
     transition: var(--pretty-transition);
 }
 
-.user-icon.active {
+.nav-link-user-container.active {
     border-style: inset;
     color: var(--pretty-base-color);
     transition: var(--pretty-transition);
 }
 
-.user-icon .nav-link-user-container .nav-link-user {
+.nav-link-user-container .nav-link-user-container .nav-link-user {
     color: var(--pretty-base-color-light);
     text-decoration: none;
 }
 
-.user-icon .dropdown-list {
+.nav-link-user-container .dropdown-list {
     width: auto;
     position: absolute;
     top: 110%;
