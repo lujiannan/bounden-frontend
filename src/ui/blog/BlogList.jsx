@@ -62,6 +62,7 @@ function BlogList({ urlSuffix, titleString, handleBlogDelete }) {
                     )
                 }
                 {fetchError && <div>Error: {fetchError}</div>}
+                {data_blogs && data_blogs.length === 0 && <p>No blogs found.</p>}
             </div>
         </>
     );
