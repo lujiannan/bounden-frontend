@@ -11,7 +11,7 @@ function Blogs() {
     return (
         <>
             {/* generate a blog list by passing the route string, process GET request to the server */}
-            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS}/>
+            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS} forBlogSelf={true}/>
         </>
     )
 }

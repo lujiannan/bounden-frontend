@@ -25,7 +25,7 @@ function sortBlogsByUpdated(data_blogs) {
     })
 }
 
-function BlogList({ urlSuffix, titleString }) {
+function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
     const [blogsData, isLoading, fetchError] = useFetchSuffix(urlSuffix);
 
     // sort blogs by updated time
@@ -48,7 +48,7 @@ function BlogList({ urlSuffix, titleString }) {
                     ) : (
                         data_blogs.map((blog) => (
                             <div className='blog-preview' key={blog.id}>
-                                <Link className="blog-preview-link" to={`${urlSuffix}/${blog.id}`}>
+                                <Link className="blog-preview-link" to={forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`}>
                                     <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
                                     <h1 className="blog-preview-title">{blog.attributes.title}</h1>
                                     {blog.attributes.description && (
