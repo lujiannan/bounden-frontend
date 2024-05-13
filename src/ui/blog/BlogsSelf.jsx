@@ -7,15 +7,11 @@ function Blogs() {
     const authUser = useAuthUser();
     const URL_SUFFIX_BLOGS = "/users/" + authUser.email + "/blogs";
     const TITLE_BLOGS = "MY LATEST POSTS";
-    
-    const handleBlogDelete = (id) => {
-        alert("Blog " + id + " delete button clicked");
-    }
 
     return (
         <>
             {/* generate a blog list by passing the route string, process GET request to the server */}
-            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS} handleBlogDelete={handleBlogDelete}/>
+            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS}/>
         </>
     )
 }

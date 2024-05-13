@@ -25,7 +25,7 @@ function sortBlogsByUpdated(data_blogs) {
     })
 }
 
-function BlogList({ urlSuffix, titleString, handleBlogDelete }) {
+function BlogList({ urlSuffix, titleString }) {
     const [blogsData, isLoading, fetchError] = useFetchSuffix(urlSuffix);
 
     // sort blogs by updated time
