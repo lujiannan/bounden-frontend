@@ -20,6 +20,11 @@ function Navbar() {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
+        
+        // cleanup function to remove event listener when component unmounts
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
     }, []);
 
     const handleScroll = () => {
