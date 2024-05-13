@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useCurrentEditor } from '@tiptap/react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'; // for getting the logged in user's email
 
@@ -15,10 +15,15 @@ const MenuBar = () => {
 
     const { editor } = useCurrentEditor();
     const [isTextFormatMenuActive, setIsTextFormatMenuActive] = useState(false);
+    const textFormatMenuRef = useRef(null);
     const [isTextColorMenuActive, setIsTextColorMenuActive] = useState(false);
+    const textColorMenuRef = useRef(null);
     const [isTextHighlightMenuActive, setIsTextHighlightMenuActive] = useState(false);
+    const textHighlightMenuRef = useRef(null);
     const [isInsertMenuActive, setisInsertMenuActive] = useState(false);
+    const insertMenuRef = useRef(null);
     const [isAlignMenuActive, setIsAlignMenuActive] = useState(false);
+    const alignMenuRef = useRef(null);
     const [dropdownMenuPosition, setDropdownMenuPosition] = useState({ left: 0, right: "unset" });
 
     const [isImageUploadModalActive, setIsImageUploadModalActive] = useState(false);
@@ -28,6 +33,35 @@ const MenuBar = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [result, setResult] = useState(false);
     const [fetchError, setFetchError] = useState(null);
+
+    useEffect(() => {
+        // add event listener to the dropdown menu buttons to show/hide the dropdown menus
+        window.addEventListener("click", handleOutsideClick);
+
+        // cleanup function to remove event listener when component unmounts
+        return () => {
+            window.removeEventListener("click", handleOutsideClick);
+        };
+    }, []);
+
+    const handleOutsideClick = (event) => {
+        // if user clicks outside the specific element, close the element
+        if (textFormatMenuRef.current && !textFormatMenuRef.current.contains(event.target)) {
+            setIsTextFormatMenuActive(false);
+        }
+        if (textColorMenuRef.current && !textColorMenuRef.current.contains(event.target)) {
+            setIsTextColorMenuActive(false);
+        }
+        if (textHighlightMenuRef.current && !textHighlightMenuRef.current.contains(event.target)) {
+            setIsTextHighlightMenuActive(false);
+        }
+        if (insertMenuRef.current && !insertMenuRef.current.contains(event.target)) {
+            setisInsertMenuActive(false);
+        }
+        if (alignMenuRef.current && !alignMenuRef.current.contains(event.target)) {
+            setIsAlignMenuActive(false);
+        }
+    }
 
     // fix the dropdown menu position when it's out of the screen
     const handleDropdownMenuPosition = (event) => {
@@ -168,7 +202,7 @@ const MenuBar = () => {
 
                 <div className='divider'></div>
                 {/* dropdown text format list */}
-                <div className='dropdown-menu'>
+                <div className='dropdown-menu' ref={textFormatMenuRef}>
                     <div className='dropdown-btn' onClick={(e) => { setIsTextFormatMenuActive(!isTextFormatMenuActive); handleDropdownMenuPosition(e); }}>
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-menu-4-line dropdown-btn-icon'></i>
@@ -261,7 +295,7 @@ const MenuBar = () => {
                 <div className='divider'></div>
 
                 {/* dropdown text color grid */}
-                <div className='dropdown-menu'>
+                <div className='dropdown-menu' ref={textColorMenuRef}>
                     <div className='dropdown-btn' onClick={(e) => { setIsTextColorMenuActive(!isTextColorMenuActive); handleDropdownMenuPosition(e); }}>
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-font-color' style={{ color: editor.getAttributes('textStyle').color }}></i>
@@ -289,7 +323,7 @@ const MenuBar = () => {
                 </div>
 
                 {/* dropdown text highlight grid */}
-                <div className='dropdown-menu'>
+                <div className='dropdown-menu' ref={textHighlightMenuRef}>
                     <div className='dropdown-btn' onClick={(e) => { setIsTextHighlightMenuActive(!isTextHighlightMenuActive); handleDropdownMenuPosition(e); }}>
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-paint-fill' style={{ color: editor.getAttributes('highlight').color }}></i>
@@ -335,7 +369,7 @@ const MenuBar = () => {
                 <div className='divider'></div>
 
                 {/* dropdown insert list */}
-                <div className='dropdown-menu'>
+                <div className='dropdown-menu' ref={insertMenuRef}>
                     <div className='dropdown-btn' onClick={(e) => { setisInsertMenuActive(!isInsertMenuActive); handleDropdownMenuPosition(e); }}>
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-function-add-line dropdown-btn-icon'></i>
@@ -370,7 +404,7 @@ const MenuBar = () => {
                 <div className='divider'></div>
 
                 {/* dropdown alignment list */}
-                <div className='dropdown-menu'>
+                <div className='dropdown-menu' ref={alignMenuRef}>
                     <div className='dropdown-btn' onClick={(e) => { setIsAlignMenuActive(!isAlignMenuActive); handleDropdownMenuPosition(e); }}>
                         <div className='dropdown-btn-horizontal-group'>
                             <i className='ri-align-justify dropdown-btn-icon'></i>
