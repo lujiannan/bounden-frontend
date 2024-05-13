@@ -103,8 +103,8 @@ function Login() {
 
     const handleSignedInEffect = () => {
         // set user icon to logged in state
-        const user_icon = document.getElementById('user-icon');
-        user_icon.classList.add('active');
+        const nav_link_user_container = document.getElementById('nav-link-user-container');
+        nav_link_user_container.classList.add('active');
     }
 
     // make two sections of the login page switch there position on switch button click
