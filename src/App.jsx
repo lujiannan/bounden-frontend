@@ -7,6 +7,7 @@ import refreshApi from "./utils/refreshApi";
 import './App.css';
 import Navbar from './ui/Navbar'
 import Blogs from './ui/blog/Blogs';
+import BlogsSelf from './ui/blog/BlogsSelf';
 import BlogCreate from './ui/blog/BlogCreate';
 import BlogDetail from './ui/blog/BlogDetail';
 import Login from './ui/user/Login';
@@ -29,7 +30,8 @@ export default function App() {
                     <div className='container'>
                         <Routes>
                             <Route path='/blogs' element={<Blogs />} />
-                            {/* require a logged in user before one can create/edit a blog (also requie when token expires) */}
+                            <Route path='/blogs-self' element={<BlogsSelf />} />
+                            {/* require a logged in user before one can create/edit a blog (also require when token expires) */}
                             <Route element={<AuthOutlet fallbackPath='/login' />}>
                                 <Route path='/blogs/create' element={ <BlogCreate /> } />
                             </Route>
