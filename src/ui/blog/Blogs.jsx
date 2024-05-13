@@ -5,10 +5,6 @@ import BlogList from './BlogList';
 function Blogs() {
     const URL_SUFFIX_BLOGS = "/blogs";
     const TITLE_BLOGS = "LATEST POSTS";
-    
-    const handleBlogDelete = (id) => {
-        alert("Blog " + id + " delete button clicked");
-    }
 
     return (
         <>
@@ -17,7 +13,7 @@ function Blogs() {
                 <i className="ri-quill-pen-line"></i>
             </Link>
             {/* generate a blog list by passing the route string, process GET request to the server */}
-            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS} handleBlogDelete={handleBlogDelete}/>
+            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS}/>
         </>
     )
 }
