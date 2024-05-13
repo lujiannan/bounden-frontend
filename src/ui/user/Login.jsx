@@ -103,8 +103,8 @@ function Login() {
 
     const handleSignedInEffect = () => {
         // set user icon to logged in state
-        const nav_link_user = document.getElementById('nav-link-user');
-        nav_link_user.classList.add('active');
+        const user_icon = document.getElementById('user-icon');
+        user_icon.classList.add('active');
     }
 
     // make two sections of the login page switch there position on switch button click
@@ -127,8 +127,8 @@ function Login() {
     const handleSignOutEffect = () => {
         signOut();
         // set user icon to logged out state
-        const nav_link_user = document.getElementById('nav-link-user');
-        nav_link_user.classList.remove('active'); 
+        const user_icon = document.getElementById('user-icon');
+        user_icon.classList.remove('active'); 
         navigate('/login')
     }
 

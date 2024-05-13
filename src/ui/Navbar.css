@@ -103,28 +103,33 @@
     position: absolute;
     right: 3rem;
     /* justify-content: end; */
-}
-.user-icon .nav-link-user {
-    padding: 0.25rem 0.4rem;
-    white-space: nowrap;
-    background-color: transparent;
     border-radius: var(--pretty-border-radius);
     border: 2px solid var(--pretty-base-color-light);
     border-style: dashed;
+    cursor: pointer;
+}
+.user-icon .nav-link-user-container {
+    margin: 0.25rem 0.4rem;
+    white-space: nowrap;
+    background-color: transparent;
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: bold;
     color: var(--pretty-base-color-light);
     transition: var(--pretty-transition);
 }
-.user-icon .nav-link-user:hover {
+.user-icon:hover {
     background-color: var(--pretty-btn-color);
     transition: var(--pretty-transition);
 }
-.user-icon .nav-link-user.active {
+.user-icon.active {
     border-style: inset;
     color: var(--pretty-base-color);
     transition: var(--pretty-transition);
+}
+.user-icon .nav-link-user-container .nav-link-user {
+    color: var(--pretty-base-color-light);
+    text-decoration: none;
 }
 
 /* change navbar style on small screens */
