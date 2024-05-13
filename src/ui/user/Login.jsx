@@ -124,95 +124,79 @@ function Login() {
         setPasswordError(false);
     }
 
-    const handleSignOutEffect = () => {
-        signOut();
-        // set user icon to logged out state
-        const user_icon = document.getElementById('user-icon');
-        user_icon.classList.remove('active'); 
-        navigate('/login')
-    }
+    return (
+        <div className='login-page-container'>
+            <div className="login-container">
+                <div className={`login-main-container ${isSignInActive ? "" : "slide-right"}`}>
+                    <div className='login-form-block' id='signUpForm'>
+                        <h2>Create Account</h2>
+                        <form>
+                            <div className='login-form-input-container'>
+                                <label htmlFor="user_name">Username</label>
+                                <input className={`login-form-input ${usernameError ? "login-form-input-error" : ""}`} type="text" id="user_name"
+                                    onChange={(e) => { setUsername(e.target.value) }} onFocus={() => { setUsernameError(false) }}>
+                                </input>
+                                {usernameError && <span className='login-form-input-error-message'>{usernameErrorMessage}</span>}
+                            </div>
 
-    if (isAuthenticated) {
-        return (
-            <div className='login-page-container'>
-                <button onClick={() => handleSignOutEffect()}>Sign Out</button>
-            </div>
-        )
-    } else {
-        return (
-            <div className='login-page-container'>
-                <div className="login-container">
-                    <div className={`login-main-container ${isSignInActive ? "" : "slide-right"}`}>
-                        <div className='login-form-block' id='signUpForm'>
-                            <h2>Create Account</h2>
-                            <form>
-                                <div className='login-form-input-container'>
-                                    <label htmlFor="user_name">Username</label>
-                                    <input className={`login-form-input ${usernameError ? "login-form-input-error" : ""}`} type="text" id="user_name"
-                                        onChange={(e) => { setUsername(e.target.value) }} onFocus={() => { setUsernameError(false) }}>
-                                    </input>
-                                    {usernameError && <span className='login-form-input-error-message'>{usernameErrorMessage}</span>}
-                                </div>
+                            <div className='login-form-input-container'>
+                                <label htmlFor="user_email_signup">Email</label>
+                                <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signup"
+                                    onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
+                                {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
+                            </div>
 
-                                <div className='login-form-input-container'>
-                                    <label htmlFor="user_email_signup">Email</label>
-                                    <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signup"
-                                        onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
-                                    {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
-                                </div>
+                            <div className='login-form-input-container'>
+                                <label htmlFor="user_password_signup">Password</label>
+                                <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signup"
+                                    onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
+                                {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
+                            </div>
 
-                                <div className='login-form-input-container'>
-                                    <label htmlFor="user_password_signup">Password</label>
-                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signup"
-                                        onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
-                                    {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
-                                </div>
-
-                                <button type="submit" onClick={handleSignUpSubmit}>Sign Up</button>
-                            </form>
-                        </div>
-                        <div className="login-form-block" id="signInForm">
-                            <h2>Login</h2>
-                            <form>
-                                <div className='login-form-input-container'>
-                                    <label htmlFor="user_email_signin">Email</label>
-                                    <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signin"
-                                        onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
-                                    {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
-                                </div>
-
-                                <div className='login-form-input-container'>
-                                    <label htmlFor="user_password_signin">Password</label>
-                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signin"
-                                        onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
-                                    {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
-                                </div>
-
-                                <button type="submit" onClick={handleSignInSubmit}>
-                                    {isLoading ?
-                                        <div className="login-form-loading-container">
-                                            <div className="loading-pulse"></div>
-                                        </div> : "Sign In"}
-                                </button>
-                            </form>
-                        </div>
+                            <button type="submit" onClick={handleSignUpSubmit}>Sign Up</button>
+                        </form>
                     </div>
-                    <div className={`login-aside-container ${isSignInActive ? "" : "slide-left"}`}>
-                        <div className="signin-block">
-                            <h2>Already a User?</h2>
+                    <div className="login-form-block" id="signInForm">
+                        <h2>Login</h2>
+                        <form>
+                            <div className='login-form-input-container'>
+                                <label htmlFor="user_email_signin">Email</label>
+                                <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signin"
+                                    onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
+                                {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
+                            </div>
 
-                            <button type="submit" onClick={handleSideSignInClick}>Sign In</button>
-                        </div>
-                        <div className="signup-block">
-                            <h2>New User?</h2>
+                            <div className='login-form-input-container'>
+                                <label htmlFor="user_password_signin">Password</label>
+                                <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signin"
+                                    onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
+                                {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
+                            </div>
 
-                            <button type="submit" onClick={handleSideSignUpClick}>Sign Up</button>
-                        </div>
+                            <button type="submit" onClick={handleSignInSubmit}>
+                                {isLoading ?
+                                    <div className="login-form-loading-container">
+                                        <div className="loading-pulse"></div>
+                                    </div> : "Sign In"}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div className={`login-aside-container ${isSignInActive ? "" : "slide-left"}`}>
+                    <div className="signin-block">
+                        <h2>Already a User?</h2>
+
+                        <button type="submit" onClick={handleSideSignInClick}>Sign In</button>
+                    </div>
+                    <div className="signup-block">
+                        <h2>New User?</h2>
+
+                        <button type="submit" onClick={handleSideSignUpClick}>Sign Up</button>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Login
