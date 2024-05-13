@@ -99,6 +99,11 @@ function Navbar() {
                     {isNavUserClicked && (
                         <div className='dropdown-list'>
                             <div className='dropdown-item'
+                                onClick={() => { navigate('/blogs-self') }}>
+                                <i className='ri-edit-box-line'></i>
+                                <span>&nbsp;&nbsp;My Blogs</span>
+                            </div>
+                            <div className='dropdown-item'
                                 onClick={handleSignOutClick}>
                                 <i className='ri-logout-box-r-line'></i>
                                 <span>&nbsp;&nbsp;Logout</span>

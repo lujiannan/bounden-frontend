@@ -238,11 +238,11 @@
         transform: scaleX(1);
     }
 
-    .user-icon {
+    .nav-link-user-container {
         margin-right: 1.5rem;
     }
 
-    .user-icon .dropdown-list {
+    .nav-link-user-container .dropdown-list {
         right: -2.5rem;
     }
 

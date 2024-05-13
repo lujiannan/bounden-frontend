@@ -15,7 +15,15 @@ const useFetchSuffix = (urlSuffix) => {
     useEffect(() => {      
         const abortController = new AbortController();
         
-        fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, { signal: abortController.signal })
+        fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
+            signal: abortController.signal,
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                // get access token from local storage
+                "Authorization": "Bearer " + localStorage.getItem("_auth"),
+            },
+        })
             .then(res => {
                 if (!res.ok) {throw Error('Could not fetch the data for that resource...');}
                 return res.json();
