@@ -1,3 +1,21 @@
+.blog-delete-modal-btn-group {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    & button {
+        padding: 0.5rem;
+        font-size: 1rem;
+        font-weight: var(--pretty-font-weight);
+        border-radius: var(--pretty-border-radius-small);
+        border-color: var(--pretty-btn-color);
+        color: var(--pretty-base-color);
+        background-color: var(--pretty-btn-color);
+    }
+}
+
 .blog-container {
     text-align: start;
     width: var(--pretty-inner-container-width);
@@ -11,6 +29,7 @@
     font-weight: bold;
     margin-bottom: 1rem;
     padding: 1rem 0rem;
+    user-select: none;
 }
 
 .blog-list-loading-container {
@@ -22,6 +41,7 @@
 }
 
 .blog-preview {
+    cursor: pointer;
     text-align: start;
     padding: 1.5rem 1.5rem;
     margin: 0.75rem 0;
@@ -33,7 +53,8 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 15px;
     transition: var(--pretty-transition);
 }
-.blog-preview .blog-preview-link {
+.blog-preview .blog-preview-inner-container {
+    user-select: none;
     text-decoration: none;
     color: var(--pretty-base-color);
 }

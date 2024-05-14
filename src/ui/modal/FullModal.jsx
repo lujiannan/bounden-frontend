@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import './FullModal.css'
 
-const TiptapImageUploadModal = ({ isOpen, onClose, children }) => {
+const FullModal = ({ isOpen, onClose, children }) => {
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
@@ -33,4 +33,4 @@ const TiptapImageUploadModal = ({ isOpen, onClose, children }) => {
   );
 };
 
-export default TiptapImageUploadModal;
+export default FullModal;
