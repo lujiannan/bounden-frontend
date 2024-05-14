@@ -296,6 +296,14 @@
         &.active {
             background-color: var(--pretty-nav-bg-color-white);
         }
+
+        &:disabled {
+            color: var(--pretty-base-color-lighter);
+            
+            &:hover {
+                background-color: var(--pretty-bg-color);
+            }
+        }
     }
 
     & .divider {
