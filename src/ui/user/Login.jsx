@@ -3,7 +3,9 @@ import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useNavigate } from 'react-router-dom'
+
 import './Login.css'
+import AlertModal from '../modal/AlertModal'
 
 function Login() {
     // server api
@@ -29,6 +31,7 @@ function Login() {
     const [isSignInActive, setIsSignInActive] = useState(true);
     const isAuthenticated = useIsAuthenticated()
     const [fetchError, setFetchError] = useState(null);
+    const [shouldSignupAlertOn, setShouldSignupAlertOn] = useState(false);
 
     const handleSubmit = (e, suffix) => {
         setIsLoading(true);
@@ -57,8 +60,7 @@ function Login() {
                     setUsernameError(true);
                     setUsernameErrorMessage(data.message);
                     throw Error('Username error');
-                }
-                if (data.message === "Email does not exist" || data.message.email === "This field cannot be blank" || data.message === "Email already exists") {
+                } else if (data.message === "Email does not exist" || data.message.email === "This field cannot be blank" || data.message === "Email already exists" || data.message === "Email is not verified" || data.message === "Please enter a valid email") {
                     setEmailError(true);
                     setEmailErrorMessage(data.message);
                     throw Error('Email error');
@@ -67,9 +69,19 @@ function Login() {
                     setPasswordErrorMessage(data.message);
                     throw Error('Password error');
                 }
+
                 setIsLoading(false);
-                // console.log(data.access_token);
-                if (signIn({
+
+                // show the email confirmation alert modal after sign up
+                if (suffix === URL_SUFFIX_SIGNUP) {
+                    setShouldSignupAlertOn(true);
+                    setTimeout(() => {
+                        setShouldSignupAlertOn(false);
+                    }, 5000)
+                }
+
+                // authenticate the user and redirect to dashboard page
+                if (suffix === URL_SUFFIX_SIGNIN && signIn({
                     auth: {
                         token: data.access_token,
                         type: 'Bearer',
@@ -79,10 +91,12 @@ function Login() {
                 })) { // Only if you are using refreshToken feature
                     handleSignedInEffect();
                     // Redirect or do-something
-                    navigate(-1);
+                    navigate("/blogs");
                 } else {
-                    //Throw error
-                    alert("Error Occoured. Try Again")
+                    if (suffix !== URL_SUFFIX_SIGNUP) {
+                        //Throw error
+                        alert("Error Occoured. Try Again")
+                    }
                 }
             })
             .catch(error => {
@@ -94,6 +108,11 @@ function Login() {
     }
 
     const handleSignUpSubmit = (e) => {
+        setShouldSignupAlertOn(true);
+        setTimeout(() => {
+            setShouldSignupAlertOn(false);
+        }, 2000)
+
         handleSubmit(e, URL_SUFFIX_SIGNUP);
     }
 
@@ -125,77 +144,87 @@ function Login() {
     }
 
     return (
-        <div className='login-page-container'>
-            <div className="login-container">
-                <div className={`login-main-container ${isSignInActive ? "" : "slide-right"}`}>
-                    <div className='login-form-block' id='signUpForm'>
-                        <h2>Create Account</h2>
-                        <form>
-                            <div className='login-form-input-container'>
-                                <label htmlFor="user_name">Username</label>
-                                <input className={`login-form-input ${usernameError ? "login-form-input-error" : ""}`} type="text" id="user_name"
-                                    onChange={(e) => { setUsername(e.target.value) }} onFocus={() => { setUsernameError(false) }}>
-                                </input>
-                                {usernameError && <span className='login-form-input-error-message'>{usernameErrorMessage}</span>}
-                            </div>
+        <>
+            <AlertModal isOpen={shouldSignupAlertOn} onClose={() => setShouldSignupAlertOn(false)}>
+                <p>the verification link is sent to your email</p>
+            </AlertModal>
+            <div className='login-page-container'>
+                <div className="login-container">
+                    <div className={`login-main-container ${isSignInActive ? "" : "slide-right"}`}>
+                        <div className='login-form-block' id='signUpForm'>
+                            <h2>Create Account</h2>
+                            <form>
+                                <div className='login-form-input-container'>
+                                    <label htmlFor="user_name">Username (not changeable)</label>
+                                    <input className={`login-form-input ${usernameError ? "login-form-input-error" : ""}`} type="text" id="user_name"
+                                        onChange={(e) => { setUsername(e.target.value) }} onFocus={() => { setUsernameError(false) }}>
+                                    </input>
+                                    {usernameError && <span className='login-form-input-error-message'>{usernameErrorMessage}</span>}
+                                </div>
 
-                            <div className='login-form-input-container'>
-                                <label htmlFor="user_email_signup">Email</label>
-                                <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signup"
-                                    onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
-                                {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
-                            </div>
+                                <div className='login-form-input-container'>
+                                    <label htmlFor="user_email_signup">Email</label>
+                                    <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signup"
+                                        onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
+                                    {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
+                                </div>
 
-                            <div className='login-form-input-container'>
-                                <label htmlFor="user_password_signup">Password</label>
-                                <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signup"
-                                    onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
-                                {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
-                            </div>
+                                <div className='login-form-input-container'>
+                                    <label htmlFor="user_password_signup">Password</label>
+                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signup"
+                                        onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
+                                    {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
+                                </div>
 
-                            <button type="submit" onClick={handleSignUpSubmit}>Sign Up</button>
-                        </form>
+                                <button type="submit" onClick={handleSignUpSubmit}>
+                                    {isLoading ?
+                                        <div className="login-form-loading-container">
+                                            <div className="loading-pulse"></div>
+                                        </div> : "Sign Up"}
+                                </button>
+                            </form>
+                        </div>
+                        <div className="login-form-block" id="signInForm">
+                            <h2>Login</h2>
+                            <form>
+                                <div className='login-form-input-container'>
+                                    <label htmlFor="user_email_signin">Email</label>
+                                    <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signin"
+                                        onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
+                                    {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
+                                </div>
+
+                                <div className='login-form-input-container'>
+                                    <label htmlFor="user_password_signin">Password</label>
+                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signin"
+                                        onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
+                                    {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
+                                </div>
+
+                                <button type="submit" onClick={handleSignInSubmit}>
+                                    {isLoading ?
+                                        <div className="login-form-loading-container">
+                                            <div className="loading-pulse"></div>
+                                        </div> : "Sign In"}
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div className="login-form-block" id="signInForm">
-                        <h2>Login</h2>
-                        <form>
-                            <div className='login-form-input-container'>
-                                <label htmlFor="user_email_signin">Email</label>
-                                <input className={`login-form-input ${emailError ? "login-form-input-error" : ""}`} type="email" id="user_email_signin"
-                                    onChange={(e) => { setEmail(e.target.value) }} onFocus={() => { setEmailError(false) }} />
-                                {emailError && <span className='login-form-input-error-message'>{emailErrorMessage}</span>}
-                            </div>
+                    <div className={`login-aside-container ${isSignInActive ? "" : "slide-left"}`}>
+                        <div className="signin-block">
+                            <h2>Already a User?</h2>
 
-                            <div className='login-form-input-container'>
-                                <label htmlFor="user_password_signin">Password</label>
-                                <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signin"
-                                    onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
-                                {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
-                            </div>
+                            <button type="submit" onClick={handleSideSignInClick}>Sign In</button>
+                        </div>
+                        <div className="signup-block">
+                            <h2>New User?</h2>
 
-                            <button type="submit" onClick={handleSignInSubmit}>
-                                {isLoading ?
-                                    <div className="login-form-loading-container">
-                                        <div className="loading-pulse"></div>
-                                    </div> : "Sign In"}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <div className={`login-aside-container ${isSignInActive ? "" : "slide-left"}`}>
-                    <div className="signin-block">
-                        <h2>Already a User?</h2>
-
-                        <button type="submit" onClick={handleSideSignInClick}>Sign In</button>
-                    </div>
-                    <div className="signup-block">
-                        <h2>New User?</h2>
-
-                        <button type="submit" onClick={handleSideSignUpClick}>Sign Up</button>
+                            <button type="submit" onClick={handleSideSignUpClick}>Sign Up</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

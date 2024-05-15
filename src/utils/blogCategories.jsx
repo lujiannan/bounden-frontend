@@ -3,6 +3,9 @@ const BlogCategories = [
         cateName: "Technology"
     },
     {
+        cateName: "Note"
+    },
+    {
         cateName: "Fashion"
     },
     {
