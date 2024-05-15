@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 
-import './FullModal.css'
+import './AlertModal.css'
 
-const FullModal = ({ isOpen, onClose, children }) => {
+const AlertModal = ({ isOpen, onClose, children }) => {
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
@@ -22,9 +22,9 @@ const FullModal = ({ isOpen, onClose, children }) => {
 //   if (!isOpen) return null;
 
   return (
-    <div className={`full-modal ${isOpen? 'open' : ''}`}>
-      <div className="full-modal-content">
-        <span className="full-modal-close" onClick={onClose}>
+    <div className={`alert-modal ${isOpen? 'open' : ''}`}>
+      <div className="alert-modal-content">
+        <span className="alert-modal-close" onClick={onClose}>
             <i className="ri-close-line"></i>
         </span>
         {children}
@@ -33,4 +33,4 @@ const FullModal = ({ isOpen, onClose, children }) => {
   );
 };
 
-export default FullModal;
+export default AlertModal;
