@@ -18,6 +18,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const [usernameError, setUsernameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
@@ -125,6 +126,7 @@ function Login() {
     const handleSideSignInClick = () => {
         setIsSignInActive(true);
         // reset the form verification errors when switching forms
+        setIsPasswordVisible(false);
         setUsernameError(false);
         setEmailError(false);
         setPasswordError(false);
@@ -133,6 +135,7 @@ function Login() {
     const handleSideSignUpClick = () => {
         setIsSignInActive(false);
         // reset the form verification errors when switching forms
+        setIsPasswordVisible(false);
         setUsernameError(false);
         setEmailError(false);
         setPasswordError(false);
@@ -166,9 +169,15 @@ function Login() {
 
                                 <div className='login-form-input-container'>
                                     <label htmlFor="user_password_signup">Password</label>
-                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signup"
+                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type={`${isPasswordVisible ? "text" : "password"}`} id="user_password_signup"
                                         onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
                                     {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
+                                    <div
+                                        className="password-toggle-button-signup"
+                                        onClick={() => {setIsPasswordVisible(!isPasswordVisible)}}
+                                    >
+                                        <i className={`${isPasswordVisible ? "ri-eye-fill" : "ri-eye-off-fill"}`}></i>
+                                    </div>
                                 </div>
 
                                 <button type="submit" onClick={handleSignUpSubmit}>
@@ -191,9 +200,15 @@ function Login() {
 
                                 <div className='login-form-input-container'>
                                     <label htmlFor="user_password_signin">Password</label>
-                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type="password" id="user_password_signin"
+                                    <input className={`login-form-input ${passwordError ? "login-form-input-error" : ""}`} type={`${isPasswordVisible ? "text" : "password"}`} id="user_password_signin"
                                         onChange={(e) => { setPassword(e.target.value) }} onFocus={() => { setPasswordError(false) }} />
                                     {passwordError && <span className='login-form-input-error-message'>{passwordErrorMessage}</span>}
+                                    <div
+                                        className="password-toggle-button-signin"
+                                        onClick={() => {setIsPasswordVisible(!isPasswordVisible)}}
+                                    >
+                                        <i className={`${isPasswordVisible ? "ri-eye-fill" : "ri-eye-off-fill"}`}></i>
+                                    </div>
                                 </div>
 
                                 <button type="submit" onClick={handleSignInSubmit}>

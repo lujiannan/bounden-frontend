@@ -96,6 +96,26 @@
     color: var(--pretty-error-color);
 }
 
+.login-form-input-container .password-toggle-button-signin {
+    position: absolute;
+    top: calc(50% + 1.6rem);
+    right: 15%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--pretty-base-color);
+    cursor: pointer;
+}
+
+.login-form-input-container .password-toggle-button-signup {
+    position: absolute;
+    top: calc(50% + 4.5rem);
+    right: 15%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: var(--pretty-base-color);
+    cursor: pointer;
+}
+
 .login-form-block button {
     text-transform: uppercase;
     font-size: 1.25rem;
@@ -239,7 +259,6 @@
     }
 
     .login-form-input-container {
-        /* margin-bottom: 1em; */
         height: calc(0.95rem + 0.75rem + 2.25em + 0.75rem);
     }
 
@@ -251,6 +270,14 @@
     .login-form-input-container .login-form-input {
         font-size: 0.8rem;
         height: 2.25rem;
+    }
+
+    .login-form-input-container .password-toggle-button-signin {
+        top: calc(50% + 2.6rem);
+    }
+
+    .login-form-input-container .password-toggle-button-signup {
+        top: calc(50% + 5rem);
     }
 
     .login-aside-container {
