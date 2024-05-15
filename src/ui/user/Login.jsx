@@ -108,11 +108,6 @@ function Login() {
     }
 
     const handleSignUpSubmit = (e) => {
-        setShouldSignupAlertOn(true);
-        setTimeout(() => {
-            setShouldSignupAlertOn(false);
-        }, 2000)
-
         handleSubmit(e, URL_SUFFIX_SIGNUP);
     }
 
