@@ -41,7 +41,7 @@ function BlogDetail() {
                             <h1 className="blog-detail-about-title">About This Post</h1>
                             <p>
                                 {"Written by " + blog.blog.author.name + " - "}
-                                <a className="blog-detail-link" href="mailto:">{blog.blog.author.email}</a>
+                                <a className="blog-detail-link" href={`mailto:${blog.blog.author.email}`}>{blog.blog.author.email}</a>
                             </p>
                         </div>
                     </div>
