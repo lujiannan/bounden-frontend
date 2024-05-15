@@ -51,6 +51,7 @@
 }
 
 .login-form-block h2 {
+    user-select: none;
     color: var(--pretty-base-color);
     font-size: 2.5rem;
     margin: 0em 3rem 1rem 3rem;
@@ -135,6 +136,7 @@
 }
 
 .login-aside-container h2 {
+    user-select: none;
     margin: 0rem 3rem;
     font-size: 2rem;
     color: var(--pretty-btn-text-color);
