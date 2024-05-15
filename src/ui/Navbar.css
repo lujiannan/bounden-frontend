@@ -26,9 +26,8 @@
 
 .NavbarItems-affix {
     height: var(--top-nav-height-scrolled);
-    background-color: var(--pretty-nav-bg-color-white);
+    background: var(--pretty-nav-bg-color-white);
     transition: var(--pretty-transition);
-    /* opacity: 1; */
 }
 
 .bounden-title {
