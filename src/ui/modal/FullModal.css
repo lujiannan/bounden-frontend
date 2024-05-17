@@ -21,7 +21,7 @@
 
     & .full-modal-content {
         background-color: var(--pretty-bg-color);
-        padding: 1.5rem;
+        padding: 1.5rem 2rem;
         border-radius: var(--pretty-border-radius);
         position: relative;
         display: flex;

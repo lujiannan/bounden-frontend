@@ -137,11 +137,11 @@ const MenuBar = () => {
         if (event.target.value === 0) {
             // image from website
             setImageUploadModalTab(0);
-            document.getElementById("image-upload-modal-indicator").style.marginLeft = "0";
+            // document.getElementById("image-upload-modal-indicator").style.marginLeft = "0";
         } else if (event.target.value === 1) {
             // image upload
             setImageUploadModalTab(1);
-            document.getElementById("image-upload-modal-indicator").style.marginLeft = "calc((100% - 3rem)/2)";
+            // document.getElementById("image-upload-modal-indicator").style.marginLeft = "calc((100% - 3rem)/2)";
         }
     }
 
@@ -153,7 +153,7 @@ const MenuBar = () => {
                 <ul className='image-upload-modal-tab-bar'>
                     <li value={0} onClick={(e) => { handleImageUploadModalTabClick(e) }} className='image-upload-modal-tab-item'>WEBSITE</li>
                     <li value={1} onClick={(e) => { handleImageUploadModalTabClick(e) }} className='image-upload-modal-tab-item'>UPLOAD</li>
-                    <div className="image-upload-modal-indicator" id="image-upload-modal-indicator"></div>
+                    <div className="image-upload-modal-indicator" id="image-upload-modal-indicator" style={{ marginLeft: imageUploadModalTab===1 ? "calc((100% - 3rem)/2)" : "0" }}></div>
                 </ul>
                 {/* website tab */}
                 {imageUploadModalTab === 0 && (

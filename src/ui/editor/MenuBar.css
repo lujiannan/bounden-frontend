@@ -24,11 +24,10 @@
     & .image-upload-modal-indicator {
         position: absolute;
         border-radius: var(--pretty-border-radius-small);
-        width: calc((100% - 3rem)/2);
+        width: calc((100% - 5rem)/2);
         height: 0.25rem;
         background: var(--pretty-base-color);
         margin-top: 2.5rem;
-        /* margin-left: calc((100% - 3rem)/2); */
         transition: var(--pretty-transition);
     }
 }
@@ -62,10 +61,18 @@
     & button {
         margin-top: 1rem;
         font-size: 1rem;
-        padding: 0.5rem;
+        padding: 0.75rem;
         border-radius: var(--pretty-border-radius-small);
         border: none;
         cursor: pointer;
+        font-weight: var(--pretty-font-weight);
+        color: var(--pretty-base-color);
+        background-color: var(--pretty-btn-color);
+        transition: var(--pretty-transition);
+
+        &:hover {
+            background-color: var(--pretty-btn-color-hover);
+        }
     }
 }
 .image-upload-modal-container {
@@ -115,7 +122,8 @@
     color: var(--pretty-base-color-light);
 }
 
-@media screen and (max-width: 768px) {
+/* for mobile */
+@media screen and (max-width: 425px) {
     .image-upload-modal-url-container{
         & input {
             width: 16rem;
