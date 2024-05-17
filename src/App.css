@@ -1,18 +1,19 @@
 /* global font styles */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Quicksand;
+    font-family: "Noto Serif SC", serif;
     /* define global variables */
     --pretty-base-color: #222;
     --pretty-base-color-light: #666;
     --pretty-base-color-lighter: #aaa;
     --pretty-base-color-dark: #111;
     --pretty-alert-color: #aaa;
-    --pretty-bg-color: #f3f4f7;
+    --pretty-bg-color: #fff;
     /* #eee with 0.95 opacity */
     --pretty-nav-bg-color-white: rgba(238, 238, 238, 0.95);
     --pretty-header-bg-color-whiter: rgba(238, 238, 238, 0.3);
@@ -32,8 +33,8 @@
     --pretty-transition: all 0.3s ease-in-out;
     --pretty-transition-fast: all 0.2s ease-in-out;
     --pretty-inner-container-width: 53rem;
-    --top-nav-height: 100px;
-    --top-nav-height-scrolled: 75px;
+    --top-nav-height: 5rem;
+    --top-nav-height-scrolled: 4rem;
 }
 
 body {

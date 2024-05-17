@@ -16,6 +16,7 @@
         margin: 0.5rem;
         padding: 0.5rem;
         border: none;
+        border-radius: 0;
         border-bottom: 2px solid var(--pretty-input-border-color);
         transition: var(--pretty-transition);
     }
@@ -96,8 +97,8 @@
     width: min(90%, 960px);
     height: min(90%, 600px);
     min-width: 200px;
-    min-height: 500px;
-    background-color: var(--pretty-btn-color);
+    min-height: 450px;
+    background-color: var(--pretty-bg-color);
     /* box-shadow: 0 0 1em #e5e5e5; */
     font-family: inherit;
     border-radius: var(--pretty-border-radius);
@@ -122,6 +123,7 @@
     right: 0;
     width: 40%;
     background-color: var(--pretty-base-color);
+    opacity: 0.8;
 }
 
 .login-form-block {
@@ -207,7 +209,7 @@
     letter-spacing: 0.1rem;
     transition: var(--pretty-transition);
     padding: 1em 3em;
-    border-radius: 2em;
+    border-radius: var(--pretty-border-radius-large);
     background-color: var(--pretty-base-color);
     color: var(--pretty-btn-text-color);
     cursor: pointer;
@@ -243,7 +245,7 @@
     text-transform: uppercase;
     font-size: 1.05rem;
     padding: 1em 3.5em;
-    border-radius: 2em;
+    border-radius: var(--pretty-border-radius-large);
 }
 
 .login-aside-container h2 {
@@ -314,7 +316,7 @@
 }
 
 /* adapt to mobile devices */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .login-page-container {
         margin-top: 5rem;
         padding-bottom: 3rem;
@@ -323,6 +325,8 @@
 
     .login-container {
         min-height: 300px;
+        display: block;
+        margin: auto auto;
     }
 
     .login-main-container,
@@ -364,7 +368,7 @@
     }
 
     .login-form-input-container .password-toggle-button-signin {
-        top: calc(50% + 2rem);
+        top: calc(50% + 1.75rem);
     }
 
     .login-form-input-container .password-toggle-button-signup {
@@ -404,13 +408,5 @@
     .login-aside-container.slide-left {
         top: 0;
         transform: translateY(0);
-    }
-}
-
-/* adapt to mobile devices landscape */
-@media screen and (max-height: 630px) {
-    .login-container {
-        display: block;
-        margin: auto auto;
     }
 }

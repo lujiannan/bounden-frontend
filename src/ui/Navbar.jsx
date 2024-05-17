@@ -72,12 +72,12 @@ function Navbar() {
     return (
         // after scrolling down, navbar's background color & height changes
         <nav className={`NavbarItems ${scrolled ? "NavbarItems-affix" : ""}`}>
-            <h1 className="bounden-title">
+            <div className="bounden-title">
                 <Link to="/" className="nav-link-home">
                     <img className="bounden-icon" alt="Bounden Icon" src={boundenIcon}></img>
-                    <span>Bounden</span>
+                    <span className="bounden-title-text">Bounden</span>
                 </Link>
-            </h1>
+            </div>
             <div className="menu-icon" onClick={handleMenuIconClick} ref={menuIconRef}>
                 <i className={menuClicked ? "ri-close-line" : "ri-menu-line"}></i>
             </div>
