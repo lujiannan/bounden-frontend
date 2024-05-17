@@ -30,7 +30,7 @@ export default function App() {
                     <Navbar />
                     <div className='container'>
                         <Routes>
-                            <Route path='/blogs' element={<Blogs />} />
+                            <Route path='/' element={<Blogs />} />
                             {/* require a logged in user before one can create/edit a blog (also require when token expires) */}
                             <Route element={<AuthOutlet fallbackPath='/login' />}>
                                 <Route path='/blogs/create' element={ <BlogCreate /> } />

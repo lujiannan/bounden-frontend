@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: 1.2rem;
-    padding: 0 30px;
+    padding: 0 2rem;
     /* background-color: var(--pretty-base-color); */
     background-color: var(--pretty-bg-color);
     /* box-shadow: 0 5px 15px rgba(34, 34, 34, 0.25); */
@@ -17,11 +17,6 @@
     transition: var(--pretty-transition);
     height: var(--top-nav-height);
     /* opacity: 0.75; */
-}
-
-.NavbarItems h1 {
-    /* center the logo and app name */
-    margin: auto 0;
 }
 
 .NavbarItems-affix {
@@ -38,7 +33,12 @@
     transition: var(--pretty-transition);
 }
 
-.nav-link-home {
+.bounden-title .bounden-title-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.bounden-title .nav-link-home {
     text-decoration: none;
     color: var(--pretty-base-color);
     display: flex;
@@ -47,7 +47,7 @@
     align-items: center;
 }
 
-.bounden-icon {
+.bounden-title .bounden-icon {
     height: 2rem;
     margin-right: 0.5rem;
 }
@@ -78,7 +78,7 @@
 }
 
 .nav-links i {
-    padding-right: 10px;
+    padding-right: 0.5rem;
     font-size: 1.25rem;
 }
 
@@ -92,15 +92,17 @@
 /* toggle menu icon */
 .menu-icon {
     /* hide by default */
+    position: absolute;
+    left: 1.5rem;
     display: none;
-    justify-content: end;
+    justify-content: start;
     font-size: 1.5rem;
     color: var(--pretty-base-color);
     padding-bottom: 0.25rem;
 }
 
 .menu-icon:hover {
-    color: var(--pretty-btn-color-hover);
+    /* color: var(--pretty-btn-color-hover); */
     cursor: pointer;
 }
 
@@ -115,7 +117,7 @@
 }
 
 .nav-link-user-container .user-icon {
-    margin: 0.25rem 0.4rem;
+    margin: 0.1rem 0.3rem 0.15rem 0.3rem;
     white-space: nowrap;
     background-color: transparent;
     text-decoration: none;
@@ -175,9 +177,17 @@
 }
 
 /* change navbar style on small screens */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
+    .NavbarItems {
+        justify-content: center;
+    }
+
     .bounden-title {
-        padding-left: 1.5rem;
+        padding-left: 0rem;
+    }
+    
+    .bounden-icon {
+        display: none;
     }
 
     .nav-menu {
@@ -193,7 +203,7 @@
         height: 100vh;
         position: absolute;
         top: 0px;
-        right: -18rem;
+        left: -18rem;
         align-items: stretch;
         padding: 100px 0 30px 0;
         margin: 0;
@@ -202,7 +212,7 @@
 
     .nav-menu.active {
         transition: var(--pretty-transition);
-        right: 0rem;
+        left: 0rem;
     }
 
     .nav-links {
@@ -238,11 +248,7 @@
     }
 
     .nav-link-user-container {
-        margin-right: 1.5rem;
-    }
-
-    .nav-link-user-container .dropdown-list {
-        right: -2.5rem;
+        right: 1.5rem;
     }
 
     .menu-icon {
@@ -250,11 +256,5 @@
         /* align with the user icon */
         margin-top: 0.25rem;
         z-index: 99;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .bounden-title {
-        padding-left: 0rem;
     }
 }

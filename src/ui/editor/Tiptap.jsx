@@ -17,7 +17,7 @@ import './Tiptap.css'
 const extensions = [
     StarterKit,
     Placeholder.configure({
-        placeholder: ' ʕ•̀ω•́ʔ✧ ~ ~ ~',
+        placeholder: ' What impressed you today?...',
     }),
     Underline,
     TextStyle,

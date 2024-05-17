@@ -65,7 +65,7 @@ function BlogCreate() {
             })
             .then(() => {
                 // navigate to the blog page
-                navigate("/blogs");
+                navigate("/");
             })
             .catch(error => {
                 setIsSubmitting(false);

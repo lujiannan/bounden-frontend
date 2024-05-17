@@ -100,7 +100,7 @@ function Login() {
                 })) { // Only if you are using refreshToken feature
                     handleSignedInEffect();
                     // Redirect or do-something
-                    navigate("/blogs");
+                    navigate("/");
                 } else {
                     if (suffix !== URL_SUFFIX_SIGNUP) {
                         //Throw error
