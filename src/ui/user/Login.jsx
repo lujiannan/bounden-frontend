@@ -57,15 +57,15 @@ function Login() {
             })
             .then(data => {
                 // console.log(data.message);
-                if (data.message === "Username must be at least 2 characters long" || data.message.username === "This field cannot be blank") {
+                if (data.message.username === "This field cannot be blank" || data.message === "Username must be at least 2 characters long") {
                     setUsernameError(true);
                     setUsernameErrorMessage(data.message);
                     throw Error('Username error');
-                } else if (data.message === "Email does not exist" || data.message.email === "This field cannot be blank" || data.message === "Email already exists" || data.message === "Email is not verified" || data.message === "Please enter a valid email") {
+                } else if (data.message.email === "This field cannot be blank" || data.message === "Email does not exist" || data.message === "Email already exists" || data.message === "Email is not verified" || data.message === "Please enter a valid email") {
                     setEmailError(true);
                     setEmailErrorMessage(data.message);
                     throw Error('Email error');
-                } else if (data.message === "Password is incorrect" || data.message === "Password must be at least 4 characters long" || data.message.password === "This field cannot be blank") {
+                } else if (data.message.password === "This field cannot be blank" || data.message === "Password is incorrect" || data.message === "Password must be 8+ length with a mix of letters and numbers") {
                     setPasswordError(true);
                     setPasswordErrorMessage(data.message);
                     throw Error('Password error');
