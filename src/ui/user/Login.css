@@ -1,3 +1,87 @@
+.reset-password-modal-email-container {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--pretty-bg-color);
+
+    & form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    & input {
+        width: 20rem;
+        font-size: 1rem;
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border: none;
+        border-bottom: 2px solid var(--pretty-input-border-color);
+        transition: var(--pretty-transition);
+    }
+
+    & input:focus {
+        outline: none;
+        border-color: var(--pretty-input-border-color-focus);
+    }
+
+    & .forgot-password-email-error-message {
+        align-self: flex-end;
+        font-size: 0.75rem;
+        color: var(--pretty-error-color);
+        margin-right: 0.5rem;
+    }
+
+    & button {
+        margin-top: 1rem;
+        font-size: 1rem;
+        padding: 0.75rem;
+        border-radius: var(--pretty-border-radius-small);
+        border: none;
+        cursor: pointer;
+        font-weight: var(--pretty-font-weight);
+        color: var(--pretty-base-color);
+        background-color: var(--pretty-btn-color);
+        transition: var(--pretty-transition);
+
+        &:hover {
+            background-color: var(--pretty-btn-color-hover);
+        }
+    }
+
+    .reset-password-loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & .loading-pulse {
+            height: 1.25rem;
+        }
+
+        & .loading-pulse::before, 
+        .loading-pulse::after {
+            height: 1.25rem;
+        }
+    }
+}
+
+/* for mobile */
+@media screen and (max-width: 425px) {
+    .reset-password-modal-email-container {
+        & input {
+            width: 16rem;
+        }
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .reset-password-modal-email-container {
+        & input {
+            width: 14rem;
+        }
+    }
+}
+
 .login-page-container {
     display: flex;
     width: 100%;
@@ -98,7 +182,7 @@
 
 .login-form-input-container .password-toggle-button-signin {
     position: absolute;
-    top: calc(50% + 1.6rem);
+    top: calc(50% + 1rem);
     right: 15%;
     transform: translateY(-50%);
     font-size: 1.2rem;
@@ -137,6 +221,13 @@
 .login-form-block .loading-pulse::before, 
 .login-form-block .loading-pulse::after {
     height: 1.25rem;
+}
+
+.login-form-block .login-form-forgot-password-link {
+    font-size: 0.9rem;
+    color: var(--pretty-base-color);
+    text-align: center;
+    cursor: pointer;
 }
 
 .login-main-container button {
@@ -273,11 +364,16 @@
     }
 
     .login-form-input-container .password-toggle-button-signin {
-        top: calc(50% + 2.6rem);
+        top: calc(50% + 2rem);
     }
 
     .login-form-input-container .password-toggle-button-signup {
         top: calc(50% + 5rem);
+    }
+
+    .login-form-block .login-form-forgot-password-link {
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
     }
 
     .login-aside-container {
