@@ -61,6 +61,24 @@ body {
     min-height: calc(100vh - var(--top-nav-height));
 }
 
+/* footer */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: var(--pretty-base-color-lighter);
+
+    & a {
+        margin-top: 0.5rem;
+        color: var(--pretty-base-color-light);
+        text-decoration: none;
+        font-weight: var(--pretty-font-weight);
+    }
+}
+
 /* loading pulse animation */
 @-webkit-keyframes pulse {
     50% {
