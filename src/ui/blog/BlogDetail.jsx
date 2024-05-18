@@ -38,7 +38,7 @@ function BlogDetail() {
                             initialContent={JSON.parse(blog.blog.content)}
                         />
                         <div className="blog-detail-footer">
-                            <h1 className="blog-detail-about-title">About This Post</h1>
+                            <h2 className="blog-detail-about-title">About This Post</h2>
                             <p>
                                 {"Written by " + blog.blog.author.name + " - "}
                                 <a className="blog-detail-link" href={`mailto:${blog.blog.author.email}`}>{blog.blog.author.email}</a>
