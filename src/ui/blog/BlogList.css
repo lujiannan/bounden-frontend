@@ -80,7 +80,7 @@
 
 .blog-preview .blog-preview-description {
     max-width: fit-content;
-    margin: 0.5rem 0;
+    margin: 0.25rem 0;
     color: var(--pretty-base-color-light);
     background-color: var(--pretty-btn-color);
     border-radius: var(--pretty-border-radius-small);
