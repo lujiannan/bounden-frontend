@@ -2,32 +2,13 @@
 This is a reusable component for displaying a list of blog posts
 */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./BlogList.css"
 import { useNavigate } from "react-router-dom";
 
-import useFetchSuffix from '../../hooks/useFetchSuffix.jsx';
 import blogFormatDate from "../../utils/blogFormatDate.jsx";
 import useLongPress from '../../hooks/useLongPress.jsx';
 import FullModal from '../modal/FullModal';
-
-function sortBlogsByUpdated(data_blogs) {
-    return data_blogs.sort((a, b) => {
-        // Extract the "updated" time from each object and convert it to a Date object
-        const dateA = new Date(a.attributes.updated);
-        const dateB = new Date(b.attributes.updated);
-
-        // Compare the dates
-        // If "updated" time is null, consider it as the minimum value so that it appears at the end
-        if (dateA.getTime() === dateB.getTime()) {
-            return 0;
-        } else if (!dateA.getTime() || (dateB.getTime() && dateB > dateA)) {
-            return 1;
-        } else {
-            return -1;
-        }
-    })
-}
 
 function deleteBlogAtIndex(data_blogs, indexToDelete) {
     // Check if the index is within the bounds of the array
@@ -43,21 +24,50 @@ function deleteBlogAtIndex(data_blogs, indexToDelete) {
 }
 
 function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
-    const URL_SUFFIX = '/blogs/';
-
     const longPress = useLongPress();
     const navigate = useNavigate();
-    const [blogsData, isLoading, fetchBlogListError] = useFetchSuffix(urlSuffix);
+    const [isFetchBlogsLoading, setIsFetchBlogsLoading] = useState(false);
+    const [fetchBlogsError, setFetchBlogsError] = useState(null);
     const [isUpdateModalActive, setIsUpdateModalActive] = useState(false);
     const [pressedBlogId, setPressedBlogId] = useState(0);
 
     const [deleteResult, setDeleteResult] = useState(false);
     const [deleteError, setDeleteError] = useState(null);
 
-    // sort blogs by updated time
-    let data_blogs;
-    if (blogsData) {
-        data_blogs = sortBlogsByUpdated(blogsData.blogs);
+    const [data_blogs, setDataBlogs] = useState([]);
+
+    // initialize the data_blogs on first render
+    useEffect(() => {
+        handleBlogListPageFetch(1, 5);
+    }, []);
+
+    const handleBlogListPageFetch = (page, per_page) => {
+        setFetchBlogsError(null);
+        setIsFetchBlogsLoading(true);
+        fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // get access token from local storage
+                "Authorization": "Bearer " + localStorage.getItem("_auth"),
+            },
+            body: JSON.stringify({page, per_page}),
+        })
+            .then((res) => {
+                if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
+                return res.json();
+            })
+            .then((data) => {
+                setIsFetchBlogsLoading(false);
+                setDataBlogs((data_blogs) => [...data_blogs, ...data.blogs]);
+                console.log('Data fetched');
+            })
+            .catch(error => {
+                console.log(error.message)
+                setIsFetchBlogsLoading(false);
+                setFetchBlogsError(error.message);
+                // alert(fetchError);
+            });
     }
 
     const handleBlogLongPress = (blogId) => {
@@ -68,7 +78,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
     }
 
     const handleBlogDelete = () => {
-        fetch(process.env.REACT_APP_SERVER_URL + URL_SUFFIX + pressedBlogId, {
+        fetch(process.env.REACT_APP_SERVER_URL + urlSuffix + '/' + pressedBlogId, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -110,8 +120,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
                 <h1>{titleString}</h1>
                 {
                     // Checking if the blogsData retrived from the server from blog.js is undefined or not
-                    (!blogsData || isLoading) ? (
-                        !fetchBlogListError &&
+                    (!data_blogs || data_blogs.length === 0 || isFetchBlogsLoading) ? (
+                        !fetchBlogsError &&
                         <div className="blog-list-loading-container">
                             <div className="loading-pulse"></div>
                         </div>
@@ -133,8 +143,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
                         ))
                     )
                 }
-                {fetchBlogListError && <div>Error: {fetchBlogListError}</div>}
-                {data_blogs && data_blogs.length === 0 && <p>No blogs found.</p>}
+                {!isFetchBlogsLoading && data_blogs && data_blogs.length === 0 && <p>No blogs found.</p>}
+                {fetchBlogsError && <div>Error: {fetchBlogsError}</div>}
             </div>
         </>
     );
