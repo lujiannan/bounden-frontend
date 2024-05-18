@@ -216,7 +216,7 @@ function Login() {
                 <div className="login-container">
                     <div className={`login-main-container ${isSignInActive ? "" : "slide-right"}`}>
                         <div className='login-form-block' id='signUpForm'>
-                            <h2>Create Account</h2>
+                            <h2>Register</h2>
                             <form>
                                 <div className='login-form-input-container'>
                                     <label htmlFor="user_name">Username (not changeable)</label>
