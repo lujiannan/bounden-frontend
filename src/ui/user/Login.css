@@ -321,7 +321,7 @@
 }
 
 /* adapt to mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .login-page-container {
         margin-top: 5rem;
         padding-bottom: 3rem;
