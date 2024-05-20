@@ -143,7 +143,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
                         ))
                     )
                 }
-                {!isFetchBlogsLoading && data_blogs && data_blogs.length === 0 && <p>No blogs found.</p>}
+                {!isFetchBlogsLoading && !fetchBlogsError && data_blogs && data_blogs.length === 0 && <p>No blogs found.</p>}
                 {fetchBlogsError && <div>Error: {fetchBlogsError}</div>}
             </div>
         </>
