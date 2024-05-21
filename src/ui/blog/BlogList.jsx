@@ -154,7 +154,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                 {(data_blogs.length === 0 || isFetchBlogsLoading) ? (
                                     <div className="loading-pulse"></div>
                                 ) : (
-                                    isNoMorePages ? (<div>--- No more data to fetch ---</div>) : ( <button onClick={() => handleBlogListPageFetch()}>Load More</button>)
+                                    isNoMorePages ? (<div>· THE END ·</div>) : ( <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>)
                                 )}
                             </div>
                         }
