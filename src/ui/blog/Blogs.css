@@ -22,3 +22,9 @@
     opacity: 1;
     transition: var(--pretty-transition);
 }
+
+.blogs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

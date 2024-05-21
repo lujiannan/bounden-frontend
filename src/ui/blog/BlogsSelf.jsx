@@ -9,10 +9,14 @@ function Blogs() {
     const TITLE_BLOGS = "MY LATEST POSTS";
 
     return (
-        <>
+        <div className="blogs-container">
             {/* generate a blog list by passing the route string, process GET request to the server */}
             <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS} forBlogSelf={true}/>
-        </>
+            <div className="footer">
+                <p>&copy; Bounden. All rights reserved.</p>
+                <a href="https://beian.miit.gov.cn/" target="_blank">苏ICP备2024096881号</a>
+            </div>
+        </div>
     )
 }
 
