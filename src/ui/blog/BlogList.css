@@ -36,8 +36,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10rem;
+    margin-top: 2rem;
     padding: 1rem;
+
+    & button {
+        font-size: 1rem;
+        padding: 0.5rem;
+        background-color: var(--pretty-bg-color);
+        cursor: pointer;
+    }
 }
 
 .blog-preview {

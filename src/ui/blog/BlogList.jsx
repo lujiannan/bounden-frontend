@@ -18,30 +18,36 @@ function deleteBlogAtIndex(data_blogs, indexToDelete) {
     } else {
         console.error("Index out of bounds");
     }
-    
+
     // Return the modified array
     return data_blogs;
 }
 
-function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
+function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     const longPress = useLongPress();
     const navigate = useNavigate();
     const [isFetchBlogsLoading, setIsFetchBlogsLoading] = useState(false);
     const [fetchBlogsError, setFetchBlogsError] = useState(null);
+    const [data_blogs, setDataBlogs] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isNoMorePages, setIsNoMorePages] = useState(false);
+    const PER_PAGE = 5;
+
     const [isUpdateModalActive, setIsUpdateModalActive] = useState(false);
     const [pressedBlogId, setPressedBlogId] = useState(0);
 
     const [deleteResult, setDeleteResult] = useState(false);
     const [deleteError, setDeleteError] = useState(null);
 
-    const [data_blogs, setDataBlogs] = useState([]);
-
     // initialize the data_blogs on first render
     useEffect(() => {
-        handleBlogListPageFetch(1, 5);
+        handleBlogListPageFetch();
     }, []);
 
-    const handleBlogListPageFetch = (page, per_page) => {
+    const handleBlogListPageFetch = (page = currentPage, per_page = PER_PAGE) => {
+        if (isNoMorePages) {
+            return;
+        }
         setFetchBlogsError(null);
         setIsFetchBlogsLoading(true);
         fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
@@ -51,13 +57,19 @@ function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
                 // get access token from local storage
                 "Authorization": "Bearer " + localStorage.getItem("_auth"),
             },
-            body: JSON.stringify({page, per_page}),
+            body: JSON.stringify({ page, per_page }),
         })
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
                 return res.json();
             })
             .then((data) => {
+                console.log(data);
+                if (data.current_page === data.pages) {
+                    console.log('This is the last page');
+                    setIsNoMorePages(true);
+                }
+                setCurrentPage(currentPage + 1);
                 setIsFetchBlogsLoading(false);
                 setDataBlogs((data_blogs) => [...data_blogs, ...data.blogs]);
                 console.log('Data fetched');
@@ -71,7 +83,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
     }
 
     const handleBlogLongPress = (blogId) => {
-        if (forBlogSelf){
+        if (forBlogSelf) {
             setIsUpdateModalActive(true);
             setPressedBlogId(blogId);
         }
@@ -108,43 +120,48 @@ function BlogList({ urlSuffix, titleString, forBlogSelf=false }) {
 
     return (
         <>
-            <FullModal isOpen={isUpdateModalActive} onClose={() => {setIsUpdateModalActive(false); setPressedBlogId(0);}}>
+            <FullModal isOpen={isUpdateModalActive} onClose={() => { setIsUpdateModalActive(false); setPressedBlogId(0); }}>
                 <h1>Delete the Blog</h1>
                 <div className="blog-delete-modal-btn-group">
-                    <button style={{backgroundColor: "var(--pretty-error-color)", borderColor: "var(--pretty-error-color)"}}
-                        onClick={() => {handleBlogDelete()}}>Delete</button>
-                    <button onClick={() => {setIsUpdateModalActive(false); setPressedBlogId(0);}}>Cancel</button>
+                    <button style={{ backgroundColor: "var(--pretty-error-color)", borderColor: "var(--pretty-error-color)" }}
+                        onClick={() => { handleBlogDelete() }}>Delete</button>
+                    <button onClick={() => { setIsUpdateModalActive(false); setPressedBlogId(0); }}>Cancel</button>
                 </div>
             </FullModal>
             <div className="blog-container">
                 <h1>{titleString}</h1>
                 {
-                    // Checking if the blogsData retrived from the server from blog.js is undefined or not
-                    (!data_blogs || data_blogs.length === 0 || isFetchBlogsLoading) ? (
-                        !fetchBlogsError &&
-                        <div className="blog-list-loading-container">
-                            <div className="loading-pulse"></div>
-                        </div>
-                    ) : (
-                        data_blogs.map((blog) => (
-                            <div className='blog-preview' key={blog.id}
-                                onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
-                                {...longPress(() => handleBlogLongPress(blog.id))}>
-                                <div className="blog-preview-inner-container">
-                                    <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
-                                    <h1 className="blog-preview-title">{blog.attributes.title}</h1>
-                                    {blog.attributes.description && (
-                                        <p className="blog-preview-description">{blog.attributes.description}</p>
-                                    )}
-                                    <p className="blog-preview-create">{blog.author.name + ' - ' +
-                                        (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
+                    <>
+                        {data_blogs.length !== 0 &&
+                            data_blogs.map((blog) => (
+                                <div className='blog-preview' key={blog.id}
+                                    onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
+                                    {...longPress(() => handleBlogLongPress(blog.id))}>
+                                    <div className="blog-preview-inner-container">
+                                        <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
+                                        <h1 className="blog-preview-title">{blog.attributes.title}</h1>
+                                        {blog.attributes.description && (
+                                            <p className="blog-preview-description">{blog.attributes.description}</p>
+                                        )}
+                                        <p className="blog-preview-create">{blog.author.name + ' - ' +
+                                            (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
+                                    </div>
                                 </div>
+                            ))
+                        }
+                        {!fetchBlogsError &&
+                            <div className="blog-list-loading-container">
+                                {(data_blogs.length === 0 || isFetchBlogsLoading) ? (
+                                    <div className="loading-pulse"></div>
+                                ) : (
+                                    isNoMorePages ? (<div>--- No more data to fetch ---</div>) : ( <button onClick={() => handleBlogListPageFetch()}>Load More</button>)
+                                )}
                             </div>
-                        ))
-                    )
+                        }
+                        {fetchBlogsError && <div>Error: {fetchBlogsError}</div>}
+                    </>
                 }
-                {!isFetchBlogsLoading && !fetchBlogsError && data_blogs && data_blogs.length === 0 && <p>No blogs found.</p>}
-                {fetchBlogsError && <div>Error: {fetchBlogsError}</div>}
+                {!isFetchBlogsLoading && !fetchBlogsError && data_blogs.length === 0 && <p>No blogs found.</p>}
             </div>
         </>
     );
