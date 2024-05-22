@@ -74,7 +74,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
             })
             .then((data) => {
                 console.log(data);
-                if (data.current_page === data.pages) {
+                if (data.current_page >= data.pages) {
                     console.log('This is the last page');
                     setIsNoMorePages(true);
                 }
@@ -189,7 +189,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                         }
                         {!fetchBlogsError &&
                             <div className="blog-list-loading-container">
-                                {(data_blogs.length === 0 || isFetchBlogsLoading) ? (
+                                {(isFetchBlogsLoading) ? (
                                     <div className="loading-pulse"></div>
                                 ) : (
                                     isNoMorePages ? (<div>· THE END ·</div>) : (<button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>)
@@ -199,7 +199,6 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                         {fetchBlogsError && <div>Error: {fetchBlogsError}</div>}
                     </>
                 }
-                {!isFetchBlogsLoading && !fetchBlogsError && data_blogs.length === 0 && <p>No blogs found.</p>}
             </div>
         </>
     );
