@@ -102,8 +102,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 setIsDeleteBtnDisabled(false);
             }
         } else {
-            setDeleteCountDown(5);
             setIsDeleteBtnDisabled(true);
+            setDeleteCountDown(5);
         }
     }, [isUpdateModalActive, deleteCountDown]);
 
@@ -149,7 +149,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 <h1>Delete the Blog</h1>
                 <div className="blog-delete-modal-btn-group">
                     <button className="delete-btn" disabled={isDeleteBtnDisabled}
-                        onClick={() => { handleBlogDelete() }}>Delete {deleteCountDown > 0 ? `(${deleteCountDown}) ` : ''}</button>
+                        onClick={() => { handleBlogDelete() }}>Delete {(deleteCountDown > 0 && isUpdateModalActive) ? `(${deleteCountDown}) ` : ''}</button>
                     <button onClick={() => { setIsUpdateModalActive(false); setPressedBlogId(0); }}>Cancel</button>
                 </div>
             </FullModal>
