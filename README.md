@@ -10,6 +10,9 @@ Blogs and Services (Webservice - Cross-End Support)
 - NPM
 - VS Code or any other code editor
 
+## Known Issues
+- None
+
 ## Project Start Guide
 ### Clone the repository
 ```

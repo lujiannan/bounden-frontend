@@ -53,8 +53,9 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
         // reset properties
         setFetchBlogsError(null);
         setIsFetchBlogsLoading(true);
-        // pass in the updated time of the last blog in the current page to avoid fetching duplicate blogs
+        // pass in the updated time and id of the last blog in the current page to avoid fetching duplicate blogs
         const last_blog_updated_time = data_blogs.length > 0 ? data_blogs[data_blogs.length - 1].attributes.updated : null;
+        const last_blog_id = data_blogs.length > 0 ? data_blogs[data_blogs.length - 1].id : 0;
         fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
             method: "POST",
             headers: {
@@ -62,7 +63,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 // get access token from local storage
                 "Authorization": "Bearer " + localStorage.getItem("_auth"),
             },
-            body: JSON.stringify({ page, per_page, last_blog_updated_time }),
+            body: JSON.stringify({ page, per_page, last_blog_id, last_blog_updated_time }),
         })
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
