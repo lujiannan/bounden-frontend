@@ -51,7 +51,7 @@
         font-size: 1rem;
         font-weight: var(--pretty-font-weight);
         letter-spacing: 0.1rem;
-        padding: 0rem 0.5rem;
+        padding: 0rem 1rem;
         border-radius: var(--pretty-border-radius-small);
         border: 2px solid var(--pretty-base-color);
         background-color: var(--pretty-bg-color);
