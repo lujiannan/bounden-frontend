@@ -3,16 +3,34 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     & button {
+        width: 40%;
         padding: 0.5rem;
         font-size: 1rem;
         font-weight: var(--pretty-font-weight);
         border-radius: var(--pretty-border-radius-small);
-        border-color: var(--pretty-btn-color);
+        border: 2px outset var(--pretty-btn-color);
         color: var(--pretty-base-color);
         background-color: var(--pretty-btn-color);
+        letter-spacing: 0.1rem;
+        cursor: pointer;
+        transition: var(--pretty-transition);
+
+        &:active {
+            border-style: inset;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+
+    & .delete-btn {
+        width: 50%;
+        background-color: var(--pretty-error-color);
+        border-color: var(--pretty-error-color);
     }
 }
 
