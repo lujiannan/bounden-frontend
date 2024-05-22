@@ -129,7 +129,6 @@ const MenuBar = () => {
     const handleImageURL = (e) => {
         e.preventDefault();
         editor.chain().focus().setImage({ src: imageURL }).run();
-        setImageURL("");
         setIsImageUploadModalActive(false);
     }
 
@@ -148,7 +147,7 @@ const MenuBar = () => {
     return (
         <>
             {/* Modal for image upload */}
-            <FullModal isOpen={isImageUploadModalActive} onClose={() => setIsImageUploadModalActive(false)}>
+            <FullModal isOpen={isImageUploadModalActive} onClose={() => {setIsImageUploadModalActive(false);}}>
                 <h1>Insert Image</h1>
                 <ul className='image-upload-modal-tab-bar'>
                     <li value={0} onClick={(e) => { handleImageUploadModalTabClick(e) }} className='image-upload-modal-tab-item'>WEBSITE</li>
