@@ -36,7 +36,9 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
 
     const [isUpdateModalActive, setIsUpdateModalActive] = useState(false);
     const [pressedBlogId, setPressedBlogId] = useState(0);
-
+    // set the initial count down to 5 seconds for delete button
+    const [deleteCountDown, setDeleteCountDown] = useState(5);
+    const [isDeleteBtnDisabled, setIsDeleteBtnDisabled] = useState(true);
     const [deleteResult, setDeleteResult] = useState(false);
     const [deleteError, setDeleteError] = useState(null);
 
@@ -88,6 +90,23 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
             });
     }
 
+    useEffect(() => {
+        if (isUpdateModalActive) {
+            setIsDeleteBtnDisabled(true);
+            if (deleteCountDown > 0) {
+                const timer = setTimeout(() => {
+                    setDeleteCountDown(deleteCountDown - 1);
+                }, 1000);
+                return () => clearTimeout(timer);
+            } else {
+                setIsDeleteBtnDisabled(false);
+            }
+        } else {
+            setIsDeleteBtnDisabled(true);
+            setDeleteCountDown(5);
+        }
+    }, [isUpdateModalActive, deleteCountDown]);
+
     const handleBlogLongPress = (blogId) => {
         if (forBlogSelf) {
             setIsUpdateModalActive(true);
@@ -96,7 +115,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     }
 
     const handleBlogDelete = () => {
-        fetch(process.env.REACT_APP_SERVER_URL + urlSuffix + '/' + pressedBlogId, {
+        fetch(process.env.REACT_APP_SERVER_URL + '/blogs/' + pressedBlogId, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -129,8 +148,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
             <FullModal isOpen={isUpdateModalActive} onClose={() => { setIsUpdateModalActive(false); setPressedBlogId(0); }}>
                 <h1>Delete the Blog</h1>
                 <div className="blog-delete-modal-btn-group">
-                    <button style={{ backgroundColor: "var(--pretty-error-color)", borderColor: "var(--pretty-error-color)" }}
-                        onClick={() => { handleBlogDelete() }}>Delete</button>
+                    <button className="delete-btn" disabled={isDeleteBtnDisabled}
+                        onClick={() => { handleBlogDelete() }}>Delete {(deleteCountDown > 0 && isUpdateModalActive) ? `(${deleteCountDown}) ` : ''}</button>
                     <button onClick={() => { setIsUpdateModalActive(false); setPressedBlogId(0); }}>Cancel</button>
                 </div>
             </FullModal>
@@ -160,7 +179,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                 {(data_blogs.length === 0 || isFetchBlogsLoading) ? (
                                     <div className="loading-pulse"></div>
                                 ) : (
-                                    isNoMorePages ? (<div>· THE END ·</div>) : ( <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>)
+                                    isNoMorePages ? (<div>· THE END ·</div>) : (<button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>)
                                 )}
                             </div>
                         }
