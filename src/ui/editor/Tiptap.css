@@ -82,6 +82,7 @@
     }
 
     .tiptap-image {
+        display: block;
         border-radius: var(--pretty-border-radius);
         max-height: 30rem;
         max-width: 100%;
