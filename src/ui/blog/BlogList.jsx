@@ -29,8 +29,9 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     const [isFetchBlogsLoading, setIsFetchBlogsLoading] = useState(false);
     const [fetchBlogsError, setFetchBlogsError] = useState(null);
     const [data_blogs, setDataBlogs] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
     const [isNoMorePages, setIsNoMorePages] = useState(false);
+    // always fetch the first page, and use last_blog_updated_time to filter out duplicate blogs
+    const [currentPage, setCurrentPage] = useState(1);
     const PER_PAGE = 5;
 
     const [isUpdateModalActive, setIsUpdateModalActive] = useState(false);
@@ -46,10 +47,14 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
 
     const handleBlogListPageFetch = (page = currentPage, per_page = PER_PAGE) => {
         if (isNoMorePages) {
+            // if there are no more pages, don't fetch again
             return;
         }
+        // reset properties
         setFetchBlogsError(null);
         setIsFetchBlogsLoading(true);
+        // pass in the updated time of the last blog in the current page to avoid fetching duplicate blogs
+        const last_blog_updated_time = data_blogs.length > 0 ? data_blogs[data_blogs.length - 1].attributes.updated : null;
         fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
             method: "POST",
             headers: {
@@ -57,7 +62,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 // get access token from local storage
                 "Authorization": "Bearer " + localStorage.getItem("_auth"),
             },
-            body: JSON.stringify({ page, per_page }),
+            body: JSON.stringify({ page, per_page, last_blog_updated_time }),
         })
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
@@ -69,7 +74,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                     console.log('This is the last page');
                     setIsNoMorePages(true);
                 }
-                setCurrentPage(currentPage + 1);
+                // setCurrentPage(currentPage + 1);
                 setIsFetchBlogsLoading(false);
                 setDataBlogs((data_blogs) => [...data_blogs, ...data.blogs]);
                 console.log('Data fetched');
