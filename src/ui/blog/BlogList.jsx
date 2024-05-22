@@ -183,7 +183,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                                 <p className="blog-preview-description">{blog.attributes.description}</p>
                                             )}
                                         </div>
-                                        <img className="blog-preview-image" src={blog.cover_image} />
+                                        <img src={blog.cover_image} />
                                     </div>
                                     <p className="blog-preview-create">{blog.author.name + ' - ' +
                                         (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
