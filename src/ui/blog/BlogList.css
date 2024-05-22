@@ -105,16 +105,15 @@
     margin: 0.75rem 0;
     box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
     border-radius: var(--pretty-border-radius);
+    user-select: none;
+    text-decoration: none;
+    word-break: break-all;
+    color: var(--pretty-base-color);
     transition: var(--pretty-transition);
 }
 .blog-preview:hover {
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
     transition: var(--pretty-transition);
-}
-.blog-preview .blog-preview-inner-container {
-    user-select: none;
-    text-decoration: none;
-    color: var(--pretty-base-color);
 }
 .blog-preview h1,
 .blog-preview p,
@@ -122,7 +121,28 @@
     overflow-wrap: break-word;
 }
 
-.blog-preview .blog-preview-category {
+.blog-preview .blog-preview-horizontal-container {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.blog-preview .blog-preview-horizontal-container img {
+    margin-left: 0.5rem;
+    display: block;
+    border-radius: var(--pretty-border-radius-small);
+    /* max-height set to the sum of the heights of the title, description, and category */
+    max-height: calc(7rem + 3.7rem + 1.25rem);
+    max-width: 25rem;
+    transition: var(--pretty-transition);
+}
+
+.blog-preview .blog-preview-horizontal-container .blog-preview-info-container {
+    flex-grow: 1;
+}
+
+.blog-preview .blog-preview-horizontal-container .blog-preview-info-container .blog-preview-category {
     margin-left: 0.1rem;
     font-size: 0.8rem;
     font-weight: bold;
@@ -130,21 +150,35 @@
     color: var(--pretty-base-color-lighter);
 }
 
-.blog-preview .blog-preview-title {
+.blog-preview .blog-preview-horizontal-container .blog-preview-info-container .blog-preview-title {
+    /* limit the number of lines and truncate the text with ellipses, set max-height to 7rem for two lines of title */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 7rem;
     margin: 0;
-    padding: 0.75rem 0;
-    /* font-size: 2.25rem; */
+    padding: 0.75rem 0rem;
+    font-size: 2rem;
 }
 
-.blog-preview .blog-preview-description {
+.blog-preview .blog-preview-horizontal-container .blog-preview-info-container .blog-preview-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3.7rem;
     max-width: fit-content;
-    margin: 0.25rem 0;
     color: var(--pretty-base-color-light);
-    background-color: var(--pretty-btn-color);
+    /* background-color: var(--pretty-btn-color); */
     border-radius: var(--pretty-border-radius-small);
-    padding: 0.5rem;
+    padding: 0.5rem 0rem;
+    font-size: 1rem;
 }
 .blog-preview .blog-preview-create {
+    font-size: 1rem;
     max-width: fit-content;
     color: var(--pretty-base-color-lighter);
 }
@@ -159,12 +193,12 @@
 @media screen and (max-width: 800px) {
     .blog-container {
         width: 100%;
-        padding: 0% 10%;
+        padding: 0% 2.5%;
     }
 
     /* no hover effect on pad */
     .blog-preview:hover {
-        box-shadow: 1px 3px 5px rgba(2, 2, 2, 0.1);
+        box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
         transition: var(--pretty-transition);
     }
 }
@@ -177,7 +211,29 @@
 
     /* no hover effect on mobile */
     .blog-preview:hover {
-        box-shadow: 1px 3px 5px rgba(2, 2, 2, 0.1);
+        box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
         transition: var(--pretty-transition);
+    }
+
+    .blog-preview .blog-preview-horizontal-container img {
+        margin: auto;
+        margin-left: 0.5rem;
+        max-width: 50%;
+        /* max-height: 12.25rem; */
+        height: min-content;
+    }
+
+    .blog-preview .blog-preview-horizontal-container .blog-preview-info-container .blog-preview-title {
+        font-size: 1.25rem;
+        max-height: 4.75rem;
+    }
+
+    .blog-preview .blog-preview-horizontal-container .blog-preview-info-container .blog-preview-description {
+        font-size: 0.8rem;
+        max-height: 3.1rem;
+    }
+    
+    .blog-preview .blog-preview-create {
+        font-size: 0.8rem;
     }
 }

@@ -175,15 +175,18 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                 <div className='blog-preview' key={blog.id}
                                     onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
                                     {...longPress(() => handleBlogLongPress(blog.id))}>
-                                    <div className="blog-preview-inner-container">
-                                        <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
-                                        <h1 className="blog-preview-title">{blog.attributes.title}</h1>
-                                        {blog.attributes.description && (
-                                            <p className="blog-preview-description">{blog.attributes.description}</p>
-                                        )}
-                                        <p className="blog-preview-create">{blog.author.name + ' - ' +
-                                            (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
+                                    <div className="blog-preview-horizontal-container">
+                                        <div className="blog-preview-info-container">
+                                            <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
+                                            <h1 className="blog-preview-title">{blog.attributes.title}</h1>
+                                            {blog.attributes.description && (
+                                                <p className="blog-preview-description">{blog.attributes.description}</p>
+                                            )}
+                                        </div>
+                                        <img className="blog-preview-image" src={blog.cover_image} />
                                     </div>
+                                    <p className="blog-preview-create">{blog.author.name + ' - ' +
+                                        (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
                                 </div>
                             ))
                         }
