@@ -39,6 +39,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     // set the initial count down to 5 seconds for delete button
     const [deleteCountDown, setDeleteCountDown] = useState(5);
     const [isDeleteBtnDisabled, setIsDeleteBtnDisabled] = useState(true);
+    const [isBlogDeleting, setIsBlogDeleting] = useState(false);
     const [deleteResult, setDeleteResult] = useState(false);
     const [deleteError, setDeleteError] = useState(null);
 
@@ -115,6 +116,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     }
 
     const handleBlogDelete = () => {
+        setIsBlogDeleting(true);
         fetch(process.env.REACT_APP_SERVER_URL + '/blogs/' + pressedBlogId, {
             method: "DELETE",
             headers: {
@@ -126,6 +128,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
                 console.log('Data posted');
+                setIsBlogDeleting(false);
                 setDeleteResult(true);
                 setDeleteError(null);
                 // return res.json();
@@ -136,6 +139,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 deleteBlogAtIndex(data_blogs, data_blogs.findIndex(blog => blog.id === pressedBlogId));
             })
             .catch(error => {
+                setIsBlogDeleting(false);
                 setDeleteResult(false);
                 setDeleteError(error.message);
                 console.log(error.message)
@@ -149,7 +153,16 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 <h1>Delete the Blog</h1>
                 <div className="blog-delete-modal-btn-group">
                     <button className="delete-btn" disabled={isDeleteBtnDisabled}
-                        onClick={() => { handleBlogDelete() }}>Delete {(deleteCountDown > 0 && isUpdateModalActive) ? `(${deleteCountDown}) ` : ''}</button>
+                        onClick={() => { handleBlogDelete() }}>
+                        {isBlogDeleting ?
+                            <div className="delete-blog-loading-container">
+                                <div className="loading-pulse"></div>
+                            </div> :
+                            <>
+                                Delete {(deleteCountDown > 0 && isUpdateModalActive) ? `(${deleteCountDown}) ` : ''}
+                            </>
+                        }
+                    </button>
                     <button onClick={() => { setIsUpdateModalActive(false); setPressedBlogId(0); }}>Cancel</button>
                 </div>
             </FullModal>

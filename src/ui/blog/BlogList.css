@@ -5,6 +5,21 @@
     flex-direction: row;
     justify-content: space-between;
 
+    & .delete-blog-loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & .loading-pulse {
+            height: 1.25rem;
+        }
+
+        & .loading-pulse::before, 
+        .loading-pulse::after {
+            height: 1.25rem;
+        }
+    }
+
     & button {
         width: 40%;
         padding: 0.5rem;
