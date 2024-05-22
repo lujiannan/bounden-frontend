@@ -43,6 +43,7 @@ function BlogCreate() {
             "description": data.description,
             "content": JSON.stringify(data.content),
             "author_email": author_email,
+            "cover_image": data.cover_image
         });
 
         // send data to server in a format {"blog" : {category: "", title: "", etc.}}
@@ -89,7 +90,8 @@ function BlogCreate() {
                 }
                 return "Content is required";
             }
-        })
+        });
+        register("cover_image");
     }, []);
 
     const handleContentOnChange = (editor) => {
@@ -99,6 +101,7 @@ function BlogCreate() {
             shouldValidate: true,
             shouldTouched: true,
         });
+        setValue("cover_image", editor.state.doc.content.content.filter(node => node.type.name === 'image')[0].attrs.src);
     }
 
     return (

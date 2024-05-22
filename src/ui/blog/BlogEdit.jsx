@@ -46,6 +46,7 @@ function BlogEdit() {
             "title": data.title,
             "description": data.description,
             "content": JSON.stringify(data.content),
+            "cover_image": data.cover_image,
             "author_email": author_email,
         });
 
@@ -93,7 +94,8 @@ function BlogEdit() {
                 }
                 return "Content is required";
             }
-        })
+        });
+        register("cover_image");
     }, []);
 
     useEffect(() => {
@@ -103,6 +105,7 @@ function BlogEdit() {
             setValue("description", blog.blog.attributes.description);
             setValue("category", blog.blog.attributes.category);
             setValue("content", JSON.parse(blog.blog.content));
+            setValue("cover_image", blog.blog.cover_image);
         }
     }, [blog]);
 
@@ -113,6 +116,7 @@ function BlogEdit() {
             shouldValidate: true,
             shouldTouched: true,
         });
+        setValue("cover_image", editor.state.doc.content.content.filter(node => node.type.name === 'image')[0].attrs.src);
     }
 
     return (
