@@ -116,7 +116,7 @@ function BlogEdit() {
             shouldValidate: true,
             shouldTouched: true,
         });
-        setValue("cover_image", editor.state.doc.content.content.filter(node => node.type.name === 'image')[0].attrs.src);
+        setValue("cover_image", editor.state.doc.content.content.filter(node => node.type.name === 'image')[0]?.attrs.src);
     }
 
     return (
