@@ -136,6 +136,7 @@
     /* max-height set to the sum of the heights of the title, description, and category */
     max-height: calc(7rem + 3.7rem + 1.25rem);
     max-width: 25rem;
+    object-fit: contain;
     transition: var(--pretty-transition);
 }
 
