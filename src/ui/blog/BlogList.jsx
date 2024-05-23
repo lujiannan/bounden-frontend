@@ -195,12 +195,15 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                         {!fetchBlogsError &&
                             <div className="blog-list-loading-container">
                                 {(isFetchBlogsLoading) ? (
-                                    <div data-aos-disabled="true" className="loading-pulse"></div>
+                                    <div className="loading-pulse"></div>
                                 ) : (
-                                    isNoMorePages ? (<div data-aos="fade-up">· THE END ·</div>) :
-                                        (<div data-aos="fade-up">
-                                            <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>
-                                        </div>)
+                                    <div>
+                                        {isNoMorePages ? (<div data-aos="fade-up">· THE END ·</div>) :
+                                            (<div data-aos="fade-up">
+                                                <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>
+                                            </div>)
+                                        }
+                                    </div>
                                 )}
                             </div>
                         }
