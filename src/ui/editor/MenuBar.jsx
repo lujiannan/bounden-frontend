@@ -199,7 +199,7 @@ const MenuBar = () => {
                                 <h3>Click (Drop) to Upload</h3>
                             </>
                         )}
-                        <input type="file" accept="image/*" onChange={(event) => {
+                        <input type="file" accept="image/*" disabled={isLoading} onChange={(event) => {
                             handleImageChange(event);
                         }} />
                     </div>

@@ -198,6 +198,12 @@
                 background-color: var(--pretty-nav-bg-color-white);
             }
 
+            @media screen and (max-width: 800px) {
+                &:hover {
+                    background-color: var(--pretty-bg-color);
+                }
+            }
+
             & .dropdown-btn-horizontal-group {
                 display: flex;
                 flex-direction: row;
@@ -304,6 +310,12 @@
 
         &:hover {
             background-color: var(--pretty-nav-bg-color-white);
+        }
+
+        @media screen and (max-width: 800px) {
+            &:hover {
+                background-color: var(--pretty-bg-color);
+            }
         }
 
         &.active {
