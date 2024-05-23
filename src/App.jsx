@@ -16,7 +16,11 @@ import BlogDetail from './ui/blog/BlogDetail';
 import Login from './ui/user/Login';
 
 export default function App() {
-    AOS.init();
+    AOS.init({
+        offset: 50,
+        duration: 700,
+        easing: 'ease-in-out',
+    });
 
     const store = createStore({
         authName: '_auth',
