@@ -194,9 +194,10 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                         }
                         {!fetchBlogsError &&
                             <div className="blog-list-loading-container">
-                                {(isFetchBlogsLoading) ? (
+                                {isFetchBlogsLoading &&
                                     <div className="loading-pulse"></div>
-                                ) : (
+                                }
+                                {!isFetchBlogsLoading &&
                                     <div>
                                         {isNoMorePages ? (<div data-aos="fade-up">· THE END ·</div>) :
                                             (<div data-aos="fade-up">
@@ -204,7 +205,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                             </div>)
                                         }
                                     </div>
-                                )}
+                                }
                             </div>
                         }
                         {fetchBlogsError && <div>Error: {fetchBlogsError}</div>}
