@@ -1,4 +1,5 @@
 .blog-create-btn {
+    z-index: 99;
     position: fixed;
     bottom: 4%;
     right: 4%;
