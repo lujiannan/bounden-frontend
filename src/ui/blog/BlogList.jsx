@@ -195,7 +195,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                         {!fetchBlogsError &&
                             <div className="blog-list-loading-container">
                                 {(isFetchBlogsLoading) ? (
-                                    <div className="loading-pulse"></div>
+                                    <div data-aos-disabled="true" className="loading-pulse"></div>
                                 ) : (
                                     isNoMorePages ? (<div data-aos="fade-up">· THE END ·</div>) :
                                         (<div data-aos="fade-up">
