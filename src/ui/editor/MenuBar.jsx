@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useCurrentEditor } from '@tiptap/react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'; // for getting the logged in user's email
+import imageCompression from 'browser-image-compression'; // for image compression before upload
 
 import FullModal from '../modal/FullModal';
 import Colors from '../../utils/colors';
@@ -74,11 +75,33 @@ const MenuBar = () => {
         }
     }
 
-    const handleImageUpload = (event) => {
-        setIsLoading(true);
+    // reduce the size of the image before upload
+    const handleImageChange = async (event) => {
+        const imageFile = event.target.files[0];
+        if (!imageFile) {
+            return;
+        }
+        console.log('Original image instanceof Blob? ', imageFile instanceof Blob); // true
+        console.log(`Original image size ${imageFile.size / 1024 / 1024} MB`);
 
-        const file = event.target.files[0];
+        const options = {
+            maxWidthOrHeight: 760,
+            useWebWorker: true,
+        };
+        try {
+            setIsLoading(true);
+            const compressedFile = await imageCompression(imageFile, options);
+            console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+            console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+            handleImageUpload(compressedFile);
+        } catch (error) {
+            setIsLoading(false);
+            console.log(error);
+        }
 
+    }
+
+    const handleImageUpload = (file) => {
         // upload the image to the server, insert the image into the editor and show the upload status under the editor
         const form_data = new FormData();
         form_data.append("user_email", user_email);
@@ -97,7 +120,6 @@ const MenuBar = () => {
         })
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
-                console.log('Image Data posted');
                 setIsLoading(false);
                 setResult(true);
                 setFetchError(null);
@@ -147,18 +169,18 @@ const MenuBar = () => {
     return (
         <>
             {/* Modal for image upload */}
-            <FullModal isOpen={isImageUploadModalActive} onClose={() => {setIsImageUploadModalActive(false);}}>
+            <FullModal isOpen={isImageUploadModalActive} onClose={() => { setIsImageUploadModalActive(false); }}>
                 <h1>Insert Image</h1>
                 <ul className='image-upload-modal-tab-bar'>
                     <li value={0} onClick={(e) => { handleImageUploadModalTabClick(e) }} className='image-upload-modal-tab-item'>WEBSITE</li>
                     <li value={1} onClick={(e) => { handleImageUploadModalTabClick(e) }} className='image-upload-modal-tab-item'>UPLOAD</li>
-                    <div className="image-upload-modal-indicator" id="image-upload-modal-indicator" style={{ marginLeft: imageUploadModalTab===1 ? "calc((100% - 3rem)/2)" : "0" }}></div>
+                    <div className="image-upload-modal-indicator" id="image-upload-modal-indicator" style={{ marginLeft: imageUploadModalTab === 1 ? "calc((100% - 3rem)/2)" : "0" }}></div>
                 </ul>
                 {/* website tab */}
                 {imageUploadModalTab === 0 && (
                     <div className='image-upload-modal-url-container'>
                         <form onSubmit={handleImageURL}>
-                            <input type="text" placeholder="Enter image URL" onChange={(e) => { setImageURL(e.target.value) }}/>
+                            <input type="text" placeholder="Enter image URL" onChange={(e) => { setImageURL(e.target.value) }} />
                             <button type="submit">Confirm</button>
                         </form>
                     </div>
@@ -178,7 +200,7 @@ const MenuBar = () => {
                             </>
                         )}
                         <input type="file" accept="image/*" onChange={(event) => {
-                            handleImageUpload(event);
+                            handleImageChange(event);
                         }} />
                     </div>
                 )}
