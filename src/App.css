@@ -66,8 +66,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     font-size: 1rem;
     color: var(--pretty-base-color-lighter);
 

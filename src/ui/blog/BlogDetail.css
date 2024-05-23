@@ -53,7 +53,7 @@
 .blog-detail-container .blog-detail-category {
     text-align: center;
     font-size: 0.9rem;
-    font-weight: bold;
+    font-weight: 700;
     letter-spacing: 0.1rem;
     color: var(--pretty-base-color-lighter);
     margin-top: 1rem;
@@ -63,16 +63,18 @@
     text-align: center;
     max-width: fit-content;
     color: var(--pretty-base-color-light);
-    background-color: var(--pretty-btn-color);
+    /* background-color: var(--pretty-btn-color); */
     border-radius: var(--pretty-border-radius-small);
-    padding: 0.5rem;
+    padding: 0.5rem 0rem;
     margin-top: 0.5rem;
 }
 
 .blog-detail-container .blog-detail-create {
     text-align: center;
+    font-size: 1rem;
+    font-weight: var(--pretty-font-weight);
     max-width: fit-content;
-    color: var(--pretty-base-color-light);
+    color: var(--pretty-base-color-lighter);
     border-radius: var(--pretty-border-radius-small);
     padding: 0.5rem;
     letter-spacing: 0.1rem;

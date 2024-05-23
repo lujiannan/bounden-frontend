@@ -172,22 +172,23 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                     <>
                         {data_blogs.length !== 0 &&
                             data_blogs.map((blog) => (
-                                <div className='blog-preview' key={blog.id}
-                                    data-aos="fade-up" data-aos-duration="700" data-aos-easing="ease-in-out"
-                                    onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
-                                    {...longPress(() => handleBlogLongPress(blog.id))}>
-                                    <div className="blog-preview-horizontal-container">
-                                        <div className="blog-preview-info-container">
-                                            <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
-                                            <h1 className="blog-preview-title">{blog.attributes.title}</h1>
-                                            {blog.attributes.description && (
-                                                <p className="blog-preview-description">{blog.attributes.description}</p>
-                                            )}
+                                <div data-aos="fade-up">
+                                    <div className='blog-preview' key={blog.id}
+                                        onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
+                                        {...longPress(() => handleBlogLongPress(blog.id))}>
+                                        <div className="blog-preview-horizontal-container">
+                                            <div className="blog-preview-info-container">
+                                                <p className="blog-preview-category">{blog.attributes.category.toUpperCase()}</p>
+                                                <h1 className="blog-preview-title">{blog.attributes.title}</h1>
+                                                {blog.attributes.description && (
+                                                    <p className="blog-preview-description">{blog.attributes.description}</p>
+                                                )}
+                                            </div>
+                                            <img src={blog.cover_image} />
                                         </div>
-                                        <img src={blog.cover_image} />
+                                        <p className="blog-preview-create">{blog.author.name + ' - ' +
+                                            (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
                                     </div>
-                                    <p className="blog-preview-create">{blog.author.name + ' - ' +
-                                        (blog.attributes.updated ? blogFormatDate(blog.attributes.updated) : blogFormatDate(blog.attributes.created))}</p>
                                 </div>
                             ))
                         }
@@ -196,7 +197,10 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                 {(isFetchBlogsLoading) ? (
                                     <div className="loading-pulse"></div>
                                 ) : (
-                                    isNoMorePages ? (<div>· THE END ·</div>) : (<button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>)
+                                    isNoMorePages ? (<div data-aos="fade-up">· THE END ·</div>) :
+                                        (<div data-aos="fade-up">
+                                            <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>
+                                        </div>)
                                 )}
                             </div>
                         }

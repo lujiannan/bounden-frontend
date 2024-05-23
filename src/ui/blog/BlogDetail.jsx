@@ -46,6 +46,10 @@ function BlogDetail() {
                         </div>
                     </div>
                 )}
+                <div className="footer">
+                    <p>&copy; Bounden. All rights reserved.</p>
+                    <a href="https://beian.miit.gov.cn/" target="_blank">苏ICP备2024096881号</a>
+                </div>
             </div>
         </>
     )
