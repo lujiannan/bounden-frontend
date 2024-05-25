@@ -25,15 +25,15 @@
         padding: 1rem 0rem;
 
         & .comment-item-horizontal-group {
-            display: flex;
+            display: inline-flex;
             flex-direction: row;
             align-items: center;
             gap: 1rem;
-            padding: 0.5rem 0;
+            padding-bottom: 0.5rem;
             justify-content: space-between;
 
             & .comment-item-horizontal-group-left {
-                display: flex;
+                display: inline-flex;
                 flex-direction: row;
                 gap: 1rem;
 
@@ -62,14 +62,15 @@
         padding: 0.5rem 0rem 0rem 1rem;
 
         & .comment-reply-item-horizontal-group {
-            display: flex;
+            display: inline-flex;
             flex-direction: row;
             align-items: center;
             gap: 1rem;
-            padding: 0.5rem 0;
+            padding-bottom: 0.5rem;
+            justify-content: space-between;
 
             & .comment-reply-item-horizontal-group-left {
-                display: flex;
+                display: inline-flex;
                 flex-direction: row;
                 gap: 1rem;
 

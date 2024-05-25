@@ -51,6 +51,7 @@ function Comments({ blogId }) {
     }
 
     const handleExpandRepliesClick = (commentId, index) => {
+        setReplyToCommentId(null);
         // fetch the replies if the user clicks the expand button for the first time
         if (!commentsExpanded[index] && !expandedComments[commentId]) {
             fetchReplies(commentId);
