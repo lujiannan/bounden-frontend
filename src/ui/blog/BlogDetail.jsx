@@ -4,6 +4,7 @@ import "./BlogDetail.css"
 import blogFormatDate from "../../utils/blogFormatDate";
 
 import Tiptap from "../editor/Tiptap"
+import Comments from "../comment/Comments";
 
 function BlogDetail() {
     const URL_SUFFIX_DETAIL = '/blogs/';
@@ -44,6 +45,7 @@ function BlogDetail() {
                                 <a className="blog-detail-link" href={`mailto:${blog.blog.author.email}`}>{blog.blog.author.email}</a>
                             </p>
                         </div>
+                        <Comments blogId={id} />
                     </div>
                 )}
                 <div className="footer">

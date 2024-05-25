@@ -172,8 +172,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                     <>
                         {data_blogs.length !== 0 &&
                             data_blogs.map((blog) => (
-                                <div data-aos="fade-up">
-                                    <div className='blog-preview' key={blog.id}
+                                <div data-aos="fade-up" key={blog.id}>
+                                    <div className='blog-preview'
                                         onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
                                         {...longPress(() => handleBlogLongPress(blog.id))}>
                                         <div className="blog-preview-horizontal-container">
@@ -199,7 +199,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                 }
                                 {!isFetchBlogsLoading &&
                                     <div>
-                                        {isNoMorePages ? (<div data-aos="fade-up">· THE END ·</div>) :
+                                        {isNoMorePages ? (<div>· THE END ·</div>) :
                                             (<div data-aos="fade-up">
                                                 <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>
                                             </div>)
