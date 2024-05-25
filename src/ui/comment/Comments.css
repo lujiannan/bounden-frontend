@@ -35,6 +35,7 @@
             & .comment-item-horizontal-group-left {
                 display: inline-flex;
                 flex-direction: row;
+                align-items: center;
                 gap: 1rem;
 
                 & .comment-item-name {
@@ -43,7 +44,7 @@
                 }
 
                 & .comment-item-date {
-                    font-size: 0.9rem;
+                    font-size: 0.8rem;
                     color: var(--pretty-base-color-lighter);
                 }
             }
@@ -73,6 +74,7 @@
                 display: inline-flex;
                 flex-direction: row;
                 gap: 1rem;
+                align-items: center;
 
                 & .comment-reply-item-name {
                     font-weight: 700;
@@ -80,7 +82,7 @@
                 }
 
                 & .comment-reply-item-date {
-                    font-size: 1rem;
+                    font-size: 0.8rem;
                     color: var(--pretty-base-color-lighter);
                 }
             }
