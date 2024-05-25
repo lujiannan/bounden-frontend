@@ -30,19 +30,25 @@
             align-items: center;
             gap: 1rem;
             padding: 0.5rem 0;
+            justify-content: space-between;
 
-            & .comment-item-name {
-                font-weight: 700;
-                font-size: 1rem;
-            }
+            & .comment-item-horizontal-group-left {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
 
-            & .comment-item-date {
-                font-size: 1rem;
-                color: var(--pretty-base-color-lighter);
+                & .comment-item-name {
+                    font-weight: 700;
+                    font-size: 1rem;
+                }
+
+                & .comment-item-date {
+                    font-size: 0.9rem;
+                    color: var(--pretty-base-color-lighter);
+                }
             }
 
             & .ri-reply-line {
-                margin-left: auto;
                 font-size: 1.25rem;
                 cursor: pointer;
             }
@@ -62,14 +68,20 @@
             gap: 1rem;
             padding: 0.5rem 0;
 
-            & .comment-reply-item-name {
-                font-weight: 700;
-                font-size: 1rem;
-            }
+            & .comment-reply-item-horizontal-group-left {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
 
-            & .comment-reply-item-date {
-                font-size: 1rem;
-                color: var(--pretty-base-color-lighter);
+                & .comment-reply-item-name {
+                    font-weight: 700;
+                    font-size: 1rem;
+                }
+
+                & .comment-reply-item-date {
+                    font-size: 1rem;
+                    color: var(--pretty-base-color-lighter);
+                }
             }
 
             & .ri-reply-line {

@@ -96,8 +96,8 @@ function Comments({ blogId }) {
                 Markdown is supported & <strong>Login before commenting is preferred &nbsp;: &#41;</strong>
             </div>
 
-            <CommentCreate 
-                blogId={blogId} 
+            <CommentCreate
+                blogId={blogId}
                 onCommentSubmitFinished={() => {
                     handleCommentsPageFetch();
                     setReplyToCommentId(null);
@@ -115,8 +115,10 @@ function Comments({ blogId }) {
                             <div data-aos="fade-up" key={comment.id}>
                                 <div className='comment-item'>
                                     <div className='comment-item-horizontal-group'>
-                                        <div className='comment-item-name'>{comment.name}</div>
-                                        <div className='comment-item-date'>{blogFormatDate(comment.created)}</div>
+                                        <div className='comment-item-horizontal-group-left'>
+                                            <div className='comment-item-name'>{comment.name}</div>
+                                            <div className='comment-item-date'>{blogFormatDate(comment.created)}</div>
+                                        </div>
                                         <i className='ri-reply-line' onClick={() => handleReplyClick(comment.id)}></i>
                                     </div>
                                     <div className='comment-item-content-md'>
@@ -129,12 +131,26 @@ function Comments({ blogId }) {
                                                 <div data-aos="fade-right" key={reply.id}>
                                                     <div className='comment-reply-item'>
                                                         <div className='comment-reply-item-horizontal-group'>
-                                                            <div className='comment-reply-item-name'>{reply.name}</div>
-                                                            <div className='comment-reply-item-date'>{blogFormatDate(reply.created)}</div>
+                                                            <div className='comment-reply-item-horizontal-group-left'>
+                                                                <div className='comment-reply-item-name'>{reply.name}</div>
+                                                                <div className='comment-reply-item-date'>{blogFormatDate(reply.created)}</div>
+                                                            </div>
+                                                            <i className='ri-reply-line' onClick={() => handleReplyClick(reply.id)}></i>
                                                         </div>
                                                         <div className='comment-reply-item-content-md'>
                                                             <Markdown value={reply.content} gfm={true} breaks={true} openLinksInNewTab={true}></Markdown>
                                                         </div>
+                                                        {replyToCommentId === reply.id && (
+                                                            <CommentCreate
+                                                                blogId={blogId}
+                                                                forReply={true}
+                                                                parentId={comment.id}
+                                                                onCommentSubmitFinished={() => {
+                                                                    handleCommentsPageFetch();
+                                                                    setReplyToCommentId(null);
+                                                                }}
+                                                            />
+                                                        )}
                                                     </div>
                                                 </div>
                                             ))}
