@@ -1,0 +1,94 @@
+.comment-container {
+    width: 100%;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+
+    & .comment-title {
+        user-select: none;
+        padding: 0.5rem 0;
+        font-size: 1.5rem;
+    }
+
+    & .comment-tip {
+        width: fit-content;
+        font-size: 1rem;
+        padding: 0.5rem;
+        border-radius: var(--pretty-border-radius-small);
+        background-color: var(--pretty-alert-color);
+    }
+
+    & .comment-item {
+        display: flex;
+        flex-direction: column;
+        border-radius: var(--pretty-border-radius-small);
+        padding: 1rem 0rem;
+
+        & .comment-item-horizontal-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+
+            & .comment-item-name {
+                font-weight: 700;
+                font-size: 1rem;
+            }
+
+            & .comment-item-date {
+                font-size: 1rem;
+                color: var(--pretty-base-color-lighter);
+            }
+
+            & .ri-reply-line {
+                margin-left: auto;
+                font-size: 1.25rem;
+                cursor: pointer;
+            }
+        }
+    }
+
+    & .comment-reply-item {
+        display: flex;
+        flex-direction: column;
+        border-radius: var(--pretty-border-radius-small);
+        padding: 0.5rem 0rem 0rem 1rem;
+
+        & .comment-reply-item-horizontal-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+
+            & .comment-reply-item-name {
+                font-weight: 700;
+                font-size: 1rem;
+            }
+
+            & .comment-reply-item-date {
+                font-size: 1rem;
+                color: var(--pretty-base-color-lighter);
+            }
+
+            & .ri-reply-line {
+                margin-left: auto;
+                font-size: 1.25rem;
+                cursor: pointer;
+            }
+        }
+    }
+
+    & .comment-item-expand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+        padding-left: 1rem;
+        font-size: 0.8rem;
+        user-select: none;
+        cursor: pointer;
+    }
+}

@@ -29,7 +29,7 @@
         border: 2px outset var(--pretty-btn-color);
         color: var(--pretty-base-color);
         background-color: var(--pretty-btn-color);
-        letter-spacing: 0.1rem;
+        letter-spacing: 0.05rem;
         cursor: pointer;
         transition: var(--pretty-transition);
 
