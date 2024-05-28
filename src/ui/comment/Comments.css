@@ -36,7 +36,7 @@
                 display: inline-flex;
                 flex-direction: row;
                 align-items: center;
-                gap: 1rem;
+                gap: 0.75rem;
 
                 & .comment-item-name {
                     font-weight: 700;
@@ -73,17 +73,37 @@
             & .comment-reply-item-horizontal-group-left {
                 display: inline-flex;
                 flex-direction: row;
-                gap: 1rem;
+                gap: 0.75rem;
                 align-items: center;
 
                 & .comment-reply-item-name {
                     font-weight: 700;
                     font-size: 1rem;
+                    /* prevent text from turning to a new line */
+                    white-space: nowrap;
                 }
 
                 & .comment-reply-item-date {
                     font-size: 0.8rem;
                     color: var(--pretty-base-color-lighter);
+                    /* hide text if it's too long */
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                & .comment-reply-item-to {
+                    font-weight: 700;
+                    font-size: 0.8rem;
+                    color: var(--pretty-base-color-lighter);
+                    /* hide text if it's too long */
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 
@@ -105,5 +125,30 @@
         font-size: 0.8rem;
         user-select: none;
         cursor: pointer;
+    }
+
+    & .comment-list-loading-container {
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    & .reply-list-loading-container {
+        height: 2.5rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem 0.5rem 0.5rem 2.25rem;
+
+        & .loading-pulse {
+            height: 0.75rem;
+
+            &::before,
+            &::after {
+                height: 0.75rem;
+            }
+        }
     }
 }
