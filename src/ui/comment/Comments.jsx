@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import './Comments.css'
 import blogFormatDate from '../../utils/blogFormatDate';
 import CommentCreate from './CommentCreate';
 import Markdown from 'marked-react';
 
-function Comments({ blogId }) {
+function Comments({ blogId, blogAuthorEmail }) {
     const URL_SUFFIX_COMMENTS = "/blogs/" + blogId + "/comments";
+
+    const authUser = useAuthUser();
+    const authEmail = authUser?.email;
 
     const [comments, setComments] = useState([]);
     const [isCommentsExpanded, setIsCommentsExpanded] = useState([]);
@@ -136,6 +140,30 @@ function Comments({ blogId }) {
         });
     }
 
+    const deleteComment = (id, forReply=false, index, commentId=null) => {
+        const fetchUrl = process.env.REACT_APP_SERVER_URL + URL_SUFFIX_COMMENTS + "/" + id;
+        fetch(fetchUrl, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => {
+                if (!res.ok) { throw Error('Could not fetch the replies...'); }
+            })
+            .then(() => {
+                if (forReply) {
+                    fetchReplies(commentId, index);
+                    updateCommentReplyNum(index, commentReplyNum[index] - 1);
+                } else {
+                    handleCommentsPageFetch();
+                }
+            })
+            .catch(error => {
+                console.log(error.message);
+            });
+    }
+
     return (
         <div className="comment-container">
             <h2 className="comment-title">
@@ -153,7 +181,12 @@ function Comments({ blogId }) {
                                             <div className='comment-item-name'>{comment.name}</div>
                                             <div className='comment-item-date'>{blogFormatDate(comment.created)}</div>
                                         </div>
-                                        <i className='ri-reply-line' onClick={() => handleReplyClick(comment.id)}></i>
+                                        <div className='comment-item-horizontal-group-right'>
+                                            {(comment.email === authEmail || authEmail === blogAuthorEmail) &&
+                                                <i className='ri-delete-bin-line' onClick={() => deleteComment(comment.id, false, index, null)}></i>
+                                            }
+                                            <i className={`${replyToCommentId === comment.id ? 'ri-reply-fill' : 'ri-reply-line'}`} onClick={() => handleReplyClick(comment.id)}></i>
+                                        </div>
                                     </div>
                                     <div className='comment-item-content-md'>
                                         <Markdown value={comment.content} gfm={true} breaks={true} openLinksInNewTab={true}></Markdown>
@@ -170,7 +203,12 @@ function Comments({ blogId }) {
                                                                 <div className='comment-reply-item-date'>{blogFormatDate(reply.created)}</div>
                                                                 <div className='comment-reply-item-to'>@ {reply.parent_name}</div>
                                                             </div>
-                                                            <i className='ri-reply-line' onClick={() => handleReplyClick(reply.id)}></i>
+                                                            <div className='comment-reply-item-horizontal-group-right'>
+                                                                {(reply.email === authEmail || authEmail === blogAuthorEmail) &&
+                                                                    <i className='ri-delete-bin-line' onClick={() => deleteComment(reply.id, true, index, comment.id)}></i>
+                                                                }
+                                                                <i className={`${replyToCommentId === reply.id ? 'ri-reply-fill' : 'ri-reply-line'}`} onClick={() => handleReplyClick(reply.id)}></i>
+                                                            </div>
                                                         </div>
                                                         <div className='comment-reply-item-content-md'>
                                                             <Markdown value={reply.content} gfm={true} breaks={true} openLinksInNewTab={true}></Markdown>
@@ -194,7 +232,7 @@ function Comments({ blogId }) {
                                         </div>
                                     )}
                                     {/* expand button for the replies */}
-                                    {comment.replyNum > 0 && (
+                                    {commentReplyNum[index] > 0 && (
                                         <>
                                             {!fetchRepliesError[index] && isFetchingReplies[index] &&
                                                 <div className="reply-list-loading-container">

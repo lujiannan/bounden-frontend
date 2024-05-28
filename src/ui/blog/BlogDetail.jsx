@@ -45,7 +45,7 @@ function BlogDetail() {
                                 <a className="blog-detail-link" href={`mailto:${blog.blog.author.email}`}>{blog.blog.author.email}</a>
                             </p>
                         </div>
-                        <Comments blogId={id} />
+                        <Comments blogId={id} blogAuthorEmail={blog.blog.author.email} />
                     </div>
                 )}
                 <div className="footer">

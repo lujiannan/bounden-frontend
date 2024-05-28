@@ -41,17 +41,34 @@
                 & .comment-item-name {
                     font-weight: 700;
                     font-size: 1rem;
+                    /* prevent text from turning to a new line */
+                    white-space: nowrap;
                 }
 
                 & .comment-item-date {
                     font-size: 0.8rem;
                     color: var(--pretty-base-color-lighter);
+                    /* hide text if it's too long */
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
 
-            & .ri-reply-line {
-                font-size: 1.25rem;
-                cursor: pointer;
+            & .comment-item-horizontal-group-right {
+                /* align-self: flex-end; */
+                display: inline-flex;
+                flex-direction: row;
+                gap: 0.5rem;
+                align-items: center;
+                
+                & [class^="ri-"] {
+                    font-size: 1.25rem;
+                    transition: var(--pretty-transition);
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -74,7 +91,7 @@
                 display: inline-flex;
                 flex-direction: row;
                 gap: 0.75rem;
-                align-items: center;
+                justify-content: center;
 
                 & .comment-reply-item-name {
                     font-weight: 700;
@@ -107,10 +124,18 @@
                 }
             }
 
-            & .ri-reply-line {
-                margin-left: auto;
-                font-size: 1.25rem;
-                cursor: pointer;
+            & .comment-reply-item-horizontal-group-right {
+                /* align-self: flex-end; */
+                display: inline-flex;
+                flex-direction: row;
+                gap: 0.5rem;
+                align-items: center;
+                
+                & [class^="ri-"] {
+                    font-size: 1.25rem;
+                    transition: var(--pretty-transition);
+                    cursor: pointer;
+                }
             }
         }
     }
