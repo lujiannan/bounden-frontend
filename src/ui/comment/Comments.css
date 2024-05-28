@@ -90,8 +90,8 @@
             & .comment-reply-item-horizontal-group-left {
                 display: inline-flex;
                 flex-direction: row;
+                align-items: center;
                 gap: 0.75rem;
-                justify-content: center;
 
                 & .comment-reply-item-name {
                     font-weight: 700;
