@@ -5,7 +5,7 @@ import Markdown from 'marked-react';
 
 import './CommentCreate.css'
 
-function CommentCreate({ blogId, forReply=false, parentId=null, onCommentSubmitFinished=null }) {
+function CommentCreate({ blogId, forReply=false, parentId=null, parentName=null, onCommentSubmitFinished=null, onCancelComment=null }) {
     const URL_SUFFIX_COMMENT_POST = "/blogs/" + blogId + "/comments/create";
 
     const auth = useAuthUser();
@@ -81,7 +81,7 @@ function CommentCreate({ blogId, forReply=false, parentId=null, onCommentSubmitF
                 <div className='horizontal-divider'></div>
                 <textarea
                     {...register("comment", { required: "Comment is required", minLength: { value: 5, message: "Comment must be at least 5 characters long" }, maxLength: { value: 500, message: "Comment must be at most 500 characters long" } })}
-                    placeholder="Write your comment here...">
+                    placeholder={`${forReply ? "Reply to " + parentName + "..." : "Write your comment here..."}`}>
                 </textarea>
                 <div className='comment-form-word-count'>{comment ? comment.length : 0}/500</div>
             </form>
@@ -91,6 +91,9 @@ function CommentCreate({ blogId, forReply=false, parentId=null, onCommentSubmitF
 
             <div className='comment-form-submit-group'>
                 <i className="ri-markdown-fill"></i>
+                {forReply && 
+                    <button className="comment-form-cancel-button" onClick={() => onCancelComment()}>Cancel</button>
+                }
                 <button className={`comment-form-preview-button ${isPreviewActive ? "active" : ""}`} onClick={() => setIsPreviewActive(!isPreviewActive)}>Preview</button>
                 <button className="comment-form-submit-button" type="submit" form={`${forReply ? "comment-reply-form" : "comment-form"}`}>
                     {isSubmitting && 

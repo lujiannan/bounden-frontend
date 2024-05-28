@@ -90,6 +90,23 @@
             font-size: 1.5rem;
         }
 
+        & .comment-form-cancel-button {
+            width: fit-content;
+            background-color: var(--pretty-btn-color);
+            color: var(--pretty-base-color);
+            border-radius: var(--pretty-border-radius-small);
+            border: 2px outset var(--pretty-btn-color);
+            padding: 0.25rem 0.5rem;
+            letter-spacing: 0.05rem;
+            font-size: 1rem;
+            font-weight: var(--pretty-font-weight);
+            cursor: pointer;
+    
+            &:active {
+                border-style: inset;
+            }
+        }
+
         & .comment-form-preview-button {
             width: fit-content;
             background-color: var(--pretty-btn-color);

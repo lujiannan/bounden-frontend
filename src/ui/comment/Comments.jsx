@@ -13,6 +13,7 @@ function Comments({ blogId }) {
     const [expandedComments, setExpandedComments] = useState({});
     const [replyToCommentId, setReplyToCommentId] = useState(null);
 
+    const [commentReplyNum, setCommentReplyNum] = useState([]);
     const [isFetchingComments, setIsFetchingComments] = useState(false);
     const [fetchCommentsError, setFetchCommentsError] = useState(null);
     const [isFetchingReplies, setIsFetchingReplies] = useState([]);
@@ -41,6 +42,7 @@ function Comments({ blogId }) {
                 console.log(data);
                 setIsFetchingComments(false);
                 setComments(data.comments);
+                setCommentReplyNum(data.comments.map(comment => comment.replyNum));
                 setIsCommentsExpanded(Array(data.comments.length).fill(false));
                 setIsFetchingReplies(Array(data.comments.length).fill(false));
                 setFetchRepliesError(Array(data.comments.length).fill(null));
@@ -126,6 +128,14 @@ function Comments({ blogId }) {
             });
     }
 
+    const updateCommentReplyNum = (index, newNum) => {
+        setCommentReplyNum(prevState => {
+            const newState = [...prevState];
+            newState[index] = newNum;
+            return newState;
+        });
+    }
+
     return (
         <div className="comment-container">
             <h2 className="comment-title">
@@ -136,7 +146,7 @@ function Comments({ blogId }) {
                 <>
                     {comments.length > 0 &&
                         comments.map((comment, index) => (
-                            <div data-aos="fade-right" key={comment.id}>
+                            <div data-aos="fade-right" data-aos-once="true" key={comment.id}>
                                 <div className='comment-item'>
                                     <div className='comment-item-horizontal-group'>
                                         <div className='comment-item-horizontal-group-left'>
@@ -152,7 +162,7 @@ function Comments({ blogId }) {
                                     {isCommentsExpanded[index] && expandedComments[comment.id] && (
                                         <div className='replies-container'>
                                             {expandedComments[comment.id].map(reply => (
-                                                <div data-aos="fade-right" key={reply.id}>
+                                                <div data-aos="fade-right" data-aos-once="true" key={reply.id}>
                                                     <div className='comment-reply-item'>
                                                         <div className='comment-reply-item-horizontal-group'>
                                                             <div className='comment-reply-item-horizontal-group-left'>
@@ -170,8 +180,10 @@ function Comments({ blogId }) {
                                                                 blogId={blogId}
                                                                 forReply={true}
                                                                 parentId={reply.id}
+                                                                parentName={reply.parent_name}
                                                                 onCommentSubmitFinished={() => {
-                                                                    handleCommentsPageFetch();
+                                                                    updateCommentReplyNum(index, commentReplyNum[index] + 1);
+                                                                    fetchReplies(comment.id, index);
                                                                     setReplyToCommentId(null);
                                                                 }}
                                                             />
@@ -192,7 +204,7 @@ function Comments({ blogId }) {
                                             {fetchRepliesError[index] && <div>Error: {fetchRepliesError[index]}</div>}
                                             <div className='comment-item-expand' onClick={() => handleExpandRepliesClick(comment.id, index)}>
                                                 <i className={`${isCommentsExpanded[index] ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'}`}></i>
-                                                {comment.replyNum} {comment.replyNum > 1 ? 'replies' : 'reply'}
+                                                {commentReplyNum[index]} {commentReplyNum[index] > 1 ? 'replies' : 'reply'}
                                             </div>
                                         </>
                                     )}
@@ -201,10 +213,13 @@ function Comments({ blogId }) {
                                             blogId={blogId}
                                             forReply={true}
                                             parentId={comment.id}
+                                            parentName={comment.name}
                                             onCommentSubmitFinished={() => {
-                                                handleCommentsPageFetch();
+                                                updateCommentReplyNum(index, commentReplyNum[index] + 1);
+                                                fetchReplies(comment.id, index);
                                                 setReplyToCommentId(null);
                                             }}
+                                            onCancelComment={() => setReplyToCommentId(null)}
                                         />
                                     )}
                                 </div>

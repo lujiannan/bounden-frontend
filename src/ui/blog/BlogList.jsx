@@ -172,7 +172,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                     <>
                         {data_blogs.length !== 0 &&
                             data_blogs.map((blog) => (
-                                <div data-aos="fade-up" key={blog.id}>
+                                <div data-aos="fade-up" data-aos-once="true" key={blog.id}>
                                     <div className='blog-preview'
                                         onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
                                         {...longPress(() => handleBlogLongPress(blog.id))}>
