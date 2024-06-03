@@ -81,6 +81,7 @@ function Navbar() {
             <div className="menu-icon" onClick={handleMenuIconClick} ref={menuIconRef}>
                 <i className={menuClicked ? "ri-close-line" : "ri-menu-line"}></i>
             </div>
+            <div className={`nav-cover ${menuClicked ? "active" : ""}`}></div>
             <ul className={menuClicked ? "nav-menu active" : "nav-menu"} ref={menuRef}>
                 {MenuData.map((item, index) => {
                     return (

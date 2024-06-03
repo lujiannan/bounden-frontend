@@ -25,11 +25,15 @@ git clone https://github.com/lujiannan/bounden-frontend.git
 
 ### Client Setup
 - Go to the client directory
+#### Ubuntu
 - Install npm ```sudo apt install npm```
 - Install node.js ```sudo npm cache clean -f && sudo npm install -g n && sudo n stable```
 - Check upgrades ```sudo apt upgrade```
 - Install the node.js dependencies ```npm install```
 - Run the client ```npm start``` (on port 3000 by default)
+#### MacOS
+- Install nvm ```brew install nvm```
+- install npm and node.js ```brew install node```
 
 ## Dependencies
 - The whole website is built using React as frontend and Flask + Python as backend
