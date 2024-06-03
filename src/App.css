@@ -31,6 +31,7 @@
     --pretty-border-radius-small: 5px;
     --pretty-border-radius-large: 20px;
     --pretty-transition: all 0.3s ease-in-out;
+    --pretty-transition-slow: all 0.5s ease-in-out;
     --pretty-transition-fast: all 0.2s ease-in-out;
     --pretty-inner-container-width: 53rem;
     --top-nav-height: 5rem;
