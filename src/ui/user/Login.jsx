@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
-import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useNavigate } from 'react-router-dom'
 
@@ -15,7 +14,6 @@ function Login() {
     const URL_SUFFIX_FORGOT_PASSWORD = '/forgot_password';
 
     const signIn = useSignIn();
-    const signOut = useSignOut();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
