@@ -75,16 +75,16 @@
     font-size: 1rem;
     font-weight: var(--pretty-font-weight);
     color: var(--pretty-base-color-light);
-    letter-spacing: 0.2rem;
+    letter-spacing: 0.1rem;
     user-select: none;
 
     & button {
         height: 3rem;
         color: var(--pretty-base-color);
         font-size: 1rem;
-        font-weight: var(--pretty-font-weight);
+        font-weight: 700;
         letter-spacing: 0.1rem;
-        padding: 0rem 1rem;
+        padding: 0rem 0.75rem;
         border-radius: var(--pretty-border-radius-small);
         border: 2px solid var(--pretty-base-color);
         background-color: var(--pretty-bg-color);

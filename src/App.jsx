@@ -21,7 +21,7 @@ export default function App() {
     AOS.init({
         offset: 50,
         duration: 700,
-        easing: 'ease-in-out',
+        easing: 'ease',
     });
 
     const store = createStore({
