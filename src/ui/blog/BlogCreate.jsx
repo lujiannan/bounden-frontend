@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom"; // for redirecting to the blog page after creating a new blog
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'; // for getting the logged in user's email
 import { useForm } from "react-hook-form"; // for handling form data
+import { BlogsContext } from './BlogsContext';
 import "./BlogCreate.css";
 import "../../utils/blogCategories"
 
@@ -14,6 +15,8 @@ function BlogCreate() {
     const navigate = useNavigate();
     const auth = useAuthUser();
     const author_email = auth.email;
+
+    const { dataBlogs, setDataBlogs } = useContext(BlogsContext);
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [result, setResult] = useState(false);
@@ -62,9 +65,12 @@ function BlogCreate() {
                 setIsSubmitting(false);
                 setResult(true);
                 setFetchError(null);
-                // return res.json();
+                return res.json();
             })
-            .then(() => {
+            .then((data) => {
+                console.log(data)
+                // add the new blog to the dataBlogs array
+                setDataBlogs([data.blog, ...dataBlogs]);
                 // navigate to the blog page
                 navigate("/");
             })

@@ -13,7 +13,7 @@ function Blogs() {
                 <i className="ri-quill-pen-line"></i>
             </Link>
             {/* generate a blog list by passing the route string, process GET request to the server */}
-            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS}/>
+            <BlogList urlSuffix={URL_SUFFIX_BLOGS} titleString={TITLE_BLOGS} />
             <div className="footer">
                 <p>&copy; Bounden. All rights reserved.</p>
                 <a href="https://beian.miit.gov.cn/" target="_blank">苏ICP备2024096881号</a>

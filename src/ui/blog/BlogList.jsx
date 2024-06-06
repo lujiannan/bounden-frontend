@@ -2,25 +2,26 @@
 This is a reusable component for displaying a list of blog posts
 */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./BlogList.css"
 import { useNavigate } from "react-router-dom";
+import { BlogsContext } from './BlogsContext';
 
 import blogFormatDate from "../../utils/blogFormatDate.jsx";
 import useLongPress from '../../hooks/useLongPress.jsx';
 import FullModal from '../modal/FullModal';
 
-function deleteBlogAtIndex(data_blogs, indexToDelete) {
+function deleteBlogAtIndex(dataBlogs, indexToDelete) {
     // Check if the index is within the bounds of the array
-    if (indexToDelete >= 0 && indexToDelete < data_blogs.length) {
+    if (indexToDelete >= 0 && indexToDelete < dataBlogs.length) {
         // Use splice to remove the item at the specified index
-        data_blogs.splice(indexToDelete, 1);
+        dataBlogs.splice(indexToDelete, 1);
     } else {
         console.error("Index out of bounds");
     }
 
     // Return the modified array
-    return data_blogs;
+    return dataBlogs;
 }
 
 function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
@@ -28,10 +29,9 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     const navigate = useNavigate();
     const [isFetchBlogsLoading, setIsFetchBlogsLoading] = useState(false);
     const [fetchBlogsError, setFetchBlogsError] = useState(null);
-    const [data_blogs, setDataBlogs] = useState([]);
-    const [isNoMorePages, setIsNoMorePages] = useState(false);
+    const { dataBlogs, setDataBlogs, isBlogsNoMorePages, setIsBlogsNoMorePages } = useContext(BlogsContext);
     // always fetch the first page, and use last_blog_updated_time to filter out duplicate blogs
-    const [currentPage, setCurrentPage] = useState(1);
+    const CURRENT_PAGE = 1;
     const PER_PAGE = 5;
 
     const [isUpdateModalActive, setIsUpdateModalActive] = useState(false);
@@ -43,13 +43,16 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     const [deleteResult, setDeleteResult] = useState(false);
     const [deleteError, setDeleteError] = useState(null);
 
-    // initialize the data_blogs on first render
+    // initialize the dataBlogs on first render
     useEffect(() => {
-        handleBlogListPageFetch();
+        if (dataBlogs.length === 0) {
+            handleBlogListPageFetch();
+        }
+        console.log(dataBlogs)
     }, []);
 
-    const handleBlogListPageFetch = (page = currentPage, per_page = PER_PAGE) => {
-        if (isNoMorePages) {
+    const handleBlogListPageFetch = (page = CURRENT_PAGE, per_page = PER_PAGE) => {
+        if (isBlogsNoMorePages) {
             // if there are no more pages, don't fetch again
             return;
         }
@@ -57,8 +60,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
         setFetchBlogsError(null);
         setIsFetchBlogsLoading(true);
         // pass in the updated time and id of the last blog in the current page to avoid fetching duplicate blogs
-        const last_blog_updated_time = data_blogs.length > 0 ? data_blogs[data_blogs.length - 1].attributes.updated : null;
-        const last_blog_id = data_blogs.length > 0 ? data_blogs[data_blogs.length - 1].id : 0;
+        const last_blog_updated_time = dataBlogs.length > 0 ? dataBlogs[dataBlogs.length - 1].attributes.updated : null;
+        const last_blog_id = dataBlogs.length > 0 ? dataBlogs[dataBlogs.length - 1].id : 0;
         fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
             method: "POST",
             headers: {
@@ -76,11 +79,11 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 console.log(data);
                 if (data.current_page >= data.pages) {
                     console.log('This is the last page');
-                    setIsNoMorePages(true);
+                    setIsBlogsNoMorePages(true);
                 }
                 // setCurrentPage(currentPage + 1);
                 setIsFetchBlogsLoading(false);
-                setDataBlogs((data_blogs) => [...data_blogs, ...data.blogs]);
+                setDataBlogs((dataBlogs) => [...dataBlogs, ...data.blogs]);
                 console.log('Data fetched');
             })
             .catch(error => {
@@ -136,7 +139,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
             .then(() => {
                 setIsUpdateModalActive(false);
                 setPressedBlogId(0);
-                deleteBlogAtIndex(data_blogs, data_blogs.findIndex(blog => blog.id === pressedBlogId));
+                deleteBlogAtIndex(dataBlogs, dataBlogs.findIndex(blog => blog.id === pressedBlogId));
             })
             .catch(error => {
                 setIsBlogDeleting(false);
@@ -170,8 +173,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 <h1>{titleString}</h1>
                 {
                     <>
-                        {data_blogs.length !== 0 &&
-                            data_blogs.map((blog) => (
+                        {dataBlogs.length !== 0 &&
+                            dataBlogs.map((blog) => (
                                 <div data-aos="fade-up" data-aos-once="true" key={blog.id}>
                                     <div className='blog-preview'
                                         onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
@@ -199,8 +202,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                 }
                                 {!isFetchBlogsLoading &&
                                     <div>
-                                        {isNoMorePages ? (<div>· THE END ·</div>) :
-                                            (<div data-aos="fade-up">
+                                        {isBlogsNoMorePages ? (<div>· THE END ·</div>) :
+                                            (<div data-aos="fade-up" data-aos-once="true">
                                                 <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>
                                             </div>)
                                         }
