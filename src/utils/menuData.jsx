@@ -23,10 +23,10 @@ export const MenuData = [
     //     cName: "nav-links",
     //     icon: "fa-solid fa-address-book"
     // },
-    {
-        title: "About",
-        url: "/about",
-        cName: "nav-links",
-        icon: "ri-information-fill"
-    },
+    // {
+    //     title: "About",
+    //     url: "/about",
+    //     cName: "nav-links",
+    //     icon: "ri-information-fill"
+    // },
 ]
