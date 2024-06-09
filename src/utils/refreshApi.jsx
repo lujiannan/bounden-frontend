@@ -7,7 +7,7 @@ const refreshApi = createRefresh({
         // param contructor: { refreshToken: string, authToken: string, authUserState: {} }
         console.log(param)
         try {
-            const response = await axios.post("/token/refresh", param, {
+            const response = await axios.post(process.env.REACT_APP_SERVER_URL + "/token/refresh", param, {
                 headers: { 'Authorization': `Bearer ${param.refreshToken}` }
             })
             console.log(response)
