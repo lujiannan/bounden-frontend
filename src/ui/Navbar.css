@@ -12,8 +12,6 @@
     /* fix the nv bar at the top */
     position: fixed;
     top: 0;
-    left: 50%;
-    transform: translate(-50%);
     transition: var(--pretty-transition);
     height: var(--top-nav-height);
     /* opacity: 0.75; */
