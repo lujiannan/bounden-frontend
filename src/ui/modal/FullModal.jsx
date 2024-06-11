@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import './FullModal.css'
 
-const FullModal = ({ isOpen, onClose, children }) => {
+const FullModal = ({ isOpen=false, onClose, children }) => {
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
