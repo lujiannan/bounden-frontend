@@ -48,9 +48,10 @@ function MealRecipeGenerator() {
     useEffect(() => {
         const cleanupInterval = setInterval(() => {
             setFloatingTexts((prev) =>
+                // Remove texts that are older than 1 second
                 prev.filter((text) => Date.now() - text.id < 1000)
             );
-        }, 100);
+        }, 10);
         return () => clearInterval(cleanupInterval);
     }, []);
 
@@ -60,11 +61,13 @@ function MealRecipeGenerator() {
 
     return (
         <div className="meal-recipe-generator-container">
-            <button onClick={handleClick}>
-                {isRunning ? 'Stop' : 'Start'}
-            </button>
-            <div className="current-text-container">
-                {textList[currentIndex]}
+            <div className='info-container'>
+                <div className="current-text-container">
+                    {textList[currentIndex]}
+                </div>
+                <button className='start-stop-button' onClick={handleClick}>
+                    {isRunning ? 'STOP' : 'START'}
+                </button>
             </div>
             {floatingTexts.map((text) => (
                 <div
