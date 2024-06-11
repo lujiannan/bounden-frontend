@@ -29,7 +29,11 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     const navigate = useNavigate();
     const [isFetchBlogsLoading, setIsFetchBlogsLoading] = useState(false);
     const [fetchBlogsError, setFetchBlogsError] = useState(null);
+    // all blogs data
     const { dataBlogs, setDataBlogs, isBlogsNoMorePages, setIsBlogsNoMorePages } = useContext(BlogsContext);
+    // blogs data for the current user
+    const [dataBlogsSelf, setDataBlogsSelf] = useState([]);
+    const [isBlogsSelfNoMorePages, setIsBlogsSelfNoMorePages] = useState(false);
     // always fetch the first page, and use last_blog_updated_time to filter out duplicate blogs
     const CURRENT_PAGE = 1;
     const PER_PAGE = 5;
@@ -45,14 +49,13 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
 
     // initialize the dataBlogs on first render
     useEffect(() => {
-        if (dataBlogs.length === 0) {
+        if (dataBlogs.length === 0 || forBlogSelf) {
             handleBlogListPageFetch();
         }
-        console.log(dataBlogs)
     }, []);
 
     const handleBlogListPageFetch = (page = CURRENT_PAGE, per_page = PER_PAGE) => {
-        if (isBlogsNoMorePages) {
+        if ((!forBlogSelf && isBlogsNoMorePages) || (forBlogSelf && isBlogsSelfNoMorePages)) {
             // if there are no more pages, don't fetch again
             return;
         }
@@ -60,8 +63,12 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
         setFetchBlogsError(null);
         setIsFetchBlogsLoading(true);
         // pass in the updated time and id of the last blog in the current page to avoid fetching duplicate blogs
-        const last_blog_updated_time = dataBlogs.length > 0 ? dataBlogs[dataBlogs.length - 1].attributes.updated : null;
-        const last_blog_id = dataBlogs.length > 0 ? dataBlogs[dataBlogs.length - 1].id : 0;
+        const last_blog_updated_time = forBlogSelf ?
+            (dataBlogsSelf.length > 0 ? dataBlogsSelf[dataBlogsSelf.length - 1].attributes.updated : null) :
+            (dataBlogs.length > 0 ? dataBlogs[dataBlogs.length - 1].attributes.updated : null);
+        const last_blog_id = forBlogSelf ?
+            (dataBlogsSelf.length > 0 ? dataBlogsSelf[dataBlogsSelf.length - 1].id : 0) :
+            (dataBlogs.length > 0 ? dataBlogs[dataBlogs.length - 1].id : 0);
         fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
             method: "POST",
             headers: {
@@ -79,11 +86,11 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 console.log(data);
                 if (data.current_page >= data.pages) {
                     console.log('This is the last page');
-                    setIsBlogsNoMorePages(true);
+                    forBlogSelf ? setIsBlogsSelfNoMorePages(true) : setIsBlogsNoMorePages(true);
                 }
                 // setCurrentPage(currentPage + 1);
                 setIsFetchBlogsLoading(false);
-                setDataBlogs((dataBlogs) => [...dataBlogs, ...data.blogs]);
+                forBlogSelf ? setDataBlogsSelf((dataBlogsSelf) => [...dataBlogsSelf, ...data.blogs]) : setDataBlogs((dataBlogs) => [...dataBlogs, ...data.blogs]);
                 console.log('Data fetched');
             })
             .catch(error => {
@@ -173,8 +180,8 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 <h1>{titleString}</h1>
                 {
                     <>
-                        {dataBlogs.length !== 0 &&
-                            dataBlogs.map((blog) => (
+                        {(forBlogSelf ? dataBlogsSelf : dataBlogs).length !== 0 &&
+                            (forBlogSelf ? dataBlogsSelf : dataBlogs).map((blog) => (
                                 <div data-aos="fade" key={blog.id}>
                                     <div className='blog-preview'
                                         onClick={() => navigate(forBlogSelf ? `/blogs-self/edit/${blog.id}` : `/blogs/${blog.id}`)}
@@ -202,7 +209,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                                 }
                                 {!isFetchBlogsLoading &&
                                     <div>
-                                        {isBlogsNoMorePages ? (<div>· END ·</div>) :
+                                        {(forBlogSelf ? isBlogsSelfNoMorePages : isBlogsNoMorePages) ? (<div>· END ·</div>) :
                                             (<div data-aos="fade">
                                                 <button onClick={() => handleBlogListPageFetch()}>LOAD MORE</button>
                                             </div>)
