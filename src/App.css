@@ -82,6 +82,21 @@ body {
     }
 }
 
+/* fade in out animation */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 /* loading pulse animation */
 @-webkit-keyframes pulse {
     50% {
