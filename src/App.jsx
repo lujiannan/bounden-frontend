@@ -15,6 +15,8 @@ import BlogCreate from './ui/blog/BlogCreate';
 import BlogEdit from './ui/blog/BlogEdit';
 import BlogDetail from './ui/blog/BlogDetail';
 import Login from './ui/user/Login';
+import Widgets from './ui/widget/Widgets';
+import { WidgetsData } from './utils/widgetsData';
 
 export default function App() {
     // AOS animation initialization
@@ -43,6 +45,12 @@ export default function App() {
                 </Route>
                 <Route path='/blogs/:id' element={<BlogDetail />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/widgets' element={<Widgets />} />
+                {WidgetsData.map((widget, index) => {
+                    return (
+                        <Route key={index} path={`/widgets${widget.url}`} element={widget.routeElement} />
+                    )
+                })}
                 <Route path='*' element={<h1>Page not found</h1>} />
             </Route>
         )

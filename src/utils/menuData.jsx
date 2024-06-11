@@ -12,8 +12,8 @@ export const MenuData = [
         icon: "ri-blogger-fill"
     },
     {
-        title: "Service",
-        url: "/service",
+        title: "Widget",
+        url: "/widgets",
         cName: "nav-links",
         icon: "ri-suitcase-fill"
     },
