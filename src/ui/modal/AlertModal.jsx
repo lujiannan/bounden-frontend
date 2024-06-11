@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import './AlertModal.css'
 
-const AlertModal = ({ isOpen, onClose, children }) => {
+const AlertModal = ({ isOpen=false, onClose, children }) => {
   useEffect(() => {
     const handleEscape = (event) => {
       if (event.key === 'Escape') {
