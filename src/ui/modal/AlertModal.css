@@ -2,7 +2,7 @@
     font-weight: var(--pretty-font-weight);
     user-select: none;
     z-index: 99;
-    display: flex;
+    display: none;
     justify-content: center;
     /* align-items: center; */
     position: fixed;
@@ -15,12 +15,15 @@
     border-radius: var(--pretty-border-radius);
     /* background-color: rgba(0, 0, 0, 0.5); */
     transition: var(--pretty-transition);
-    opacity: 0;
-    visibility: hidden;
+    /* opacity: 0;
+    visibility: hidden; */
+    animation: flexFadeOut 0.3s ease;
 
     &.open {
-        opacity: 1;
-        visibility: visible;
+        /* opacity: 1;
+        visibility: visible; */
+        display: flex;
+        animation: fadeIn 0.3s ease;
     }
 
     & .alert-modal-content {

@@ -96,8 +96,9 @@ body {
 }
 
 /* fade out animation */
-@keyframes fadeOut {
+@keyframes flexFadeOut {
     0% {
+        display: flex;
         opacity: 1;
     }
 
