@@ -84,7 +84,7 @@ function Login() {
                     setShouldSignupAlertOn(true);
                     setTimeout(() => {
                         setShouldSignupAlertOn(false);
-                    }, 5000)
+                    }, 5000);
                 }
 
                 // authenticate the user and redirect to dashboard page
