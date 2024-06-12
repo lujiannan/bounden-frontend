@@ -1,6 +1,6 @@
 .blog-delete-modal-btn-group {
     margin-top: 1rem;
-    width: 100%;
+    width: 12rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -43,7 +43,7 @@
     }
 
     & .delete-btn {
-        width: 50%;
+        width: 55%;
         background-color: var(--pretty-error-color);
         border-color: var(--pretty-error-color);
     }

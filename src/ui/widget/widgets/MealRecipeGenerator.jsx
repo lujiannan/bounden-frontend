@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import "./MealRecipeGenerator.css"
 
 
-const textList = ["Text 1", "Text 2", "Text 3", "Text 4", "Text 5"];
+const textList = ["红烧肉", "水煮白菜", "蛋炒饭", "番茄炒蛋", "泡面"];
 
 const getRandomPosition = () => {
     const x = Math.random() * 80; // Assuming 80vw max for x position

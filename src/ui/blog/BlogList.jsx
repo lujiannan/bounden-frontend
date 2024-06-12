@@ -147,6 +147,9 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
                 setIsUpdateModalActive(false);
                 setPressedBlogId(0);
                 deleteBlogAtIndex(dataBlogs, dataBlogs.findIndex(blog => blog.id === pressedBlogId));
+                if (forBlogSelf) {
+                    deleteBlogAtIndex(dataBlogsSelf, dataBlogsSelf.findIndex(blog => blog.id === pressedBlogId));
+                }
             })
             .catch(error => {
                 setIsBlogDeleting(false);
@@ -160,7 +163,7 @@ function BlogList({ urlSuffix, titleString, forBlogSelf = false }) {
     return (
         <>
             <FullModal isOpen={isUpdateModalActive} onClose={() => { setIsUpdateModalActive(false); setPressedBlogId(0); }}>
-                <h1>Delete the Blog</h1>
+                <h2>Delete the Blog</h2>
                 <div className="blog-delete-modal-btn-group">
                     <button className="delete-btn" disabled={isDeleteBtnDisabled}
                         onClick={() => { handleBlogDelete() }}>
