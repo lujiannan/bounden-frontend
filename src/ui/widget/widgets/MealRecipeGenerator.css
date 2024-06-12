@@ -41,20 +41,22 @@
 
     & button {
         user-select: none;
-        margin-top: 1rem;
+        width: auto;
         font-size: 1rem;
+        font-weight: var(--pretty-font-weight-bold);
         letter-spacing: 0.1rem;
-        padding: 0.75rem;
+        margin-top: 1rem;
+        padding: 0.5rem;
         border-radius: var(--pretty-border-radius-small);
-        border: none;
+        border: 2px solid var(--pretty-base-color);
         cursor: pointer;
-        font-weight: var(--pretty-font-weight);
         color: var(--pretty-base-color);
-        background-color: var(--pretty-btn-color);
+        background-color: var(--pretty-bg-color);
         transition: var(--pretty-transition);
 
         &:hover {
-            background-color: var(--pretty-btn-color-hover);
+            color: var(--pretty-bg-color);
+            background-color: var(--pretty-base-color);
         }
     }
 
@@ -116,19 +118,25 @@
             color: var(--pretty-base-color);
             background-color: var(--pretty-bg-color-lighter);
             font-size: 1rem;
-            font-weight: bold;
+            font-weight: var(--pretty-font-weight-bold);
             padding: 0.5rem;
             letter-spacing: 0.1rem;
             border-radius: var(--pretty-border-radius-small);
             border: 2px solid var(--pretty-base-color);
+            transition: var(--pretty-transition);
             cursor: pointer;
+
+            &:hover {
+                color: var(--pretty-bg-color);
+                background-color: var(--pretty-base-color);
+            }
         }
 
         & .customize-menu-button {
             user-select: none;
             font-size: 0.9rem;
             padding: 0.5rem;
-            color: var(--pretty-base-color);
+            color: var(--pretty-base-color-light);
             text-align: center;
             cursor: pointer;
         }

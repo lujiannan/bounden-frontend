@@ -201,12 +201,20 @@ function Login() {
                     <form onSubmit={handleForgotPasswordSubmit}>
                         <input type="text" placeholder="Enter your email" value={forgotPasswordEmail} onChange={(e) => { setForgotPasswordEmail(e.target.value) }} />
                         {forgotPasswordEmailErrorMessage && <span className='forgot-password-email-error-message'>{forgotPasswordEmailErrorMessage}</span>}
-                        <button type="submit">
+                        {/* <button type="submit">
                             {isForgotPasswordSubmitLoading ?
                                 <div className="reset-password-loading-container">
                                     <div className="loading-pulse"></div>
                                 </div> : "Send Reset Link"}
-                        </button>
+                        </button> */}
+                        {isForgotPasswordSubmitLoading ? 
+                            <div className="reset-password-loading-container">
+                                <div className="loading-pulse"></div>
+                            </div> : 
+                            <button type="submit">
+                                {"Send Reset Link"}
+                            </button>
+                        }
                     </form>
                 </div>
             </FullModal>

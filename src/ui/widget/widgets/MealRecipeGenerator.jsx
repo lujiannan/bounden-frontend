@@ -194,7 +194,7 @@ function MealRecipeGenerator() {
                             alertRunning(true) :
                             setIsCustomizeModalActive(true)
                     }}>
-                        Customize
+                        {"customize ?"}
                     </p>
                 </div>
                 {floatingTexts.map((text) => (

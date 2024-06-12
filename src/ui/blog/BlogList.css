@@ -82,7 +82,7 @@
         height: 3rem;
         color: var(--pretty-base-color);
         font-size: 1rem;
-        font-weight: 700;
+        font-weight: var(--pretty-font-weight-bold);
         letter-spacing: 0.1rem;
         padding: 0rem 0.75rem;
         border-radius: var(--pretty-border-radius-small);

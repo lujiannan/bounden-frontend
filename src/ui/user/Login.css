@@ -35,19 +35,21 @@
 
     & button {
         user-select: none;
-        margin-top: 1rem;
+        height: 2.75rem;
         font-size: 1rem;
-        padding: 0.75rem;
-        border-radius: var(--pretty-border-radius-small);
-        border: none;
-        cursor: pointer;
         font-weight: var(--pretty-font-weight);
+        margin-top: 1rem;
+        padding: 0 0.5rem;
+        border-radius: var(--pretty-border-radius-small);
+        border: 2px solid var(--pretty-base-color);
+        cursor: pointer;
         color: var(--pretty-base-color);
-        background-color: var(--pretty-btn-color);
+        background-color: var(--pretty-bg-color);
         transition: var(--pretty-transition);
 
         &:hover {
-            background-color: var(--pretty-btn-color-hover);
+            color: var(--pretty-bg-color);
+            background-color: var(--pretty-base-color);
         }
     }
 
@@ -55,6 +57,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        height: 2.75rem;
+        margin-top: 1rem;
 
         & .loading-pulse {
             height: 1.25rem;
@@ -233,7 +237,7 @@
 
 .login-form-block .login-form-forgot-password-link {
     font-size: 0.9rem;
-    color: var(--pretty-base-color);
+    color: var(--pretty-base-color-light);
     text-align: center;
     cursor: pointer;
 }
