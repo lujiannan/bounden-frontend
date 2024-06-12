@@ -182,9 +182,9 @@ function MealRecipeGenerator() {
             <div className="meal-recipe-generator-container">
                 <div className='info-container'>
                     {runnedTimes > 0 && (
-                        <div className="current-text-container">
+                        <a className="current-text-container" href={"https://m.xiachufang.com/search/?keyword=" + dishList[currentIndex].replace(/ /g, "+")} target="_blank" >
                             {dishList[currentIndex]}
-                        </div>
+                        </a>
                     )}
                     <button className='start-stop-button' onClick={handleClick}>
                         {isRunning ? 'STOP' : 'START'}

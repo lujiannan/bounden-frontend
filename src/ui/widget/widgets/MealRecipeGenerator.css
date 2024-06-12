@@ -99,12 +99,15 @@
 
         & .current-text-container {
             min-width: 10rem;
+            color: var(--pretty-base-color);
             text-align: center;
+            text-decoration: none;
             font-size: 2rem;
             font-weight: bold;
             padding: 0.5rem;
             margin-bottom: 0.5rem;
             border-radius: var(--pretty-border-radius-small);
+            cursor: pointer;
         }
 
         & .start-stop-button {
