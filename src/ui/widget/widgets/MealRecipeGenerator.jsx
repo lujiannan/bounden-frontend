@@ -18,6 +18,29 @@ const getRandomListIndex = (list) => {
     return Math.floor(Math.random() * list.length);
 }
 
+const englishOrChinese = (str) => {
+    // return true for English, false for Chinese
+    let englishCount = 0;
+    let chineseCount = 0;
+
+    if (typeof str === 'string') {
+        for (let i = 0; i < str.length; i++) {
+            const char = str[i];
+            if (char.match(/[a-zA-Z]/)) {
+                englishCount++;
+            } else if (char.match(/[\u4E00-\u9FFF]/)) {
+                chineseCount++;
+            }
+        }
+    }
+
+    if (englishCount > chineseCount) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function MealRecipeGenerator() {
     const [dishList, setDishList] = useState(localStorage.getItem("preferredDishMenu") ?
         localStorage.getItem("preferredDishMenu").split(/[^a-zA-Z0-9\u4e00-\u9fff ()（）]+/).filter(Boolean) :
@@ -162,9 +185,11 @@ function MealRecipeGenerator() {
 
     return (
         <>
+            {/* alert if user tries to customize menu while running */}
             <AlertModal isOpen={shouldRunningAlertOn} onClose={() => alertRunning(false)}>
                 <p>Please stop before customizing the menu</p>
             </AlertModal>
+            {/* shows if user wants to customize menu */}
             <FullModal isOpen={isCustomizeModalActive} onClose={() => { setIsCustomizeModalActive(false); }}>
                 <h2>Customize Menu</h2>
                 <div className='customize-dish-menu-modal-container'>
@@ -182,7 +207,12 @@ function MealRecipeGenerator() {
             <div className="meal-recipe-generator-container">
                 <div className='info-container'>
                     {runnedTimes > 0 && (
-                        <a className="current-text-container" href={"https://m.xiachufang.com/search/?keyword=" + dishList[currentIndex].replace(/ /g, "+")} target="_blank" >
+                        // jump to outlet link if user has clicked the dish name
+                        <a className="current-text-container" target="_blank"
+                            href={englishOrChinese(dishList[currentIndex]) ?
+                                "https://www.allrecipes.com/search?q=" + dishList[currentIndex].replace(/ /g, "+") :
+                                "https://m.xiachufang.com/search/?keyword=" + dishList[currentIndex].replace(/ /g, "+")
+                            } >
                             {dishList[currentIndex]}
                         </a>
                     )}
