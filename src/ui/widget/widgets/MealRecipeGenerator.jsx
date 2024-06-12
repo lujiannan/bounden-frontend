@@ -15,6 +15,7 @@ const getRandomFontSize = () => {
 };
 
 function MealRecipeGenerator() {
+    const [runnedTimes, setRunnedTimes] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [floatingTexts, setFloatingTexts] = useState([]);
@@ -56,15 +57,20 @@ function MealRecipeGenerator() {
     }, []);
 
     const handleClick = () => {
+        if (!isRunning) {
+            setRunnedTimes((prev) => prev + 1);
+        }
         setIsRunning((prev) => !prev);
     };
 
     return (
         <div className="meal-recipe-generator-container">
             <div className='info-container'>
-                <div className="current-text-container">
-                    {textList[currentIndex]}
-                </div>
+                {runnedTimes > 0 && (
+                    <div className="current-text-container">
+                        {textList[currentIndex]}
+                    </div>
+                )}
                 <button className='start-stop-button' onClick={handleClick}>
                     {isRunning ? 'STOP' : 'START'}
                 </button>

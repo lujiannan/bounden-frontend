@@ -13,8 +13,8 @@
         z-index: 2;
         width: auto;
         height: auto;
-        /* background: var(--pretty-bg-color); */
-        backdrop-filter: blur(10px);
+        background: var(--pretty-bg-color-lighter);
+        backdrop-filter: var(--pretty-backdrop-filter);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -25,11 +25,13 @@
             font-size: 2rem;
             font-weight: bold;
             padding: 0.5rem;
-            margin: 0.5rem;
+            margin-bottom: 0.5rem;
             border-radius: var(--pretty-border-radius);
         }
         
         & .start-stop-button {
+            width: 5rem;
+            color: var(--pretty-base-color);
             font-size: 1rem;
             font-weight: bold;
             padding: 0.5rem;

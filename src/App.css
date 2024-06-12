@@ -16,6 +16,8 @@
     --pretty-base-color-dark: #111;
     --pretty-alert-color: #ddd;
     --pretty-bg-color: #fff;
+    --pretty-bg-color-lighter: rgba(255, 255, 255, 0.3);
+    --pretty-backdrop-filter: blur(10px);
     /* #eee with 0.95 opacity */
     --pretty-nav-bg-color-white: rgba(238, 238, 238, 0.95);
     --pretty-header-bg-color-whiter: rgba(238, 238, 238, 0.3);
