@@ -27,6 +27,18 @@
         border-color: var(--pretty-input-border-color-focus);
     }
 
+    @media screen and (max-width: 800px) {
+        & textarea {
+            width: 20rem;
+        }
+    }
+
+    @media screen and (max-width: 450px) {
+        & textarea {
+            width: 15rem;
+        }
+    }
+
     & button {
         user-select: none;
         margin-top: 1rem;

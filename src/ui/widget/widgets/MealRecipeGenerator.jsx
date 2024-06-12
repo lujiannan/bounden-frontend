@@ -14,10 +14,74 @@ const getRandomFontSize = () => {
     return Math.floor(Math.random() * 35) + 15; // Font size between 15px and 50px
 };
 
+const getRandomListIndex = (list) => {
+    return Math.floor(Math.random() * list.length);
+}
+
 function MealRecipeGenerator() {
     const [dishList, setDishList] = useState(localStorage.getItem("preferredDishMenu") ?
-        localStorage.getItem("preferredDishMenu").split(/[^a-zA-Z0-9\u4e00-\u9fff ]+/).filter(Boolean) :
-        ["红烧肉", "水煮白菜", "蛋炒饭", "番茄炒蛋", "泡面"]
+        localStorage.getItem("preferredDishMenu").split(/[^a-zA-Z0-9\u4e00-\u9fff ()（）]+/).filter(Boolean) :
+        [
+            "馄饨",
+            "烩面",
+            "热干面",
+            "刀削面",
+            "油泼面",
+            "炸酱面",
+            "炒面",
+            "重庆小面",
+            "米线",
+            "酸辣粉",
+            "土豆粉",
+            "螺狮粉",
+            "凉皮儿",
+            "麻辣烫",
+            "肉夹馍",
+            "羊肉泡馍",
+            "炒饭",
+            "盖浇饭",
+            "烤肉饭",
+            "黄焖鸡米饭",
+            "麻辣香锅",
+            "火锅",
+            "酸菜鱼",
+            "烤串",
+            "披萨",
+            "烤鸭",
+            "汉堡",
+            "炸鸡",
+            "寿司",
+            "煎饼果子",
+            "南瓜粥",
+            "小龙虾",
+            "牛排",
+            "砂锅",
+            "大排档",
+            "馒头",
+            "西餐",
+            "自助餐",
+            "小笼包",
+            "水果",
+            "西北风",
+            "烧烤",
+            "泡面",
+            "水饺",
+            "日本料理",
+            "涮羊肉",
+            "兰州拉面",
+            "肯德基",
+            "面包",
+            "臊子面",
+            "小笼包",
+            "麦当劳",
+            "沙县小吃",
+            "烤鱼",
+            "海鲜",
+            "铁板烧",
+            "韩国料理",
+            "甜点",
+            "鸭血粉丝汤"
+        ]
     );
     const [dishListInputString, setDishListInputString] = useState(localStorage.getItem("preferredDishMenu") ?
         localStorage.getItem("preferredDishMenu") :
@@ -38,14 +102,16 @@ function MealRecipeGenerator() {
     useEffect(() => {
         if (isRunning) {
             intervalRef.current = setInterval(() => {
-                setCurrentIndex((prevIndex) => (prevIndex + 1) % dishList.length);
+                const randomIndex = getRandomListIndex(dishList);
+                // setCurrentIndex((prevIndex) => (prevIndex + 1) % dishList.length);
+                setCurrentIndex(randomIndex);
                 const { x, y } = getRandomPosition();
                 const fontSize = getRandomFontSize();
                 setFloatingTexts((prev) => [
                     ...prev,
                     {
                         id: Date.now(),
-                        text: dishList[currentIndex],
+                        text: dishList[randomIndex],
                         x,
                         y,
                         fontSize,
