@@ -118,12 +118,14 @@
             margin: 0.5rem;
             letter-spacing: 0.1rem;
             border-radius: var(--pretty-border-radius-small);
+            border: 2px solid var(--pretty-base-color);
             cursor: pointer;
         }
 
         & .customize-menu-button {
             user-select: none;
             font-size: 0.9rem;
+            margin-bottom: 0.5rem;
             color: var(--pretty-base-color);
             text-align: center;
             cursor: pointer;
