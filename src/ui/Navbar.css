@@ -152,11 +152,17 @@
     border: 1px solid var(--pretty-input-border-color);
     border-radius: var(--pretty-border-radius-small);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    display: flex;
+    display: none;
     flex-direction: column;
     z-index: 1;
     transition: var(--pretty-transition);
     user-select: none;
+    animation: flexFadeOut 0.3s ease;
+
+    &.active {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+    }
 
     & .dropdown-item {
         padding: 0.5rem 0.25rem;

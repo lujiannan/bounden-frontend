@@ -238,11 +238,16 @@
             border: 1px solid var(--pretty-input-border-color);
             border-radius: var(--pretty-border-radius-small);
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-            display: grid;
+            display: none;
             z-index: 2;
             grid-template-columns: repeat(5, 1.5rem);
             column-gap: 0.25rem;
             row-gap: 0.5rem;
+
+            &.active {
+                display: grid;
+                animation: fadeIn 0.3s ease;
+            }
 
             & button {
                 margin: auto;
@@ -272,10 +277,15 @@
             border: 1px solid var(--pretty-input-border-color);
             border-radius: var(--pretty-border-radius-small);
             box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-            display: flex;
+            display: none;
             flex-direction: column;
             z-index: 2;
             transition: var(--pretty-transition);
+
+            &.active {
+                display: flex;
+                animation: fadeIn 0.3s ease;
+            }
 
             & .dropdown-item {
                 padding: 0.5rem 0.25rem;
