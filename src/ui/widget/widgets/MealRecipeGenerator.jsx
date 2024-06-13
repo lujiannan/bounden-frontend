@@ -211,7 +211,7 @@ function MealRecipeGenerator() {
                 <div className='info-container'>
                     {runnedTimes > 0 && (
                         // jump to outlet link if user has clicked the dish name
-                        <a className="current-text-container" target="_blank"
+                        <a className="current-text-container" target="_blank" title='Check out the Recipe'
                             href={englishOrChinese(dishList[currentIndex]) ?
                                 "https://www.allrecipes.com/search?q=" + dishList[currentIndex].replace(/ /g, "+") :
                                 "https://m.xiachufang.com/search/?keyword=" + dishList[currentIndex].replace(/ /g, "+")
