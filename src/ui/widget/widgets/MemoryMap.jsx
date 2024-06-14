@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Map, MapApiLoaderHOC, Marker, ScaleControl } from 'react-bmapgl';
 
 import FullModal from '../../modal/FullModal';
@@ -20,28 +20,35 @@ function MemoryMap() {
     const mapRef = useRef(null);
     const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
     const [centeredMarkerIndex, setCenteredMarkerIndex] = useState(null);
+    const [centeredMarker, setCenteredMarker] = useState(null);
 
     const [createMarkerBtnActive, setCreateMarkerBtnActive] = useState(false);
 
-    const onMapClick = (e) => {
+    useEffect(() => {
+        // after the marker is added, save the list to local storage
         if (createMarkerBtnActive) {
-            const newMarker = { lng: e.latlng.lng, lat: e.latlng.lat, name: null, description: null, images: [] };
-
-            localStorage.setItem('memoryMapMarkerList', JSON.stringify({ "markers": [...markerList, newMarker] }));
+            localStorage.setItem('memoryMapMarkerList', JSON.stringify({ "markers": markerList }));
 
             // automataically navigate and open the memory modal after 500ms for user to initialize the new marker
-            mapRef.map.flyTo({ lng: e.latlng.lng, lat: e.latlng.lat }, 15);
+            mapRef.map.flyTo({ lng: markerList[markerList.length - 1].lng, lat: markerList[markerList.length - 1].lat }, 15);
+            setCenteredMarkerIndex(markerList.length - 1);
+            setCenteredMarker(markerList[markerList.length - 1]);
             setTimeout(() => {
                 setIsMemoryModalOpen(true);
-                setCenteredMarkerIndex(markerList.length);
             }, 500);
 
+            setCreateMarkerBtnActive(false);
+        }
+    }, [markerList]);
+
+    const onMapClick = (e) => {
+        if (createMarkerBtnActive) {
+            // add a new marker to the map when the create marker button is active
+            const newMarker = { lng: e.latlng.lng, lat: e.latlng.lat, name: "", description: "", images: [] };
             setMarkerList(prev => [
                 ...prev,
                 newMarker
             ]);
-
-            setCreateMarkerBtnActive(false);
         }
     }
 
@@ -54,6 +61,7 @@ function MemoryMap() {
             mapRef.map.flyTo({ lng, lat }, 15);
         }
         setCenteredMarkerIndex(index);
+        setCenteredMarker(markerList[index]);
     }
 
     return (
@@ -62,9 +70,9 @@ function MemoryMap() {
                 <i className="ri-map-pin-add-line"></i>
             </div>
             <FullModal isOpen={isMemoryModalOpen} onClose={() => { setIsMemoryModalOpen(false); }}>
-                {centeredMarkerIndex !== null &&
+                {centeredMarkerIndex !== null && centeredMarker &&
                     <>
-                        <input className='memory-map-memory-modal-title' value={markerList[centeredMarkerIndex].name}
+                        <input className='memory-map-memory-modal-title' value={centeredMarker.name}
                             placeholder='Title'
                             onChange={(e) => {
                                 // update the title of the clicked marker
@@ -73,13 +81,14 @@ function MemoryMap() {
                                     newMarkerList[centeredMarkerIndex].name = e.target.value;
                                     return newMarkerList;
                                 })
+                                setCenteredMarker({ ...centeredMarker, name: e.target.value });
                             }}
                         >
                         </input>
                         <div className='memory-map-memory-modal-content-container'>
                             <textarea className='memory-modal-description'
                                 placeholder='Description'
-                                value={markerList[centeredMarkerIndex].description}
+                                value={centeredMarker.description}
                                 onChange={(e) => {
                                     if (e.target.scrollHeight >= e.target.offsetHeight) {
                                         e.target.style.height = e.target.scrollHeight + "px";
@@ -90,6 +99,7 @@ function MemoryMap() {
                                         newMarkerList[centeredMarkerIndex].description = e.target.value;
                                         return newMarkerList;
                                     })
+                                    setCenteredMarker({ ...centeredMarker, description: e.target.value });
                                 }}
                             >
                             </textarea>
