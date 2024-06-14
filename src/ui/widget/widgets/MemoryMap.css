@@ -1,0 +1,138 @@
+.memory-map-marker-create {
+    z-index: 9;
+    position: fixed;
+    bottom: 4%;
+    right: 4%;
+    /* padding: 0.5rem 0.7rem; */
+    width: 3.5rem;
+    height: 3.5rem;
+    /* keep the icon in the center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--pretty-border-radius);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    opacity: 0.3;
+    background-color: var(--pretty-base-color);
+    color: var(--pretty-btn-color);
+    transition: var(--pretty-transition);
+    cursor: pointer;
+
+    &.active {
+        opacity: 1;
+        transition: var(--pretty-transition);
+    }
+}
+
+.memory-map-memory-modal-title {
+    user-select: none;
+    font-size: 1.75rem;
+    font-weight: var(--pretty-font-weight-bold);
+    text-align: center;
+    width: 70vw;
+    border: none;
+
+    &:focus {
+        color: var(--pretty-base-color);
+        background-color: var(--pretty-bg-color);
+        border: none;
+        outline: none;
+    }
+}
+
+.memory-map-memory-modal-content-container {
+    width: 70vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+
+    & .memory-modal-description {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        text-align: center;
+        width: 100%;
+        border: none;
+        resize: none;
+        /* prevent the textarea from being shrinked to height 0 after overflow */
+        flex-shrink: 0;
+
+        &:focus {
+            color: var(--pretty-base-color);
+            background-color: var(--pretty-bg-color);
+            border: none;
+            outline: none;
+        }
+    }
+
+    & .memory-modal-images-container {
+        width: 100%;
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, 10rem);
+        grid-auto-rows: 10rem;
+        gap: 1rem;
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--pretty-border-radius-small);
+        }
+
+        & .memory-modal-add-image-btn {
+            width: 100%;
+            height: 100%;
+            border: 2px dashed var(--pretty-input-border-color);
+            border-radius: var(--pretty-border-radius-small);
+            background-color: var(--pretty-bg-color);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            & i {
+                color: var(--pretty-input-border-color);
+                font-size: 3rem;
+                margin: 0.5rem;
+            }
+
+            & input {
+                display: block;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                opacity: 0;
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 450px) {
+    .memory-map-memory-modal-title {
+        width: 70vw;
+    }
+
+    .memory-map-memory-modal-content-container {
+        width: 70vw;
+    }
+}
+
+.memory-map-container {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
