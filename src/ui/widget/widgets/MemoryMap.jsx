@@ -66,7 +66,9 @@ function MemoryMap() {
 
     return (
         <>
-            <div className={`memory-map-marker-create ${createMarkerBtnActive ? 'active' : ''}`} onClick={() => { setCreateMarkerBtnActive(!createMarkerBtnActive) }}>
+            <div className={`memory-map-marker-create ${createMarkerBtnActive ? 'active' : ''}`} 
+                onClick={() => { setCreateMarkerBtnActive(!createMarkerBtnActive) }}
+            >
                 <i className="ri-map-pin-add-line"></i>
             </div>
             <FullModal isOpen={isMemoryModalOpen} onClose={() => { setIsMemoryModalOpen(false); }}>
