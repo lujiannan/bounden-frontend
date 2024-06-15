@@ -1,3 +1,53 @@
+.memory-map-loading-container {
+    z-index: 9999;
+    user-select: none;
+    position: fixed;
+    top: var(--top-nav-height);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--top-nav-height));
+    backdrop-filter: blur(2px);
+    display: none;
+    animation: flexFadeOut 0.3s ease;
+
+    &.active {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+    }
+
+    & .memory-map-loading-text {
+        margin: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        width: fit-content;
+        height: fit-content;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: var(--pretty-font-weight-bold);
+        border-radius: var(--pretty-border-radius-small);
+        background: var(--pretty-bg-color);
+        display: flex;
+        flex-direction: column;
+
+        & .memory-map-loading-pulse {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 2rem;
+            width: 4rem;
+
+            & .loading-pulse {
+                height: 1.25rem;
+            }
+
+            & .loading-pulse::before, 
+            .loading-pulse::after {
+                height: 1.25rem;
+            }
+        }
+    }
+
+}
+
 .memory-map-marker-create {
     z-index: 9;
     position: fixed;

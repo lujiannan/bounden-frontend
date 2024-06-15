@@ -22,6 +22,7 @@ function MemoryMap() {
     const [centeredMarkerIndex, setCenteredMarkerIndex] = useState(null);
     const [centeredMarker, setCenteredMarker] = useState(null);
 
+    const [isLoading, setIsLoading] = useState(false);
     const [createMarkerBtnActive, setCreateMarkerBtnActive] = useState(false);
 
     useEffect(() => {
@@ -66,7 +67,15 @@ function MemoryMap() {
 
     return (
         <>
-            <div className={`memory-map-marker-create ${createMarkerBtnActive ? 'active' : ''}`} 
+            <div className={`memory-map-loading-container ${isLoading? 'active' : ''}`}>
+                <div className='memory-map-loading-text'>
+                    Loading
+                    <div className='memory-map-loading-pulse'>
+                        <div className='loading-pulse'></div>
+                    </div>
+                </div>
+            </div>
+            <div className={`memory-map-marker-create ${createMarkerBtnActive ? 'active' : ''}`}
                 onClick={() => { setCreateMarkerBtnActive(!createMarkerBtnActive) }}
             >
                 <i className="ri-map-pin-add-line"></i>
