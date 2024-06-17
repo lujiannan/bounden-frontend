@@ -6,6 +6,7 @@ import refreshApi from "./utils/refreshApi";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { BlogsProvider } from './ui/blog/BlogsContext';
+import { MemoryMapProvider } from './ui/widget/widgets/MemoryMapContext'
 
 import './App.css';
 import Navbar from './ui/Navbar'
@@ -59,7 +60,9 @@ export default function App() {
     return (
         <AuthProvider store={store}>
             <BlogsProvider>
-                <RouterProvider router={router} />
+                <MemoryMapProvider>
+                    <RouterProvider router={router} />
+                </MemoryMapProvider>
             </BlogsProvider>
         </AuthProvider>
     );

@@ -1,24 +1,29 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { Map, MapApiLoaderHOC, Marker, ScaleControl } from 'react-bmapgl';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser'; // for getting the logged in user's email
+import { useNavigate } from 'react-router-dom'
+import { MemoryMapContext } from './MemoryMapContext'
 
 import FullModal from '../../modal/FullModal';
 import './MemoryMap.css';
 
 function MemoryMap() {
-    const [markerList, setMarkerList] = useState([
-        {
-            lng: 116.31088, lat: 39.99281, name: '北京大学', description: "这里是北京大学", images: [
-                "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-                "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-                "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-                "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-            ]
-        },
-        { lng: 116.326836, lat: 40.00366, name: '清华大学', description: "这里是清华大学", images: [] },
-        { lng: 121.503971, lat: 31.29686, name: '复旦大学', description: "这里是复旦大学", images: [] },
-    ]);
+    const { markerList, setMarkerList } = useContext(MemoryMapContext);
+
+    const auth = useAuthUser();
+    const user_email = auth?.email;
+    const URL_SUFFIX_CREATE = '/memory_map_markers/create';
+    const URL_SUFFIX_UPDATE = '/memory_map_markers/edit';
+    const URL_SUFFIX_DELETE = '/memory_map_markers/delete';
+    const URL_SUFFIX_ALL = '/memory_map_markers/' + user_email;
+
+    const isAuthenticated = useIsAuthenticated();
+    const navigate = useNavigate();
+
     const mapRef = useRef(null);
     const [isMemoryModalOpen, setIsMemoryModalOpen] = useState(false);
+    const [isMemoryModalChanged, setIsMemoryModalChanged] = useState(false);
     const [centeredMarkerIndex, setCenteredMarkerIndex] = useState(null);
     const [centeredMarker, setCenteredMarker] = useState(null);
 
@@ -26,12 +31,97 @@ function MemoryMap() {
     const [createMarkerBtnActive, setCreateMarkerBtnActive] = useState(false);
 
     useEffect(() => {
+        if (markerList.length === 0 && isAuthenticated) {
+            // load the marker list from backend
+            setIsLoading(true);
+            fetch(process.env.REACT_APP_SERVER_URL + URL_SUFFIX_ALL, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // get access token from local storage
+                    "Authorization": "Bearer " + localStorage.getItem("_auth"),
+                },
+            })
+                .then((res) => {
+                    if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
+                    return res.json();
+                })
+                .then((data) => {
+                    setMarkerList(data.markers);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    setIsLoading(false);
+                    console.log(error.message);
+                    // alert(fetchError);
+                });
+        } else if (markerList.length > 0) {
+            if (!isAuthenticated) {
+                // if the user is not authenticated, erase the marker list
+                setMarkerList([]);
+            }
+        }
+    }, []);
+
+    const submitMarker = (newMarker = null) => {
+        let body_data;
+        if (newMarker) {
+            body_data = JSON.stringify({
+                "user_email": user_email,
+                "latitude": newMarker.latitude,
+                "longitude": newMarker.longitude,
+            });
+        } else {
+            body_data = JSON.stringify({
+                "user_email": user_email,
+                "id": centeredMarker.id,
+                "latitude": centeredMarker.latitude,
+                "longitude": centeredMarker.longitude,
+                "name": centeredMarker.name,
+                "description": centeredMarker.description,
+                "images": centeredMarker.images.toString(),
+            });
+        }
+        // save the marker list to the server
+        const urlSuffix = newMarker ? URL_SUFFIX_CREATE : URL_SUFFIX_UPDATE;
+        fetch(process.env.REACT_APP_SERVER_URL + urlSuffix, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // get access token from local storage
+                "Authorization": "Bearer " + localStorage.getItem("_auth"),
+            },
+            body: body_data,
+        })
+            .then((res) => {
+                if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
+                console.log("marker post");
+                setIsLoading(false);
+                return res.json();
+            })
+            .then((data) => {
+                if (data.message === "Marker created successfully") {
+                    newMarker.id = data.marker.id;
+                    setMarkerList(prev => [
+                        ...prev,
+                        newMarker
+                    ]);
+                }
+            })
+            .catch(error => {
+                setIsLoading(false);
+                console.log(error.message)
+                // alert(fetchError);
+            });
+    }
+
+    useEffect(() => {
         // after the marker is added, save the list to local storage
         if (createMarkerBtnActive) {
             localStorage.setItem('memoryMapMarkerList', JSON.stringify({ "markers": markerList }));
 
             // automataically navigate and open the memory modal after 500ms for user to initialize the new marker
-            mapRef.map.flyTo({ lng: markerList[markerList.length - 1].lng, lat: markerList[markerList.length - 1].lat }, 15);
+            mapRef.map.flyTo({ lng: markerList[markerList.length - 1].longitude, lat: markerList[markerList.length - 1].latitude }, 15);
             setCenteredMarkerIndex(markerList.length - 1);
             setCenteredMarker(markerList[markerList.length - 1]);
             setTimeout(() => {
@@ -44,30 +134,42 @@ function MemoryMap() {
 
     const onMapClick = (e) => {
         if (createMarkerBtnActive) {
+            if (!isAuthenticated) {
+                navigate('/login');
+                return;
+            }
             // add a new marker to the map when the create marker button is active
-            const newMarker = { lng: e.latlng.lng, lat: e.latlng.lat, name: "", description: "", images: [] };
-            setMarkerList(prev => [
-                ...prev,
-                newMarker
-            ]);
+            const newMarker = { id: null, longitude: e.latlng.lng, latitude: e.latlng.lat, name: "", description: "", images: [] };
+
+            setIsLoading(true);
+            submitMarker(newMarker);
         }
     }
 
-    const onMarkerClick = (lng, lat, index) => {
+    const onMarkerClick = (longitude, latitude, index) => {
         if (centeredMarkerIndex === index) {
             // if the clicked marker is already centered, open the memory modal
             setIsMemoryModalOpen(true);
         } else {
             // fly to the clicked marker with zoom level 15
-            mapRef.map.flyTo({ lng, lat }, 15);
+            mapRef.map.flyTo({ lng: longitude, lat: latitude }, 15);
         }
         setCenteredMarkerIndex(index);
         setCenteredMarker(markerList[index]);
     }
 
+    const onMemoryModalCloseSave = () => {
+        setIsMemoryModalOpen(false);
+        if (isMemoryModalChanged) {
+            setIsLoading(true);
+            submitMarker();
+            setIsMemoryModalChanged(false);
+        }
+    }
+
     return (
         <>
-            <div className={`memory-map-loading-container ${isLoading? 'active' : ''}`}>
+            <div className={`memory-map-loading-container ${isLoading ? 'active' : ''}`}>
                 <div className='memory-map-loading-text'>
                     Loading
                     <div className='memory-map-loading-pulse'>
@@ -77,15 +179,17 @@ function MemoryMap() {
             </div>
             <div className={`memory-map-marker-create ${createMarkerBtnActive ? 'active' : ''}`}
                 onClick={() => { setCreateMarkerBtnActive(!createMarkerBtnActive) }}
+                title='Place a marker on the map'
             >
                 <i className="ri-map-pin-add-line"></i>
             </div>
-            <FullModal isOpen={isMemoryModalOpen} onClose={() => { setIsMemoryModalOpen(false); }}>
+            <FullModal isOpen={isMemoryModalOpen} onClose={() => { onMemoryModalCloseSave(); }}>
                 {centeredMarkerIndex !== null && centeredMarker &&
                     <>
                         <input className='memory-map-memory-modal-title' value={centeredMarker.name}
                             placeholder='Title'
                             onChange={(e) => {
+                                setIsMemoryModalChanged(true);
                                 // update the title of the clicked marker
                                 setMarkerList(prev => {
                                     const newMarkerList = [...prev];
@@ -101,6 +205,7 @@ function MemoryMap() {
                                 placeholder='Description'
                                 value={centeredMarker.description}
                                 onChange={(e) => {
+                                    setIsMemoryModalChanged(true);
                                     if (e.target.scrollHeight >= e.target.offsetHeight) {
                                         e.target.style.height = e.target.scrollHeight + "px";
                                     }
@@ -124,11 +229,12 @@ function MemoryMap() {
                                     <i className='ri-image-add-fill'></i>
                                     <input type="file" accept="image/*"
                                         onChange={(e) => {
+                                            setIsMemoryModalChanged(true);
+                                            // add a new image to the clicked marker
                                             const file = e.target.files[0];
                                             const reader = new FileReader();
                                             reader.readAsDataURL(file);
                                             reader.onload = () => {
-                                                // add the new image to the clicked marker
                                                 setMarkerList(prev => {
                                                     const newMarkerList = [...prev];
                                                     newMarkerList[centeredMarkerIndex].images = [
@@ -156,11 +262,11 @@ function MemoryMap() {
                     {/* Enable the scale control */}
                     <ScaleControl />
                     {/* Add markers to the map */}
-                    {markerList && markerList.map((marker, index) => {
+                    {markerList && markerList.length > 0 && markerList.map((marker, index) => {
                         return (
                             <Marker key={index} icon={"loc_red"}
-                                position={{ lng: marker.lng, lat: marker.lat }}
-                                onClick={() => onMarkerClick(marker.lng, marker.lat, index)}
+                                position={{ lng: marker.longitude, lat: marker.latitude }}
+                                onClick={() => onMarkerClick(marker.longitude, marker.latitude, index)}
                             />
                         )
                     })}

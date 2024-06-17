@@ -6,12 +6,12 @@ import React, { createContext, useState } from 'react';
 export const BlogsContext = createContext();
 
 export const BlogsProvider = ({ children }) => {
-  const [dataBlogs, setDataBlogs] = useState([]);
-  const [isBlogsNoMorePages, setIsBlogsNoMorePages] = useState(false);
+    const [dataBlogs, setDataBlogs] = useState([]);
+    const [isBlogsNoMorePages, setIsBlogsNoMorePages] = useState(false);
 
-  return (
-    <BlogsContext.Provider value={{ dataBlogs, setDataBlogs, isBlogsNoMorePages, setIsBlogsNoMorePages }}>
-      {children}
-    </BlogsContext.Provider>
-  );
+    return (
+        <BlogsContext.Provider value={{ dataBlogs, setDataBlogs, isBlogsNoMorePages, setIsBlogsNoMorePages }}>
+            {children}
+        </BlogsContext.Provider>
+    );
 };
