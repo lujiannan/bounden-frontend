@@ -199,29 +199,49 @@
     }
 }
 
-.memory-map-memory-modal-delete-btn {
+.memory-map-memory-modal-toolbar {
     position: fixed;
     bottom: 4%;
-    width: 3.5rem;
-    height: 3.5rem;
+    width: auto;
+    height: auto;
+    padding: 0.5rem;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
     border-radius: var(--pretty-border-radius);
-    text-decoration: none;
-    font-size: 2rem;
-    font-weight: var(--pretty-font-weight-bold);
-    opacity: 0.5;
-    background-color: var(--pretty-error-color);
-    color: var(--pretty-btn-color);
-    transition: var(--pretty-transition);
-    cursor: pointer;
 
-    &:hover {
-        opacity: 1;
+    & .memory-map-modal-toolbar-btn {
+        width: 3.5rem;
+        height: 3.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: var(--pretty-border-radius);
+        text-decoration: none;
+        font-size: 2rem;
+        font-weight: var(--pretty-font-weight-bold);
+        opacity: 0.5;
+        color: var(--pretty-bg-color);
         transition: var(--pretty-transition);
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+            transition: var(--pretty-transition);
+        }
+
+        &.delete {
+            background-color: var(--pretty-error-color);
+        }
+
+        &.reset {
+            background-color: var(--pretty-bg-color-lighter);
+        }
     }
 }
+
 
 @media screen and (max-width: 450px) {
     .memory-map-memory-modal-title {

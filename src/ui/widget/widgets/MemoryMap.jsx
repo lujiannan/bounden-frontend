@@ -85,7 +85,7 @@ function MemoryMap() {
                 "longitude": centeredMarker.longitude,
                 "name": centeredMarker.name,
                 "description": centeredMarker.description,
-                "images": centeredMarker.images.toString(),
+                "images": centeredMarker.images,
             });
         }
         // save the marker list to the server
@@ -107,11 +107,18 @@ function MemoryMap() {
             })
             .then((data) => {
                 if (data.message === "Marker created successfully") {
-                    newMarker.id = data.marker.id;
+                    data.marker.images = [];
                     setMarkerList(prev => [
                         ...prev,
-                        newMarker
+                        data.marker,
                     ]);
+                } else if (data.message === "Marker updated successfully") {
+                    data.marker.images = data.marker.images ? data.marker.images.split(",") : [];
+                    setMarkerList(prev => {
+                        const newMarkerList = [...prev];
+                        newMarkerList[centeredMarkerIndex] = data.marker;
+                        return newMarkerList;
+                    });
                 }
             })
             .catch(error => {
@@ -124,8 +131,6 @@ function MemoryMap() {
     useEffect(() => {
         // after the marker is added, save the list to local storage
         if (createMarkerBtnActive) {
-            localStorage.setItem('memoryMapMarkerList', JSON.stringify({ "markers": markerList }));
-
             // automataically navigate and open the memory modal after 500ms for user to initialize the new marker
             mapRef.map.flyTo({ lng: markerList[markerList.length - 1].longitude, lat: markerList[markerList.length - 1].latitude }, 15);
             setCenteredMarkerIndex(markerList.length - 1);
@@ -198,16 +203,47 @@ function MemoryMap() {
             .then((data) => {
                 // do sth here after the image is uploaded
                 if (data.message === "Image uploaded successfully") {
-                    setMarkerList(prev => {
-                        const newMarkerList = [...prev];
-                        newMarkerList[centeredMarkerIndex].images = [
-                            ...newMarkerList[centeredMarkerIndex].images,
-                            data.url
-                        ];
-                        return newMarkerList;
-                    });
+                    setCenteredMarker({ ...centeredMarker, images: [ ...centeredMarker.images, data.url ] });
                 } else {
                     console.log(data.message);
+                }
+            })
+            .catch(error => {
+                setIsLoading(false);
+                console.log(error.message)
+                // alert(fetchError);
+            });
+    }
+
+    const onCenteredMarkerDelete = () => {
+        // delete the clicked marker from the server and the marker list in the provider context
+        setIsMemoryModalOpen(false);
+        setIsLoading(true);
+        const body_data = JSON.stringify({
+            "user_email": user_email,
+            "id": centeredMarker.id,
+        });
+        fetch(process.env.REACT_APP_SERVER_URL + URL_SUFFIX_DELETE, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // get access token from local storage
+                "Authorization": "Bearer " + localStorage.getItem("_auth"),
+            },
+            body: body_data,
+        })
+            .then((res) => {
+                if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
+                console.log("marker delete");
+                setIsLoading(false);
+                return res.json();
+            })
+            .then((data) => {
+                if (data.message === "1 row(s) deleted") {
+                    // remove the deleted marker from the marker list in the provider context
+                    setMarkerList(prev => prev.filter(marker => marker.id !== data.id));
+                    setCenteredMarkerIndex(null);
+                    setCenteredMarker(null);
                 }
             })
             .catch(error => {
@@ -241,11 +277,6 @@ function MemoryMap() {
                             onChange={(e) => {
                                 setIsMemoryModalChanged(true);
                                 // update the title of the clicked marker
-                                setMarkerList(prev => {
-                                    const newMarkerList = [...prev];
-                                    newMarkerList[centeredMarkerIndex].name = e.target.value;
-                                    return newMarkerList;
-                                })
                                 setCenteredMarker({ ...centeredMarker, name: e.target.value });
                             }}
                         >
@@ -259,30 +290,20 @@ function MemoryMap() {
                                     if (e.target.scrollHeight >= e.target.offsetHeight) {
                                         e.target.style.height = e.target.scrollHeight + "px";
                                     }
-                                    // update the description of the clicked marker
-                                    setMarkerList(prev => {
-                                        const newMarkerList = [...prev];
-                                        newMarkerList[centeredMarkerIndex].description = e.target.value;
-                                        return newMarkerList;
-                                    });
                                     setCenteredMarker({ ...centeredMarker, description: e.target.value });
                                 }}
                             >
                             </textarea>
                             <div className='memory-modal-images-container'>
-                                {markerList[centeredMarkerIndex].images && markerList[centeredMarkerIndex].images.map((image, index) => {
+                                {centeredMarker.images && centeredMarker.images.map((image, index) => {
                                     return (
-                                        <div className='memory-modal-image-container'>
-                                            <img key={index} src={image} />
+                                        <div className='memory-modal-image-container' key={index}>
+                                            <img src={image} />
                                             <div className='memory-modal-image-remove-btn'
                                                 onClick={() => {
                                                     setIsMemoryModalChanged(true);
-                                                    // remove the clicked image from the clicked marker
-                                                    setMarkerList(prev => {
-                                                        const newMarkerList = [...prev];
-                                                        newMarkerList[centeredMarkerIndex].images = newMarkerList[centeredMarkerIndex].images.filter((img, imgIndex) => imgIndex !== index);
-                                                        return newMarkerList;
-                                                    });
+                                                    // remove the clicked image from the centered marker
+                                                    setCenteredMarker({ ...centeredMarker, images: centeredMarker.images.filter((img, imgIndex) => imgIndex !== index) });
                                                 }}>
                                                 <i className='ri-delete-bin-line' />
                                             </div>
@@ -297,25 +318,22 @@ function MemoryMap() {
                                             // add a new image to the clicked marker
                                             const file = e.target.files[0];
                                             handleImageUpload(file);
-                                            // const reader = new FileReader();
-                                            // reader.readAsDataURL(file);
-                                            // reader.onload = () => {
-                                            //     setMarkerList(prev => {
-                                            //         const newMarkerList = [...prev];
-                                            //         newMarkerList[centeredMarkerIndex].images = [
-                                            //             ...newMarkerList[centeredMarkerIndex].images,
-                                            //             reader.result
-                                            //         ];
-                                            //         return newMarkerList;
-                                            //     })
-                                            // }
                                         }}
                                     ></input>
                                 </div>
                             </div>
                         </div>
-                        <div className='memory-map-memory-modal-delete-btn'>
-                            <i className='ri-delete-bin-6-line' />
+                        <div className='memory-map-memory-modal-toolbar'>
+                            <div className='memory-map-modal-toolbar-btn reset' title='Reset' onClick={() => {
+                                setCenteredMarker(markerList[centeredMarkerIndex]);
+                            }}>
+                                <i className='ri-refresh-line' />
+                            </div>
+                            <div className='memory-map-modal-toolbar-btn delete' title='Delete' onClick={() => {
+                                onCenteredMarkerDelete();
+                            }}>
+                                <i className='ri-delete-bin-6-line' />
+                            </div>
                         </div>
                     </>
                 }
