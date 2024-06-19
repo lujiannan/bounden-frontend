@@ -63,8 +63,8 @@
     border-radius: var(--pretty-border-radius);
     text-decoration: none;
     font-size: 2rem;
-    font-weight: bold;
-    opacity: 0.3;
+    font-weight: var(--pretty-font-weight-bold);
+    opacity: 0.25;
     background-color: var(--pretty-base-color);
     color: var(--pretty-btn-color);
     transition: var(--pretty-transition);
@@ -81,7 +81,7 @@
     font-size: 1.75rem;
     font-weight: var(--pretty-font-weight-bold);
     text-align: center;
-    width: 70vw;
+    width: 32rem;
     border: none;
 
     &:focus {
@@ -93,7 +93,7 @@
 }
 
 .memory-map-memory-modal-content-container {
-    width: 70vw;
+    width: 100%;
     height: 60vh;
     display: flex;
     flex-direction: column;
@@ -105,7 +105,7 @@
         margin-bottom: 1rem;
         font-size: 1rem;
         text-align: center;
-        width: 100%;
+        width: 32rem;
         border: none;
         resize: none;
         /* prevent the textarea from being shrinked to height 0 after overflow */
@@ -121,17 +121,48 @@
 
     & .memory-modal-images-container {
         width: 100%;
+        padding: 0 0.5rem;
         display: grid;
         justify-content: center;
-        grid-template-columns: repeat(auto-fit, 10rem);
+        grid-template-columns: repeat(3, 10rem);
         grid-auto-rows: 10rem;
         gap: 1rem;
 
-        & img {
+        & .memory-modal-image-container {
+            position: relative;
             width: 100%;
             height: 100%;
-            object-fit: cover;
             border-radius: var(--pretty-border-radius-small);
+
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: var(--pretty-border-radius-small);
+            }
+
+            & .memory-modal-image-remove-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 2rem;
+                height: 2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1.5rem;
+                font-weight: var(--pretty-font-weight-bold);
+                opacity: 0.5;
+                color: var(--pretty-btn-color);
+                background-color: var(--pretty-error-color);
+                border-radius: var(--pretty-border-radius-small);
+                transition: var(--pretty-transition);
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
         }
 
         & .memory-modal-add-image-btn {
@@ -166,16 +197,47 @@
             }
         }
     }
+}
 
+.memory-map-memory-modal-delete-btn {
+    position: fixed;
+    bottom: 4%;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--pretty-border-radius);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: var(--pretty-font-weight-bold);
+    opacity: 0.5;
+    background-color: var(--pretty-error-color);
+    color: var(--pretty-btn-color);
+    transition: var(--pretty-transition);
+    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+        transition: var(--pretty-transition);
+    }
 }
 
 @media screen and (max-width: 450px) {
     .memory-map-memory-modal-title {
-        width: 70vw;
+        width: 16rem;
     }
 
     .memory-map-memory-modal-content-container {
-        width: 70vw;
+        & .memory-modal-description {
+            width: 16rem;
+        }
+
+        & .memory-modal-images-container {
+            grid-template-columns: repeat(3, 5rem);
+            grid-auto-rows: 5rem;
+            gap: 0.5rem;
+        }
     }
 }
 

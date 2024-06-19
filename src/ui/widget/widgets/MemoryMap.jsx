@@ -17,6 +17,7 @@ function MemoryMap() {
     const URL_SUFFIX_UPDATE = '/memory_map_markers/edit';
     const URL_SUFFIX_DELETE = '/memory_map_markers/delete';
     const URL_SUFFIX_ALL = '/memory_map_markers/' + user_email;
+    const URL_SUFFIX_IMAGE_UPLOAD = "/images/upload";
 
     const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ function MemoryMap() {
     const [createMarkerBtnActive, setCreateMarkerBtnActive] = useState(false);
 
     useEffect(() => {
+        // load the marker list from backend if the marker list in the provider context is empty
         if (markerList.length === 0 && isAuthenticated) {
             // load the marker list from backend
             setIsLoading(true);
@@ -47,7 +49,11 @@ function MemoryMap() {
                     return res.json();
                 })
                 .then((data) => {
-                    setMarkerList(data.markers);
+                    const transformedMarkers = data.markers.map(marker => ({
+                        ...marker,
+                        images: marker.images ? marker.images.split(",") : [], // transform images from string into an array
+                    }));
+                    setMarkerList(transformedMarkers);
                     setIsLoading(false);
                 })
                 .catch(error => {
@@ -167,6 +173,50 @@ function MemoryMap() {
         }
     }
 
+    const handleImageUpload = (file) => {
+        // upload the image to the server, insert the image into the editor and show the upload status under the editor
+        const form_data = new FormData();
+        form_data.append("user_email", user_email);
+        form_data.append("name", file.name);
+        form_data.append("file", file);
+
+        fetch(process.env.REACT_APP_SERVER_URL + URL_SUFFIX_IMAGE_UPLOAD, {
+            method: "POST",
+            headers: {
+                // Content-Type is not required for FormData, cuz browser will set it automatically
+                // "Content-Type": "application/form-data",
+                // get access token from local storage
+                "Authorization": "Bearer " + localStorage.getItem("_auth"),
+            },
+            body: form_data,
+        })
+            .then((res) => {
+                if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
+                setIsLoading(false);
+                return res.json();
+            })
+            .then((data) => {
+                // do sth here after the image is uploaded
+                if (data.message === "Image uploaded successfully") {
+                    setMarkerList(prev => {
+                        const newMarkerList = [...prev];
+                        newMarkerList[centeredMarkerIndex].images = [
+                            ...newMarkerList[centeredMarkerIndex].images,
+                            data.url
+                        ];
+                        return newMarkerList;
+                    });
+                } else {
+                    console.log(data.message);
+                }
+            })
+            .catch(error => {
+                setIsLoading(false);
+                console.log(error.message)
+                // alert(fetchError);
+            });
+    }
+
     return (
         <>
             <div className={`memory-map-loading-container ${isLoading ? 'active' : ''}`}>
@@ -214,7 +264,7 @@ function MemoryMap() {
                                         const newMarkerList = [...prev];
                                         newMarkerList[centeredMarkerIndex].description = e.target.value;
                                         return newMarkerList;
-                                    })
+                                    });
                                     setCenteredMarker({ ...centeredMarker, description: e.target.value });
                                 }}
                             >
@@ -222,7 +272,21 @@ function MemoryMap() {
                             <div className='memory-modal-images-container'>
                                 {markerList[centeredMarkerIndex].images && markerList[centeredMarkerIndex].images.map((image, index) => {
                                     return (
-                                        <img key={index} src={image} />
+                                        <div className='memory-modal-image-container'>
+                                            <img key={index} src={image} />
+                                            <div className='memory-modal-image-remove-btn'
+                                                onClick={() => {
+                                                    setIsMemoryModalChanged(true);
+                                                    // remove the clicked image from the clicked marker
+                                                    setMarkerList(prev => {
+                                                        const newMarkerList = [...prev];
+                                                        newMarkerList[centeredMarkerIndex].images = newMarkerList[centeredMarkerIndex].images.filter((img, imgIndex) => imgIndex !== index);
+                                                        return newMarkerList;
+                                                    });
+                                                }}>
+                                                <i className='ri-delete-bin-line' />
+                                            </div>
+                                        </div>
                                     )
                                 })}
                                 <div className='memory-modal-add-image-btn'>
@@ -232,22 +296,26 @@ function MemoryMap() {
                                             setIsMemoryModalChanged(true);
                                             // add a new image to the clicked marker
                                             const file = e.target.files[0];
-                                            const reader = new FileReader();
-                                            reader.readAsDataURL(file);
-                                            reader.onload = () => {
-                                                setMarkerList(prev => {
-                                                    const newMarkerList = [...prev];
-                                                    newMarkerList[centeredMarkerIndex].images = [
-                                                        ...newMarkerList[centeredMarkerIndex].images,
-                                                        reader.result
-                                                    ];
-                                                    return newMarkerList;
-                                                })
-                                            }
+                                            handleImageUpload(file);
+                                            // const reader = new FileReader();
+                                            // reader.readAsDataURL(file);
+                                            // reader.onload = () => {
+                                            //     setMarkerList(prev => {
+                                            //         const newMarkerList = [...prev];
+                                            //         newMarkerList[centeredMarkerIndex].images = [
+                                            //             ...newMarkerList[centeredMarkerIndex].images,
+                                            //             reader.result
+                                            //         ];
+                                            //         return newMarkerList;
+                                            //     })
+                                            // }
                                         }}
                                     ></input>
                                 </div>
                             </div>
+                        </div>
+                        <div className='memory-map-memory-modal-delete-btn'>
+                            <i className='ri-delete-bin-6-line' />
                         </div>
                     </>
                 }
@@ -266,7 +334,7 @@ function MemoryMap() {
                         return (
                             <Marker key={index} icon={"loc_red"}
                                 position={{ lng: marker.longitude, lat: marker.latitude }}
-                                onClick={() => onMarkerClick(marker.longitude, marker.latitude, index)}
+                                onClick={() => { onMarkerClick(marker.longitude, marker.latitude, index); }}
                             />
                         )
                     })}
