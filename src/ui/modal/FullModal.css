@@ -11,7 +11,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(0, 0, 0, 0.75); */
     transition: var(--pretty-transition);
     animation: flexFadeOut 0.3s ease;
 
@@ -20,6 +20,15 @@
         visibility: visible; */
         display: flex;
         animation: fadeIn 0.3s ease;
+    }
+    
+    & .full-modal-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.75);
     }
 
     & .full-modal-content {
@@ -42,5 +51,6 @@
         right: 0.5rem;
         cursor: pointer;
         font-size: 24px;
+        font-weight: var(--pretty-font-weight);
     }
 }
