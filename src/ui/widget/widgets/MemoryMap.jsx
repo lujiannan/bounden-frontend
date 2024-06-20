@@ -29,6 +29,7 @@ function MemoryMap() {
     const [centeredMarker, setCenteredMarker] = useState(null);
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isImageUploading, setIsImageUploading] = useState(false);
     const [createMarkerBtnActive, setCreateMarkerBtnActive] = useState(false);
 
     useEffect(() => {
@@ -85,7 +86,7 @@ function MemoryMap() {
                 "longitude": centeredMarker.longitude,
                 "name": centeredMarker.name,
                 "description": centeredMarker.description,
-                "images": centeredMarker.images,
+                "images": centeredMarker.images.toString(),
             });
         }
         // save the marker list to the server
@@ -179,6 +180,7 @@ function MemoryMap() {
     }
 
     const handleImageUpload = (file) => {
+        setIsImageUploading(true);
         // upload the image to the server, insert the image into the editor and show the upload status under the editor
         const form_data = new FormData();
         form_data.append("user_email", user_email);
@@ -197,19 +199,19 @@ function MemoryMap() {
         })
             .then((res) => {
                 if (!res.ok) { throw Error('Could not fetch the data for that resource...'); }
-                setIsLoading(false);
+                setIsImageUploading(false);
                 return res.json();
             })
             .then((data) => {
                 // do sth here after the image is uploaded
                 if (data.message === "Image uploaded successfully") {
-                    setCenteredMarker({ ...centeredMarker, images: [ ...centeredMarker.images, data.url ] });
+                    setCenteredMarker({ ...centeredMarker, images: [...centeredMarker.images, data.url] });
                 } else {
                     console.log(data.message);
                 }
             })
             .catch(error => {
-                setIsLoading(false);
+                setIsImageUploading(false);
                 console.log(error.message)
                 // alert(fetchError);
             });
@@ -311,15 +313,22 @@ function MemoryMap() {
                                     )
                                 })}
                                 <div className='memory-modal-add-image-btn'>
-                                    <i className='ri-image-add-fill'></i>
-                                    <input type="file" accept="image/*"
-                                        onChange={(e) => {
-                                            setIsMemoryModalChanged(true);
-                                            // add a new image to the clicked marker
-                                            const file = e.target.files[0];
-                                            handleImageUpload(file);
-                                        }}
-                                    ></input>
+                                    {isImageUploading ?
+                                        <div className='memory-modal-add-image-loading-container'>
+                                            <div className='loading-pulse'></div>
+                                        </div> :
+                                        <>
+                                            <i className='ri-image-add-fill'></i>
+                                            <input type="file" accept="image/*"
+                                                onChange={(e) => {
+                                                    setIsMemoryModalChanged(true);
+                                                    // add a new image to the clicked marker
+                                                    const file = e.target.files[0];
+                                                    handleImageUpload(file);
+                                                }}
+                                            ></input>
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </div>
