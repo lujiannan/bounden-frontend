@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import './ImageModal.css'
 
-const ImageModal = ({ isOpen = false, onClose, imageURL = null, children }) => {
+const ImageModal = ({ isOpen = false, onClose, children }) => {
     useEffect(() => {
         const handleEscape = (event) => {
             if (event.key === 'Escape') {

@@ -37,6 +37,26 @@ function MemoryMap() {
     const [createMarkerBtnActive, setCreateMarkerBtnActive] = useState(false);
 
     useEffect(() => {
+        // set the user current location on the map
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    mapRef.map.flyTo({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    }, 15);
+                    localStorage.setItem("memoryMapCenter", JSON.stringify({ lat: position.coords.latitude, lng: position.coords.longitude }));
+                },
+                (err) => {
+                    console.log(err.message);
+                }
+            );
+        } else {
+            console.log('Geolocation is not supported by this browser.');
+        }
+    }, []);
+
+    useEffect(() => {
         // load the marker list from backend if the marker list in the provider context is empty
         if (markerList.length === 0 && isAuthenticated) {
             // load the marker list from backend
@@ -275,7 +295,7 @@ function MemoryMap() {
             >
                 <i className="ri-map-pin-add-line"></i>
             </div>
-            <ImageModal isOpen={isImageModalOpen} onClose={() => { setIsImageModalOpen(false); }} imageURL={imageModalImageURL} >
+            <ImageModal isOpen={isImageModalOpen} onClose={() => { setIsImageModalOpen(false); }} >
                 <img src={imageModalImageURL} />
             </ImageModal>
             <FullModal isOpen={isMemoryModalOpen} onClose={() => { onMemoryModalCloseSave(); }}>
@@ -307,11 +327,11 @@ function MemoryMap() {
                                 {centeredMarker.images && centeredMarker.images.map((image, index) => {
                                     return (
                                         <div className='memory-modal-image-container' key={index}>
-                                            <img src={image} 
+                                            <img src={image}
                                                 onClick={() => {
-                                                    setIsImageModalOpen(true); 
-                                                    setImageModalImageURL(image); 
-                                                }}/>
+                                                    setIsImageModalOpen(true);
+                                                    setImageModalImageURL(image);
+                                                }} />
                                             <div className='memory-modal-image-remove-btn'
                                                 onClick={() => {
                                                     setIsMemoryModalChanged(true);
@@ -359,8 +379,11 @@ function MemoryMap() {
                 }
             </FullModal>
             <div className='memory-map-container' id="memory-map-container">
-                <Map zoom="10" style={{ height: '100%', width: '100%' }} ref={ref => { mapRef.map = ref?.map }}
-                    center={{ lng: 116.402544, lat: 39.928216 }}
+                <Map zoom="15" style={{ height: '100%', width: '100%' }} ref={ref => { mapRef.map = ref?.map }}
+                    center={localStorage.getItem("memoryMapCenter") ? 
+                        JSON.parse(localStorage.getItem("memoryMapCenter")) : 
+                        { lng: 121.499809, lat: 31.239666 }
+                    }
                     enableScrollWheelZoom // enable scroll wheel zooming
                     enableDragging // enable dragging the map
                     onClick={onMapClick}
