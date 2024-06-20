@@ -1,8 +1,6 @@
-.full-modal {
-    /* opacity: 0;
-    visibility: hidden; */
+.image-modal {
     user-select: none;
-    z-index: 9999;
+    z-index: 10000;
     display: none;
     justify-content: center;
     align-items: center;
@@ -15,13 +13,11 @@
     animation: flexFadeOut 0.3s ease;
 
     &.open {
-        /* opacity: 1;
-        visibility: visible; */
         display: flex;
         animation: fadeIn 0.3s ease;
     }
     
-    & .full-modal-bg {
+    & .image-modal-bg {
         position: absolute;
         top: 0;
         left: 0;
@@ -30,26 +26,40 @@
         background-color: rgba(0, 0, 0, 0.75);
     }
 
-    & .full-modal-content {
-        background-color: var(--pretty-bg-color);
-        padding: 1.5rem 1.5rem;
-        border-radius: var(--pretty-border-radius);
+    & .image-content-container {
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        & img {
+            max-width: 95vw;
+            max-height: 85vh;
+            object-fit: cover;
+            border-radius: var(--pretty-border-radius);
+        }
     }
     
     & button {
         margin-top: 0.5rem;
     }
 
-    & .full-modal-close {
+    & .image-modal-close {
         position: absolute;
-        top: 0.25rem;
-        right: 0.5rem;
+        top: 1rem;
+        right: 1.5rem;
         cursor: pointer;
-        font-size: 24px;
+        font-size: 2rem;
         font-weight: var(--pretty-font-weight);
+        color: var(--pretty-bg-color);
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .image-modal {
+        & .image-modal-close {
+            top: 0.25rem;
+            right: 0.5rem;
+        }
     }
 }

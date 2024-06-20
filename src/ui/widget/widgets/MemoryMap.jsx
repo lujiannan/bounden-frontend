@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { MemoryMapContext } from './MemoryMapContext'
 
 import FullModal from '../../modal/FullModal';
+import ImageModal from '../../modal/ImageModal';
 import './MemoryMap.css';
 
 function MemoryMap() {
@@ -27,6 +28,9 @@ function MemoryMap() {
     const [isMemoryModalChanged, setIsMemoryModalChanged] = useState(false);
     const [centeredMarkerIndex, setCenteredMarkerIndex] = useState(null);
     const [centeredMarker, setCenteredMarker] = useState(null);
+
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [imageModalImageURL, setImageModalImageURL] = useState(null);
 
     const [isLoading, setIsLoading] = useState(false);
     const [isImageUploading, setIsImageUploading] = useState(false);
@@ -271,6 +275,9 @@ function MemoryMap() {
             >
                 <i className="ri-map-pin-add-line"></i>
             </div>
+            <ImageModal isOpen={isImageModalOpen} onClose={() => { setIsImageModalOpen(false); }} imageURL={imageModalImageURL} >
+                <img src={imageModalImageURL} />
+            </ImageModal>
             <FullModal isOpen={isMemoryModalOpen} onClose={() => { onMemoryModalCloseSave(); }}>
                 {centeredMarkerIndex !== null && centeredMarker &&
                     <>
@@ -300,7 +307,11 @@ function MemoryMap() {
                                 {centeredMarker.images && centeredMarker.images.map((image, index) => {
                                     return (
                                         <div className='memory-modal-image-container' key={index}>
-                                            <img src={image} />
+                                            <img src={image} 
+                                                onClick={() => {
+                                                    setIsImageModalOpen(true); 
+                                                    setImageModalImageURL(image); 
+                                                }}/>
                                             <div className='memory-modal-image-remove-btn'
                                                 onClick={() => {
                                                     setIsMemoryModalChanged(true);

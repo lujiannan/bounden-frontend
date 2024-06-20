@@ -1,7 +1,7 @@
 .alert-modal {
     font-weight: var(--pretty-font-weight);
     user-select: none;
-    z-index: 99;
+    z-index: 9999;
     display: none;
     justify-content: center;
     /* align-items: center; */
