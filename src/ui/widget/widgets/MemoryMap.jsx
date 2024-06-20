@@ -268,8 +268,8 @@ function MemoryMap() {
                 if (data.message === "1 row(s) deleted") {
                     // remove the deleted marker from the marker list in the provider context
                     setMarkerList(prev => prev.filter(marker => marker.id !== data.id));
-                    setCenteredMarkerIndex(null);
-                    setCenteredMarker(null);
+                    // setCenteredMarkerIndex(null);
+                    // setCenteredMarker(null);
                 }
             })
             .catch(error => {
